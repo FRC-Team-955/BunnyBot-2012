@@ -11,36 +11,34 @@ import edu.wpi.first.wpilibj.*;
  */
 public class CDrive {
     
-    Victor mtRight = new Victor(1);
-    Victor mtLeft = new Victor(2);
-    double x = 0;
-    double y = 0;
-    double mtRightSpeed = 0;
-    double mtLeftSpeed = 0;
+    private Victor mtRight = new Victor(1);
+    private Victor mtLeft = new Victor(2);
+    private double mtRightSpeed = 0;
+    private double mtLeftSpeed = 0;
     
-    public void run(Joystick joy)
-    {
-        x = joy.getX() * Math.abs(joy.getX());
-        y = joy.getY() * Math.abs(joy.getY());
+    public void run(Joystick joyLeft, Joystick joyRight)
+    {       
+        mtRightSpeed = joyRight.getY() * Math.abs(joyRight.getY());
+        mtLeftSpeed = joyLeft.getY() * Math.abs(joyLeft.getY());
         
-        mtRightSpeed = -y+x;
-        mtLeftSpeed = y+x;
-        
-        if(Math.abs(y) + Math.abs(x) > 0.1)
+        if(Var.bDrive)
         {
-            this.setSpeed(mtRightSpeed, mtLeftSpeed);
-        }
+            if(Math.abs(mtRightSpeed) + Math.abs(mtLeftSpeed) > 0.1)
+            {
+                this.setSpeed(mtLeftSpeed, mtRightSpeed);
+            }
 
-        else
-        {
-            this.setSpeed(0, 0);
+            else
+            {
+                this.setSpeed(0, 0);
+            }
         }
     }
     
-    public void setSpeed(double setMtRight, double setMtLeft)
+    public void setSpeed(double setMtLeft, double setMtRight)
     {
+        mtLeft.set(setMtLeft);
         mtRight.set(setMtRight);
-        mtLeft.set(setMtRight);
     }
     
     public double getMtRightSpeed()
