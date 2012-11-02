@@ -25,15 +25,16 @@ public class Var {
     // Solenoids
 
     // Joysticks and buttons
-    static final int btActivateRetrieve = 3;
-    static final int buttonRecord = 9;
-    static final int buttonReplay = 12;
-    static final int buttonClearList = 10;
+    static final int btActRetrieve = 3;
+    static final int btRecord = 9;
+    static final int btReplay = 12;
+    static final int btClearList = 10;
     
     // Other
     //static boolean bRecord = false;
     static boolean bDrive = true;
     static final int chanJoyDrive = 3;
+    static final double dRcrdLimit = 14;
     
     // Printing to Driverstation lines, 2-6 are available only
 

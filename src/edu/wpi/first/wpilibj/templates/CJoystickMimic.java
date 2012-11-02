@@ -1,11 +1,5 @@
+// @author Fauzi
 package edu.wpi.first.wpilibj.templates;
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-//package recording;
-import edu.wpi.first.wpilibj.*;
 
 class CJoystickMimic{
     
@@ -24,6 +18,7 @@ class CJoystickMimic{
     private link curLink;
     private int iNextIndex;
     private int size;
+    private double dTmrLimit;
     
     CJoystickMimic()
     {
@@ -56,6 +51,16 @@ class CJoystickMimic{
             tempLink.prev = last;
             last = tempLink;
         }
+    }
+    
+    public void setReplayLimit(double dTmrLmt)
+    {
+        dTmrLimit = dTmrLmt;
+    }
+    
+    public double getReplayLimit()
+    {
+        return dTmrLimit;
     }
     
     public double getMtRight(int index)

@@ -18,7 +18,7 @@ public class CRetrieve {
     
     public void run(Joystick joy)
     {
-        btRetrieve.run(joy.getRawButton(Var.btActivateRetrieve));
+        btRetrieve.run(joy.getRawButton(Var.btActRetrieve));
         
         if(btRetrieve.gotPressed())
             bRetrieveStatus = !bRetrieveStatus;
