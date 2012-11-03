@@ -29,12 +29,15 @@ public class Var {
     static final int btRecord = 9;
     static final int btReplay = 12;
     static final int btClearList = 10;
+    static final int btSwitchLayout = 11;
     
     // Other
-    //static boolean bRecord = false;
     static boolean bDrive = true;
     static final int chanJoyDrive = 3;
     static final double dRcrdLimit = 14;
+    static final int iArrayRecrdSize = 12000;
+    static boolean bAnotherIsPressed = false;
+    static final double dMaxRecordingTime = 14.5;
     
     // Printing to Driverstation lines, 2-6 are available only
 

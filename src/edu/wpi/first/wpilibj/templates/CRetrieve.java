@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.*;
 public class CRetrieve {
     
     Victor mtRetrieve = new Victor(Var.chnVicRetrieve);
-    CButton btRetrieve = new CButton();
+    CButton btRetrieve = new CButton(true);
     boolean bRetrieveStatus = false;
     
     public void run(Joystick joy)

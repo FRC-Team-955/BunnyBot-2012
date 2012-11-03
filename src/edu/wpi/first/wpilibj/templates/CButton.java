@@ -1,12 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
 
-/**
- *
+/*
  * @author Fauzi
  */
 
@@ -15,40 +9,87 @@ import edu.wpi.first.wpilibj.*;
  *  rather than do it manually which was tedious.
  */
 public class CButton {
-    private boolean curState = false;
-    private boolean lastState = false;
-    private boolean Bswitch = false;
+    private boolean bCurState = false;
+    private boolean bLastState = false;
+    private boolean bSwitch = false;
+    private boolean bIsTrue = false;
+    private boolean bCanInterrupt = false;
+    
+    public CButton(boolean bCanInterrupt)
+    {
+        this.bCanInterrupt = bCanInterrupt;
+    }
     
     public void run(boolean button)
     {
-        lastState = curState;
-        curState = button;
+        bLastState = bCurState;
+        bCurState = button;
         
-        if(curState == true && lastState == false)
-            Bswitch = !Bswitch;
+        if(bCurState == true && bLastState == false)
+        {    
+            if(bCanInterrupt) 
+            {
+                bSwitch = !bSwitch;
+            }
+        
+            else
+            {
+                if(Var.bAnotherIsPressed && bIsTrue)
+                {   
+                    Var.bAnotherIsPressed = false;
+                    bIsTrue = false;
+                }
+
+                else if(!Var.bAnotherIsPressed)
+                {
+                    Var.bAnotherIsPressed = true;
+                    bIsTrue = true;
+                } 
+            }
+        }
     }
     
     public boolean gotPressed()
     {
-        return curState == true && lastState == false;
-    }
-    
-    public boolean getSwitch()
-    {
-        return Bswitch;
-    }
-    
-    public boolean isHeld()
-    {
-        if(curState == true && lastState == true)
-            return true;
+        if(bCanInterrupt)
+            return bCurState == true && bLastState == false;
         
         else
-            return false;
+            return bCurState == true && bLastState == false && Var.bAnotherIsPressed == false;
+    }
+
+    public boolean getSwitch()
+    {
+        if(bCanInterrupt)
+            return bSwitch;
+        
+        else
+            return bIsTrue;
+    }
+        
+    public boolean isHeld()
+    {
+        if(bCanInterrupt)
+        {
+            if(bCurState == true && bLastState == true)
+                return true;
+
+            else
+                return false;
+        }
+        
+        else
+        {
+            if(bCurState == true && bLastState == true && Var.bAnotherIsPressed == false)
+                return true;
+
+            else
+                return false;
+        }    
     }
     
     public void set(boolean bSetTo)
     {
-        Bswitch = bSetTo;
+        bSwitch = bSetTo;
     }
 }

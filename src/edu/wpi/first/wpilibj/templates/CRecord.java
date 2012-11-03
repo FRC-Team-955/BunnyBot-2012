@@ -1,153 +1,162 @@
+package edu.wpi.first.wpilibj.templates;
+import edu.wpi.first.wpilibj.Joystick;
+
 // @author Fauzi
 /*
  * This class will hopefully be responsible for recording the robots 
  * movements and "replaying" them.
  */
-package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
-
 public class CRecord {
 
-    private Timer trRecord = new Timer();
-    private Timer trReplay = new Timer();
-    private CJoystickMimic joyEmu = new CJoystickMimic();
-    private CJoystickMimic joyEmuAuto = new CJoystickMimic();
-    private CButton btRecord = new CButton();
-    private CButton btReplay = new CButton();
-    private CButton btClear = new CButton();
-    private boolean bRecStart = false;
-    private boolean bRepStart = false;
-    private boolean bRepDone = false;
+    private CJoyEmulator joyEmu = new CJoyEmulator(120);
+    private CJoyEmulator joyEmuAuto = new CJoyEmulator(Var.dMaxRecordingTime);
+    private CButton btRecord = new CButton(false);
+    private CButton btReplay = new CButton(false);
+    private CButton btClear = new CButton(false);
+    private CButton btRecordAuto = new CButton(false);
+    private CButton btReplayAuto = new CButton(false);
+    private CButton btClearAuto = new CButton(false);
+    private CButton btSwitchLayout = new CButton(false);
     private String sPrintWhat = "";
+    private String sType = "";
+    private CTimer tmRecord = new CTimer();
+    private CTimer tmReplay = new CTimer();
+    private boolean bRecStarted;
+    private boolean bNormLayout = true;
+    private int iJoyIndex = 0;
+    private CDrive driver;
+    private Joystick joy;
     private CPrintDriver printToDriverSt = new CPrintDriver();
-   
-    public void run(Joystick joy, CDrive driver, CRetrieve retrieval)
+    
+    public CRecord(CDrive drive, Joystick joystick)
     {
-        btRecord.run(joy.getRawButton(Var.btRecord));
-        btReplay.run(joy.getRawButton(Var.btReplay));
-        btClear.run(joy.getRawButton(Var.btClearList));
+        driver = drive;
+        joy = joystick;
+    }
+    
+    public void run()
+    {
+        btSwitchLayout.run(joy.getRawButton(Var.btSwitchLayout));
         
-        if(btClear.gotPressed())
-                clearAll();
+        if(btSwitchLayout.gotPressed())
+            bNormLayout = !bNormLayout;
         
-        if(btRecord.getSwitch())    // Records the joystics X's and Y's into a linked list
-        {            
-            if(!bRecStart)
-            {
-                trRecord.start();
-                bRecStart = true;
-            }
-            
-            if(trRecord.get() < Var.dRcrdLimit)
-            {
-                sPrintWhat = "Recording";
-
-                try
-                {
-                    joyEmu.add(trRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieval.getStatus());
-                }
-
-                catch(OutOfMemoryError E)
-                {
-                    sPrintWhat = "Out of Memory";
-                }
-            }
-            
-            else
-            {
-                sPrintWhat = "Time Limit Reached";
-                Var.bDrive = false;                
-            }
+        if(bNormLayout)
+        {
+            sType = "Normal: ";
+            btRecord.run(joy.getRawButton(Var.btRecord ));
+            btReplay.run(joy.getRawButton(Var.btReplay));
+            btClear.run(joy.getRawButton(Var.btClearList));
         }
-		
-        else if(btReplay.getSwitch())   // Inputs the values into the drive class, etc...
-        {               
-            Var.bDrive = false;
-            
-            if(joyEmu.isEmpty() == false)
-            {
-                if(!bRepStart)
-                {
-                    trReplay.start();
-                    bRepStart = true;
-                }
-
-                if(trReplay.get() <= trRecord.get() && bRepDone == false)
-                {
-                    sPrintWhat = "Replaying";
-                    driver.setSpeed(joyEmu.getMtLeft(-1), joyEmu.getMtRight(-1));
-
-                    if(trReplay.get() > joyEmu.getTmr(-1))
-                        joyEmu.getNext();
-                }
-
-                if(joyEmu.getIter() == joyEmu.size()-1) 
-                {
-                    sPrintWhat = "Done Replaying";
-                    trReplay.stop();
-                    driver.setSpeed(0,0);
-                    bRepDone = true;
-                }
+        
+        else
+        {
+            sType = "Auto: ";
+            btRecordAuto.run(joy.getRawButton(Var.btRecord));
+            btReplayAuto.run(joy.getRawButton(Var.btReplay));
+            btClearAuto.run(joy.getRawButton(Var.btClearList));
+        }
+        
+        if(btRecord.getSwitch() || btReplay.getSwitch() || btClear.getSwitch() || btRecordAuto.getSwitch() || btReplayAuto.getSwitch() || btClearAuto.getSwitch())
+        {
+            if(btRecord.getSwitch() || btRecordAuto.getSwitch())
+            {                
+                if(btRecord.getSwitch())
+                    record(joyEmu);
+                
+                else
+                    record(joyEmuAuto);
             }
-            
-            else
+
+            else if(btReplay.getSwitch() || btReplayAuto.getSwitch())
             {
-                sPrintWhat = "Nothing Recorded";
+                Var.bDrive = false;
+                
+                if(btReplay.getSwitch())
+                    replay(joyEmu);
+                
+                else
+                    replay(joyEmuAuto);
+            }
+
+            else if(btClear.gotPressed() || btClearAuto.gotPressed())
+            {
+                if(btClear.gotPressed())
+                    joyEmu.deleteAll();
+
+                else
+                    joyEmuAuto.deleteAll();
             }
         }
         
         else
         {
             sPrintWhat = "Doing Nothing";
-            Var.bDrive = true;
-            bRecStart = false;
-            bRepStart = false;
-            bRepDone = false;
-            trReplay.stop();
-            trReplay.reset();
-            trRecord.stop();
-            joyEmu.reset();
+            reset();
         }
         
-        printToDriverSt.print(Var.iRecordStatusLine, sPrintWhat);
+        printToDriverSt.print(Var.iRecordStatusLine, sType + sPrintWhat);
     }
     
-    private void clearAll() // To clear the memory so you can record something else
+    private void reset() // To clear the memory so you can record something else
     {
-        trRecord.stop();
-        trRecord.reset();
-        trReplay.stop();
-        trReplay.reset();
-        joyEmu.deleteAll();
-        bRecStart = false;
-        bRepStart = false;
-        bRepDone = false;
+        Var.bDrive = true;
+        bRecStarted = false;
+        tmReplay.reset(true);
+        tmRecord.reset(true);
+        iJoyIndex = 0;
     }
     
-    public void replayAuto(CDrive driver, CRetrieve retrieval)
+    private void replay(CJoyEmulator joyReplayer)
     {
+        if(!joyReplayer.isEmpty())
+        {
+            tmReplay.start();
+               
+            if(tmReplay.get() <= joyReplayer.getReplayLength())
+            {
+                sPrintWhat = "Replaying";
+                driver.setSpeed(joyReplayer.getMtLeft(iJoyIndex), joyReplayer.getMtRight(iJoyIndex));
+
+                if(tmReplay.get() >= joyReplayer.getTmr(iJoyIndex))
+                    iJoyIndex++;
+            }
+
+            else 
+            {
+                sPrintWhat = "Done Replaying";
+                tmReplay.stop();
+                driver.setSpeed(0,0);
+            }
+        }
         
-        if(!bRepStart)
+        else
         {
-            trReplay.start();
-            bRepStart = true;
+            sPrintWhat = "Nothing Recorded";
+            driver.setSpeed(0, 0);
+        }
+    }
+    
+    private void record(CJoyEmulator joyRecord)
+    {
+        if(!bRecStarted)
+        {
+            tmRecord.start();
+            bRecStarted = true;
+            joyRecord.deleteAll(); // Deletes previous recording to start a new one
+            iJoyIndex = 0;
         }
 
-        if(trReplay.get() <= joyEmu.getReplayLimit() && bRepDone == false)
+        if(tmRecord.get() < joyRecord.getMaxReplayLimit())
         {
-            sPrintWhat = "Replaying";
-            driver.setSpeed(joyEmu.getMtLeft(-1), joyEmu.getMtRight(-1));
-
-            if(trReplay.get() > joyEmu.getTmr(-1))
-                joyEmu.getNext();
+            sPrintWhat = "Recording";
+            joyRecord.add(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), false);
         }
 
-        if(joyEmu.getIter() == joyEmu.size()-1) 
+        else
         {
-            sPrintWhat = "Done Replaying";
-            trReplay.stop();
-            driver.setSpeed(0,0);
-            bRepDone = true;
+            sPrintWhat = "Time Limit Reached";
+            Var.bDrive = false;                
         }
     }
 }
