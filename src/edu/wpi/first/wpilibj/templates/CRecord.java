@@ -24,14 +24,20 @@ public class CRecord {
     private boolean bRecStarted;
     private boolean bNormLayout = true;
     private int iJoyIndex = 0;
-    private CDrive driver;
     private Joystick joy;
+    private CDrive driver;
+    private CRetrieve retrieve;
+    private CRelease releaser;
+    private CFileWriter fileWriter = new CFileWriter(Var.sOutput);
+    private CFileReader fileReader;
     private CPrintDriver printToDriverSt = new CPrintDriver();
     
-    public CRecord(CDrive drive, Joystick joystick)
+    public CRecord(Joystick joystick, CDrive drive, CRetrieve retrieval, CRelease release)
     {
-        driver = drive;
         joy = joystick;
+        driver = drive;
+        retrieve = retrieval;
+        releaser = release;
     }
     
     public void run()
@@ -117,7 +123,9 @@ public class CRecord {
             {
                 sPrintWhat = "Replaying";
                 driver.setSpeed(joyReplayer.getMtLeft(iJoyIndex), joyReplayer.getMtRight(iJoyIndex));
-
+                retrieve.set(joyReplayer.getRetrieveStatus(iJoyIndex));
+                releaser.set(joyReplayer.getReleaseStatus(iJoyIndex));
+                
                 if(tmReplay.get() >= joyReplayer.getTmr(iJoyIndex))
                     iJoyIndex++;
             }
@@ -150,7 +158,7 @@ public class CRecord {
         if(tmRecord.get() < joyRecord.getMaxReplayLimit())
         {
             sPrintWhat = "Recording";
-            joyRecord.add(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), false);
+            joyRecord.add(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus(), releaser.getReleaseStatus());
         }
 
         else

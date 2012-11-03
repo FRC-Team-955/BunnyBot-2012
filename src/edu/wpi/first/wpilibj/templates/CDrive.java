@@ -15,11 +15,17 @@ public class CDrive {
     private Victor mtLeft = new Victor(2);
     private double mtRightSpeed = 0;
     private double mtLeftSpeed = 0;
+    private Joystick joy;
     
-    public void run(Joystick joyLeft, Joystick joyRight)
+    public CDrive(Joystick joystick)
+    {
+        joy = joystick;
+    }
+    
+    public void run()
     {       
-        mtRightSpeed = joyRight.getY() * Math.abs(joyRight.getY());
-        mtLeftSpeed = joyLeft.getY() * Math.abs(joyLeft.getY());
+        mtRightSpeed = joy.getX() * Math.abs(joy.getX());
+        mtLeftSpeed = joy.getY() * Math.abs(joy.getY());
         
         if(Var.bDrive)
         {

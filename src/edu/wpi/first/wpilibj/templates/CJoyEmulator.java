@@ -13,13 +13,14 @@ class CJoyEmulator{
     private double[] m_dMtLeft = new double[Var.iArrayRecrdSize];
     private double[] m_dTmr = new double[Var.iArrayRecrdSize];
     private boolean[] m_bRetrieveStatus = new boolean[Var.iArrayRecrdSize];
+    private boolean[] m_bReleaseStatus = new boolean[Var.iArrayRecrdSize];
 
     public CJoyEmulator(double dMaxRplyLimit)
     {
         m_dMaxRrplyLimit = dMaxRplyLimit;
     }
     
-    public void add(double dTimer, double dMtLeftSpeed, double dMtRightSpeed, boolean bRtvStatus)
+    public void add(double dTimer, double dMtLeftSpeed, double dMtRightSpeed, boolean bRtvStatus, boolean bReleaseStatus)
     {
         if(m_size == 0)
         {
@@ -33,6 +34,7 @@ class CJoyEmulator{
         m_dMtLeft[m_size] = dMtLeftSpeed;
         m_dMtRight[m_size] = dMtRightSpeed;
         m_bRetrieveStatus[m_size] = bRtvStatus;
+        m_bReleaseStatus[m_size] = bReleaseStatus;
         m_size++;
         m_dRplyLength =+ dTimer;
     }
@@ -40,6 +42,11 @@ class CJoyEmulator{
     public double getReplayLength()
     {
         return m_dRplyLength;
+    }
+    
+    public boolean getReleaseStatus(int index)
+    {
+        return m_bReleaseStatus[index];
     }
     
     public double getMaxReplayLimit()

@@ -12,26 +12,41 @@ import edu.wpi.first.wpilibj.*;
  */
 public class CRetrieve {
     
-    Victor mtRetrieve = new Victor(Var.chnVicRetrieve);
-    CButton btRetrieve = new CButton(true);
-    boolean bRetrieveStatus = false;
+    private Victor m_mtRetrieve = new Victor(Var.chnVicRetrieve);
+    private CButton m_btRetrieve = new CButton(true);
+    private boolean m_bRetrieveStatus = false;
+    private Joystick m_joy;
     
-    public void run(Joystick joy)
+    public CRetrieve(Joystick joystick)
     {
-        btRetrieve.run(joy.getRawButton(Var.btActRetrieve));
+        m_joy = joystick;
+    }
+    
+    public void run()
+    {
+        m_btRetrieve.run(m_joy.getRawButton(Var.btActRetrieve));
         
-        if(btRetrieve.gotPressed())
-            bRetrieveStatus = !bRetrieveStatus;
+        if(m_btRetrieve.gotPressed())
+            m_bRetrieveStatus = !m_bRetrieveStatus;
         
-        if(bRetrieveStatus)
-            mtRetrieve.set(1);
+        if(m_bRetrieveStatus)
+            m_mtRetrieve.set(1);
         
         else
-            mtRetrieve.set(0);
+            m_mtRetrieve.set(0);
     }
     
     public boolean getStatus()
     {
-        return bRetrieveStatus;
+        return m_bRetrieveStatus;
+    }
+    
+    public void set(boolean bStatus)
+    {
+        if(bStatus)
+            m_mtRetrieve.set(1);
+        
+        else
+            m_mtRetrieve.set(0);
     }
 }

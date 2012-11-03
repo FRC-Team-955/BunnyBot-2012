@@ -23,6 +23,9 @@ public class Var {
     static final int chnVicRetrieve = 3;
 	
     // Solenoids
+    // SOLENOID BUMPER CHANNEL 7 OR 8 DOES NOT WORK!!!!!!
+    static final int chnSolReleaseUp = 1;
+    static final int chnSolReleaseDown = 2;
 
     // Joysticks and buttons
     static final int btActRetrieve = 3;
@@ -30,16 +33,17 @@ public class Var {
     static final int btReplay = 12;
     static final int btClearList = 10;
     static final int btSwitchLayout = 11;
+    static final int btReleaseBall = 1;
     
     // Other
-    static boolean bDrive = true;
-    static final int chanJoyDrive = 3;
+    static final double dMaxRecordingTime = 14.5;
     static final double dRcrdLimit = 14;
+    static final int chnJoyDrive = 3;
     static final int iArrayRecrdSize = 12000;
     static boolean bAnotherIsPressed = false;
-    static final double dMaxRecordingTime = 14.5;
+    static boolean bDrive = true;
+    static String sOutput = "AutoVal";
     
     // Printing to Driverstation lines, 2-6 are available only
-
     static final int iRecordStatusLine = 5;
 }

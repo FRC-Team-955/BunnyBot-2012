@@ -6,9 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package edu.wpi.first.wpilibj.templates;
-
-
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,8 +20,15 @@ public class RobotTemplate extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
 
+    Joystick ps3Joy = new Joystick(1);
+    CDrive drive = new CDrive(ps3Joy);
+    CRetrieve retrieve = new CRetrieve(ps3Joy);
+    CRelease releaser = new CRelease(ps3Joy);
+    CRecord recorder = new CRecord(ps3Joy, drive, retrieve, releaser);
+    
+    public void robotInit() {
+        ps3Joy.setAxisChannel(Joystick.AxisType.kX, Var.chnJoyDrive);
     }
 
     /**
@@ -37,7 +42,11 @@ public class RobotTemplate extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+       
+        drive.run();
+        retrieve.run();
+        releaser.run();
+        recorder.run();
     }
     
 }
