@@ -34,6 +34,7 @@ public class Var {
     static final int btClearList = 10;
     static final int btSwitchLayout = 6;
     static final int btReleaseBall = 1;
+    static final int btAllowEdit = 4;
     
     // Other
     static final double dMaxRecordingTime = 14.5;

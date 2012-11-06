@@ -22,7 +22,7 @@ public class CFileWriter {
     String sFile;
     FileConnection fc;
     DataOutputStream writer;
-    
+    boolean bIsClosed = false;    
     
     public CFileWriter(String sFileName)
     {
@@ -49,7 +49,6 @@ public class CFileWriter {
             writer.writeDouble(dMtRight);
             writer.writeBoolean(bRtrveStat);
             writer.writeBoolean(bReleaseStat);
-            writer.flush();
         }
         
         catch(IOException e)
@@ -64,6 +63,7 @@ public class CFileWriter {
         {
             fc.delete();
         }
+        
         catch(IOException e)
         {
             System.out.println(e.getMessage());
@@ -75,6 +75,7 @@ public class CFileWriter {
             fc.create();
             writer = new DataOutputStream(fc.openOutputStream(0));
         }
+        
         catch (IOException e) 
         {
             e.printStackTrace();
@@ -129,6 +130,7 @@ public class CFileWriter {
         {
             writer.close();
             fc.close();
+            bIsClosed = true;
         }
         
         catch(IOException e)
@@ -144,10 +146,17 @@ public class CFileWriter {
             fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
             fc.create();
             writer = new DataOutputStream(fc.openOutputStream(0));
+            bIsClosed = false;
         }
         catch (IOException e) 
         {
             e.printStackTrace();
         }
     }
+    
+    public boolean isClosed()
+    {
+        return bIsClosed;
+    }
+    
 }
