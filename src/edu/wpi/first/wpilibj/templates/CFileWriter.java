@@ -27,6 +27,48 @@ public class CFileWriter {
     public CFileWriter(String sFileName)
     {
         sFile = sFileName;
+                
+        try
+        {
+            fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
+            fc.create();
+            writer = new DataOutputStream(fc.openOutputStream(0));
+        }
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void writeData(double dTime, double dMtLeft, double dMtRight, boolean bRtrveStat, boolean bReleaseStat)
+    {
+        try
+        {
+            writer.writeDouble(dTime);
+            writer.writeDouble(dMtLeft);
+            writer.writeDouble(dMtRight);
+            writer.writeBoolean(bRtrveStat);
+            writer.writeBoolean(bReleaseStat);
+            writer.flush();
+        }
+        
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void reset()
+    {
+        try
+        {
+            fc.delete();
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        
         try
         {
             fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
@@ -44,6 +86,7 @@ public class CFileWriter {
         try
         {
             writer.writeInt(iData); 
+            writer.flush();
         } 
         
         catch (IOException e) 
@@ -56,7 +99,8 @@ public class CFileWriter {
     {
         try
         {
-            writer.writeDouble(dData); 
+            writer.writeDouble(dData);
+            writer.flush();
         } 
         
         catch (IOException e) 
@@ -70,6 +114,7 @@ public class CFileWriter {
         try
         {
             writer.writeBoolean(bData); 
+            writer.flush();
         } 
         
         catch (IOException e) 
@@ -82,12 +127,25 @@ public class CFileWriter {
     {
         try
         {
-            writer.flush();
             writer.close();
             fc.close();
         }
         
         catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void open()
+    {
+        try
+        {
+            fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
+            fc.create();
+            writer = new DataOutputStream(fc.openOutputStream(0));
+        }
+        catch (IOException e) 
         {
             e.printStackTrace();
         }

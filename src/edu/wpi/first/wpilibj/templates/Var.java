@@ -30,9 +30,9 @@ public class Var {
     // Joysticks and buttons
     static final int btActRetrieve = 3;
     static final int btRecord = 9;
-    static final int btReplay = 12;
+    static final int btReplay = 2;
     static final int btClearList = 10;
-    static final int btSwitchLayout = 11;
+    static final int btSwitchLayout = 6;
     static final int btReleaseBall = 1;
     
     // Other
@@ -42,7 +42,7 @@ public class Var {
     static final int iArrayRecrdSize = 12000;
     static boolean bAnotherIsPressed = false;
     static boolean bDrive = true;
-    static String sOutput = "AutoVal";
+    static String sOutput = "file:///autoval.txt";
     
     // Printing to Driverstation lines, 2-6 are available only
     static final int iRecordStatusLine = 5;

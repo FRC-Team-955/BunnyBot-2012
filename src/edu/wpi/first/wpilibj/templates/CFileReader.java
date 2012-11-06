@@ -40,15 +40,45 @@ public class CFileReader {
     }
 
     
-    public void read()
+    public int readInt()
     {
         try 
         {           
-            System.out.println("The file says: " + reader.readInt());
+            //System.out.println("The file says: " + reader.readInt());
+			return reader.readInt();
         } 
         catch (Exception e)
         {
             e.printStackTrace();
+			return -1;
+        }
+    }
+    
+	public double readDouble()
+    {
+        try 
+        {           
+            //System.out.println("The file says: " + reader.readInt());
+			return reader.readDouble();
+        } 
+        catch (Exception e)
+        {
+            e.printStackTrace();
+			return -1;
+        }
+    }
+    
+	public boolean readBoolean()
+    {
+        try 
+        {           
+            //System.out.println("The file says: " + reader.readInt());
+			return reader.readBoolean();
+        } 
+        catch (Exception e)
+        {
+            e.printStackTrace();
+			return false;
         }
     }
     
@@ -57,7 +87,7 @@ public class CFileReader {
         try
         {
             reader.close();
-	fc.close();
+			fc.close();
         }
         
         catch(IOException e)

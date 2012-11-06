@@ -28,7 +28,7 @@ public class RobotTemplate extends IterativeRobot {
     CRecord recorder = new CRecord(ps3Joy, drive, retrieve, releaser);
     
     public void robotInit() {
-        ps3Joy.setAxisChannel(Joystick.AxisType.kX, Var.chnJoyDrive);
+        //ps3Joy.setAxisChannel(Joystick.AxisType.kX, Var.chnJoyDrive);
     }
 
     /**

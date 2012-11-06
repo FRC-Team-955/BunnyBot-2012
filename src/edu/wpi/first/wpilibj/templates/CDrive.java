@@ -22,25 +22,48 @@ public class CDrive {
         joy = joystick;
     }
     
-    public void run()
-    {       
-        mtRightSpeed = joy.getX() * Math.abs(joy.getX());
-        mtLeftSpeed = joy.getY() * Math.abs(joy.getY());
-        
+//    public void run()
+//    {       
+//        mtRightSpeed = joy.getX() * Math.abs(joy.getX());
+//        mtLeftSpeed = joy.getY() * Math.abs(joy.getY());
+//        
+//        if(Var.bDrive)
+//        {
+//            if(Math.abs(mtRightSpeed) + Math.abs(mtLeftSpeed) > 0.1)
+//            {
+//                this.setSpeed(mtLeftSpeed, mtRightSpeed);
+//            }
+//
+//            else
+//            {
+//                this.setSpeed(0, 0);
+//            }
+//        }
+//    }
+    
+	public void run()
+    {		
+        double y = joy.getY() * Math.abs(joy.getY());
+        double x = joy.getX() * Math.abs(joy.getX());
+
+		mtRightSpeed = (-y+x);
+		mtLeftSpeed = (y+x);
         if(Var.bDrive)
         {
-            if(Math.abs(mtRightSpeed) + Math.abs(mtLeftSpeed) > 0.1)
+            if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > 0.1)
             {
-                this.setSpeed(mtLeftSpeed, mtRightSpeed);
+                mtRight.set(mtRightSpeed);
+                mtLeft.set(mtLeftSpeed);
             }
 
             else
             {
-                this.setSpeed(0, 0);
+                mtRight.set(0);
+                mtLeft.set(0);
             }
         }
-    }
-    
+    } 
+		
     public void setSpeed(double setMtLeft, double setMtRight)
     {
         mtLeft.set(setMtLeft);
