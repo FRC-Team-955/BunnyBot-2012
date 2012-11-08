@@ -43,6 +43,7 @@ public class Var {
     static final int iArrayRecrdSize = 12000;
     static boolean bAnotherIsPressed = false;
     static boolean bDrive = true;
+    static double dCompareEnd = -10.0;
     static String sOutput = "file:///autoval.txt";
     
     // Printing to Driverstation lines, 2-6 are available only

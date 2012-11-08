@@ -14,7 +14,6 @@ public class CRecord {
     private CButton btRecord = new CButton(false);
     private CButton btReplay = new CButton(false);
     private CButton btClear = new CButton(false);	//
-    private CButton btAllowEdit = new CButton(false);
     private CPrintDriver printToDriverSt = new CPrintDriver();
     private String sPrintWhat = "";
     private String sType = "";
@@ -43,7 +42,6 @@ public class CRecord {
         btRecord.run(joy.getRawButton(Var.btRecord));
         btReplay.run(joy.getRawButton(Var.btReplay));
         btClear.run(joy.getRawButton(Var.btClearList));
-        btAllowEdit.run(joy.getRawButton(Var.btAllowEdit));
 
         if(btRecord.getSwitch() || btReplay.getSwitch() || btClear.getSwitch())
         {
@@ -68,13 +66,16 @@ public class CRecord {
     
     private void reset() // Resets timer and boolean so that you can record or replay again
     {
+        if(bRecStarted)
+            fileWriter.writeDouble(Var.dCompareEnd);
+        
         Var.bDrive = true;
         bRepStarted = false;
         bRecStarted = false;
         tmReplay.reset(true);
         tmRecord.reset(true);
-		bDoneReplay = false;
-		fileReader = null;
+        bDoneReplay = false;
+        fileReader = null;
     }
     
     private void replay()
@@ -84,34 +85,29 @@ public class CRecord {
         if(!bRepStarted)
         {
             tmReplay.start();
-            //fileWriter.close();
             fileReader = new CFileReader(Var.sOutput);
             joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
             bRepStarted = true;
         }
 
-		if(!bDoneReplay)
-		{
-			if(tmReplay.get() <= joyAuto.m_dReplayLength)
-			{
-				sPrintWhat = "Replaying";
-				driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
-				retrieve.set(joyAuto.getRetrieve());
-				releaser.set(joyAuto.getRelease());
+        if(!bDoneReplay)
+        {
+            sPrintWhat = "Replaying";
+            driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
+            retrieve.set(joyAuto.getRetrieve());
+            releaser.set(joyAuto.getRelease());
 
-				if(tmReplay.get() >= joyAuto.getTimer())
-				{
-					double x = fileReader.readDouble();
-					if( x == -1) ;// done
-					else
-						joyAuto.add(x, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
-				}
-					joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
-			}
-			
-			else
-				bDoneReplay = true;
-		}
+            if(tmReplay.get() >= joyAuto.getTimer())
+            {
+                double x = fileReader.readDouble();
+
+                if(x == Var.dCompareEnd)    // done
+                    bDoneReplay = true;
+
+                else
+                    joyAuto.add(x, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
+            }
+        }
 		
         else
         {
@@ -124,27 +120,12 @@ public class CRecord {
     {
         if(!bRecStarted)
         {
-			if(fileWriter.isClosed())
-                fileWriter.open();
-			
             tmRecord.start();
             fileWriter.reset();
             bRecStarted = true;
-            
-            
         }
         
-        if(tmRecord.get() <= Var.dRcrdLimit)	// TODO: Set this as Var variable or something, not magic number
-        {
-            sPrintWhat = "Recording";
-            joyAuto.m_dReplayLength = tmRecord.get();
-            fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus(), releaser.getReleaseStatus());
-	}
-
-        else
-        {
-            sPrintWhat = "Time Limit Reached";
-            Var.bDrive = false;                
-        }
+        sPrintWhat = "Recording";
+        fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus(), releaser.getReleaseStatus());
     }
 }

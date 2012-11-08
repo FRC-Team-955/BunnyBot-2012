@@ -9,7 +9,6 @@ class CJoyEmulator{
     private double m_dMtRight = 0;
     private boolean m_bRtrvStat = false;
     private boolean m_bReleaseStat = false;
-    double m_dReplayLength = 0;
     
     public  void add(double dTimer, double dMtLeft, double dMtRight, boolean bRtrvStat, boolean bReleaseStat)
     {
