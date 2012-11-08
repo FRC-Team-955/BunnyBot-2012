@@ -36,7 +36,7 @@ public class CFileWriter {
         }
         catch (IOException e) 
         {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
     
@@ -78,7 +78,7 @@ public class CFileWriter {
         
         catch (IOException e) 
         {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
     
@@ -92,7 +92,7 @@ public class CFileWriter {
         
         catch (IOException e) 
         {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
     
@@ -106,7 +106,7 @@ public class CFileWriter {
         
         catch (IOException e) 
         {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
     
@@ -120,24 +120,24 @@ public class CFileWriter {
         
         catch (IOException e) 
         {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
        
-    public void close()
-    {
-        try
-        {
-            writer.close();
-            fc.close();
-            bIsClosed = true;
-        }
-        
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    public void close()
+//    {
+//        try
+//        {
+//            writer.close();
+//            fc.close();
+//            bIsClosed = true;
+//        }
+//        
+//        catch(IOException e)
+//        {
+//            e.getMessage();
+//        }
+//    }
     
     public void open()
     {
@@ -150,7 +150,7 @@ public class CFileWriter {
         }
         catch (IOException e) 
         {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
     

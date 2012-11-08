@@ -22,7 +22,7 @@ public class CRecord {
     private CTimer tmReplay = new CTimer();
     private boolean bRepStarted = false;
     private boolean bRecStarted = false;
-    private boolean bCanEditAuto = false;
+    private boolean bDoneReplay = false;
     private CJoyEmulator joyAuto = new CJoyEmulator();
     private Joystick joy;
     private CDrive driver;
@@ -73,6 +73,8 @@ public class CRecord {
         bRecStarted = false;
         tmReplay.reset(true);
         tmRecord.reset(true);
+		bDoneReplay = false;
+		fileReader = null;
     }
     
     private void replay()
@@ -82,26 +84,38 @@ public class CRecord {
         if(!bRepStarted)
         {
             tmReplay.start();
-            fileWriter.close();
+            //fileWriter.close();
             fileReader = new CFileReader(Var.sOutput);
             joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
             bRepStarted = true;
         }
 
-        if(tmReplay.get() <= joyAuto.m_dReplayLength)
-        {
-            sPrintWhat = "Replaying";
-            driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
-            retrieve.set(joyAuto.getRetrieve());
-            releaser.set(joyAuto.getRelease());
+		if(!bDoneReplay)
+		{
+			if(tmReplay.get() <= joyAuto.m_dReplayLength)
+			{
+				sPrintWhat = "Replaying";
+				driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
+				retrieve.set(joyAuto.getRetrieve());
+				releaser.set(joyAuto.getRelease());
 
-            if(tmReplay.get() >= joyAuto.getTimer())
-                joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
-        }
+				if(tmReplay.get() >= joyAuto.getTimer())
+				{
+					double x = fileReader.readDouble();
+					if( x == -1) ;// done
+					else
+						joyAuto.add(x, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
+				}
+					joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
+			}
+			
+			else
+				bDoneReplay = true;
+		}
 		
         else
         {
-            sPrintWhat = "Nothing Recorded";
+            sPrintWhat = "Done Replaying";
             driver.setSpeed(0, 0);
         }
     }
@@ -110,18 +124,20 @@ public class CRecord {
     {
         if(!bRecStarted)
         {
+			if(fileWriter.isClosed())
+                fileWriter.open();
+			
             tmRecord.start();
             fileWriter.reset();
             bRecStarted = true;
             
-            if(fileWriter.isClosed())
-                fileWriter.open();
+            
         }
         
         if(tmRecord.get() <= Var.dRcrdLimit)	// TODO: Set this as Var variable or something, not magic number
         {
             sPrintWhat = "Recording";
-            joyAuto.m_dReplayLength =+ tmRecord.get();
+            joyAuto.m_dReplayLength = tmRecord.get();
             fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus(), releaser.getReleaseStatus());
 	}
 
