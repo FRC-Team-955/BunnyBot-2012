@@ -34,6 +34,7 @@ public class CFileWriter {
             fc.create();
             writer = new DataOutputStream(fc.openOutputStream(0));
         }
+        
         catch (IOException e) 
         {
             e.getMessage();

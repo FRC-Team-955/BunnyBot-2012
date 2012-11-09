@@ -101,7 +101,7 @@ public class CRecord {
             {
                 double x = fileReader.readDouble();
 
-                if(x == Var.dCompareEnd)    // done
+                if(x < Var.dCompareEnd+1)    // done
                     bDoneReplay = true;
 
                 else
