@@ -67,7 +67,13 @@ public class CRecord {
     private void reset() // Resets timer and boolean so that you can record or replay again
     {
         if(bRecStarted)
+        {
             fileWriter.writeDouble(Var.dCompareEnd);
+            fileWriter.close();
+        }
+        
+        if(bRepStarted)
+                fileReader.close();
         
         Var.bDrive = true;
         bRepStarted = false;
@@ -120,8 +126,13 @@ public class CRecord {
     {
         if(!bRecStarted)
         {
+            if(fileWriter.isClosed())
+            {
+                fileWriter.open();
+                fileWriter.reset();
+            }
+			
             tmRecord.start();
-            fileWriter.reset();
             bRecStarted = true;
         }
         

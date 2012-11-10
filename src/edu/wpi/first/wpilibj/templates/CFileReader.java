@@ -18,10 +18,10 @@ import com.sun.squawk.microedition.io.FileConnection;
  */
 public class CFileReader {
 
-    String sFile;
-    FileConnection fc;
-    DataInputStream reader;
-    
+    private String sFile;
+    private FileConnection fc;
+    private DataInputStream reader;
+    private boolean bIsClosed = false;
     
     public CFileReader(String sFileName)
     {
@@ -30,7 +30,7 @@ public class CFileReader {
         try
         {
             fc = (FileConnection)Connector.open(sFile, Connector.READ);
-            reader= new DataInputStream(fc.openInputStream());
+            reader = new DataInputStream(fc.openInputStream());
         }
         
         catch (IOException e) 
@@ -44,8 +44,7 @@ public class CFileReader {
     {
         try 
         {           
-            //System.out.println("The file says: " + reader.readInt());
-			return reader.readInt();
+            return reader.readInt();
         } 
         catch (Exception e)
         {
@@ -58,8 +57,7 @@ public class CFileReader {
     {
         try 
         {           
-            //System.out.println("The file says: " + reader.readInt());
-			return reader.readDouble();
+            return reader.readDouble();
         } 
         catch (Exception e)
         {
@@ -72,8 +70,7 @@ public class CFileReader {
     {
         try 
         {           
-            //System.out.println("The file says: " + reader.readInt());
-			return reader.readBoolean();
+            return reader.readBoolean();
         } 
         catch (Exception e)
         {
@@ -82,12 +79,28 @@ public class CFileReader {
         }
     }
     
+    public void open()
+    {
+        try
+        {
+            fc = (FileConnection)Connector.open(sFile, Connector.READ);
+            reader = new DataInputStream(fc.openInputStream());
+            bIsClosed = false;
+        }
+        
+        catch(IOException e)
+        {
+            e.getMessage();
+        }
+    }
+	
     public void close()
     {
         try
         {
             reader.close();
-			fc.close();
+            fc.close();
+            bIsClosed = true;
         }
         
         catch(IOException e)

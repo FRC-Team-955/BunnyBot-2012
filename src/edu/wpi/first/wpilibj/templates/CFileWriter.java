@@ -19,10 +19,10 @@ import com.sun.squawk.microedition.io.FileConnection;
 
 public class CFileWriter {
 
-    String sFile;
-    FileConnection fc;
-    DataOutputStream writer;
-    boolean bIsClosed = false;    
+    private String sFile;
+    private FileConnection fc;
+    private DataOutputStream writer;
+    private boolean bIsClosed = false;    
     
     public CFileWriter(String sFileName)
     {
@@ -125,20 +125,20 @@ public class CFileWriter {
         }
     }
        
-//    public void close()
-//    {
-//        try
-//        {
-//            writer.close();
-//            fc.close();
-//            bIsClosed = true;
-//        }
-//        
-//        catch(IOException e)
-//        {
-//            e.getMessage();
-//        }
-//    }
+    public void close()
+    {
+        try
+        {
+            writer.close();
+            fc.close();
+            bIsClosed = true;
+        }
+        
+        catch(IOException e)
+        {
+            e.getMessage();
+        }
+    }
     
     public void open()
     {
