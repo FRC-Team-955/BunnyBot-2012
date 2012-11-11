@@ -10,10 +10,10 @@ import java.io.Writer;
 public class CRecord {
     
     private CFileWriter fileWriter = new CFileWriter(Var.sOutput);		//	<----------------------
-    private CFileReader fileReader;
+    private CFileReader fileReader = new CFileReader(Var.sOutput);
     private CButton btRecord = new CButton(false);
     private CButton btReplay = new CButton(false);
-    private CButton btClear = new CButton(false);	//
+    //private CButton btClear = new CButton(false);	//
     private CPrintDriver printToDriverSt = new CPrintDriver();
     private String sPrintWhat = "";
     private String sType = "";
@@ -27,6 +27,11 @@ public class CRecord {
     private CDrive driver;
     private CRetrieve retrieve;
     private CRelease releaser;
+    private int iWriteOpen = 0;
+    private int iWriteClose = 0;
+    private int iReaderOpen = 0;
+    private int iReaderClose = 0;
+    
     
     public CRecord(Joystick joystick, CDrive drive, CRetrieve retrieval, CRelease release)
     {
@@ -34,6 +39,8 @@ public class CRecord {
         driver = drive;
         retrieve = retrieval;
         releaser = release;
+        fileReader.close();
+        fileWriter.close();
     }
     
     public void run()
@@ -41,9 +48,9 @@ public class CRecord {
         sType = "Auto: ";
         btRecord.run(joy.getRawButton(Var.btRecord));
         btReplay.run(joy.getRawButton(Var.btReplay));
-        btClear.run(joy.getRawButton(Var.btClearList));
+        //btClear.run(joy.getRawButton(Var.btClearList));
 
-        if(btRecord.getSwitch() || btReplay.getSwitch() || btClear.getSwitch())
+        if(btRecord.getSwitch() || btReplay.getSwitch()/* || btClear.getSwitch()*/)
         {
             if(btRecord.getSwitch())   
                 record();
@@ -51,8 +58,8 @@ public class CRecord {
             else if(btReplay.getSwitch())
                 replay();
 
-            else if(btClear.gotPressed())
-                fileWriter.reset();
+//            else if(btClear.gotPressed())
+//                fileWriter.reset();
         }
         
         else
@@ -62,6 +69,8 @@ public class CRecord {
         }
         
         printToDriverSt.print(Var.iRecordStatusLine, sType + sPrintWhat);
+        System.out.println("Writer open/close: " + iWriteOpen + ", " + iWriteClose);    // DEBUGGER
+        System.out.println("Reader open/close: " + iReaderOpen + ", " + iReaderClose);
     }
     
     private void reset() // Resets timer and boolean so that you can record or replay again
@@ -70,10 +79,14 @@ public class CRecord {
         {
             fileWriter.writeDouble(Var.dCompareEnd);
             fileWriter.close();
+            iWriteClose++;      // DEBUGGER
         }
         
         if(bRepStarted)
-                fileReader.close();
+        {
+            fileReader.close();
+            iReaderClose++;     // DEBUGGER
+        }
         
         Var.bDrive = true;
         bRepStarted = false;
@@ -81,7 +94,6 @@ public class CRecord {
         tmReplay.reset(true);
         tmRecord.reset(true);
         bDoneReplay = false;
-        fileReader = null;
     }
     
     private void replay()
@@ -90,8 +102,13 @@ public class CRecord {
         
         if(!bRepStarted)
         {
+            if(fileReader.isClosed())
+            {
+                fileReader.open();
+                iReaderOpen++;      // DEBUGGER
+            }
+            
             tmReplay.start();
-            fileReader = new CFileReader(Var.sOutput);
             joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
             bRepStarted = true;
         }
@@ -129,7 +146,7 @@ public class CRecord {
             if(fileWriter.isClosed())
             {
                 fileWriter.open();
-                fileWriter.reset();
+                iWriteOpen++;      //DEBUGGER
             }
 			
             tmRecord.start();

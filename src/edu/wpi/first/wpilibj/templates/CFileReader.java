@@ -49,7 +49,7 @@ public class CFileReader {
         catch (Exception e)
         {
             e.printStackTrace();
-			return -1;
+            return -1;
         }
     }
     
@@ -62,7 +62,7 @@ public class CFileReader {
         catch (Exception e)
         {
             e.printStackTrace();
-			return -1;
+            return -1;
         }
     }
     
@@ -75,7 +75,7 @@ public class CFileReader {
         catch (Exception e)
         {
             e.printStackTrace();
-			return false;
+            return false;
         }
     }
     
@@ -107,6 +107,11 @@ public class CFileReader {
         {
             e.printStackTrace();
         }
+    }
+    
+    public boolean isClosed()
+    {
+        return bIsClosed;
     }
 }
 

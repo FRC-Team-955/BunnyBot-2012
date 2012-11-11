@@ -58,31 +58,6 @@ public class CFileWriter {
         }
     }
     
-    public void reset()
-    {
-        try
-        {
-            fc.delete();
-        }
-        
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        
-        try
-        {
-            fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
-            fc.create();
-            writer = new DataOutputStream(fc.openOutputStream(0));
-        }
-        
-        catch (IOException e) 
-        {
-            e.getMessage();
-        }
-    }
-    
     public void writeInt(int iData)
     {
         try
@@ -160,4 +135,28 @@ public class CFileWriter {
         return bIsClosed;
     }
     
+//    public void reset()
+//    {
+//        try
+//        {
+//            fc.delete();
+//        }
+//        
+//        catch(IOException e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
+//        
+//        try
+//        {
+//            fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
+//            fc.create();
+//            writer = new DataOutputStream(fc.openOutputStream(0));
+//        }
+//        
+//        catch (IOException e) 
+//        {
+//            e.getMessage();
+//        }
+//    }
 }
