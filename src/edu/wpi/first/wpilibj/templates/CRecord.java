@@ -102,12 +102,8 @@ public class CRecord {
         
         if(!bRepStarted)
         {
-            if(fileReader.isClosed())
-            {
-                fileReader.open();
-                iReaderOpen++;      // DEBUGGER
-            }
-            
+            fileReader.open();
+            iReaderOpen++;      // DEBUGGER
             tmReplay.start();
             joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
             bRepStarted = true;
@@ -143,12 +139,8 @@ public class CRecord {
     {
         if(!bRecStarted)
         {
-            if(fileWriter.isClosed())
-            {
-                fileWriter.open();
-                iWriteOpen++;      //DEBUGGER
-            }
-			
+            fileWriter.open();
+            iWriteOpen++;      //DEBUGGER	
             tmRecord.start();
             bRecStarted = true;
         }
