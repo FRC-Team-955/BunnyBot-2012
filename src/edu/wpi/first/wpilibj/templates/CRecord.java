@@ -13,7 +13,6 @@ public class CRecord {
     private CFileReader fileReader = new CFileReader(Var.sOutput);
     private CButton btRecord = new CButton(false);
     private CButton btReplay = new CButton(false);
-    //private CButton btClear = new CButton(false);	//
     private CPrintDriver printToDriverSt = new CPrintDriver();
     private String sPrintWhat = "";
     private String sType = "";
@@ -48,18 +47,14 @@ public class CRecord {
         sType = "Auto: ";
         btRecord.run(joy.getRawButton(Var.btRecord));
         btReplay.run(joy.getRawButton(Var.btReplay));
-        //btClear.run(joy.getRawButton(Var.btClearList));
 
-        if(btRecord.getSwitch() || btReplay.getSwitch()/* || btClear.getSwitch()*/)
+        if(btRecord.getSwitch() || btReplay.getSwitch())
         {
             if(btRecord.getSwitch())   
                 record();
 
             else if(btReplay.getSwitch())
                 replay();
-
-//            else if(btClear.gotPressed())
-//                fileWriter.reset();
         }
         
         else
@@ -118,13 +113,13 @@ public class CRecord {
 
             if(tmReplay.get() >= joyAuto.getTimer())
             {
-                double x = fileReader.readDouble();
+                double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
 
-                if(x < Var.dCompareEnd+1)    // done
+                if(dTemp < Var.dCompareEnd+1)    // done
                     bDoneReplay = true;
 
                 else
-                    joyAuto.add(x, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
+                    joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
             }
         }
 		

@@ -31,7 +31,6 @@ public class Var {
     static final int btActRetrieve = 3;
     static final int btRecord = 9;
     static final int btReplay = 2;
-    static final int btClearList = 10;
     static final int btSwitchLayout = 6;
     static final int btReleaseBall = 1;
     static final int btAllowEdit = 4;
