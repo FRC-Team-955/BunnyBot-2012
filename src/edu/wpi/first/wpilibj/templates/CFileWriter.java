@@ -124,6 +124,7 @@ public class CFileWriter {
             writer = new DataOutputStream(fc.openOutputStream(0));
             bIsClosed = false;
         }
+        
         catch (IOException e) 
         {
             e.getMessage();

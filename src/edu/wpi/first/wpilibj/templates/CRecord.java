@@ -26,7 +26,7 @@ public class CRecord {
     private CDrive driver;
     private CRetrieve retrieve;
     private CRelease releaser;
-    private int iWriteOpen = 0;
+    private int iWriteOpen = 0;     // DEGUBBER PURPOSES 
     private int iWriteClose = 0;
     private int iReaderOpen = 0;
     private int iReaderClose = 0;
@@ -69,37 +69,37 @@ public class CRecord {
     }
     
     private void reset() // Resets timer and boolean so that you can record or replay again
-    {
+    {  
         if(bRecStarted)
         {
             fileWriter.writeDouble(Var.dCompareEnd);
             fileWriter.close();
             iWriteClose++;      // DEBUGGER
+            tmRecord.reset(true);
+            bRecStarted = false;
         }
-        
+
         if(bRepStarted)
         {
             fileReader.close();
             iReaderClose++;     // DEBUGGER
+            tmReplay.reset(true);
+            bDoneReplay = false;
+            bRepStarted = false;
         }
-        
+            
         Var.bDrive = true;
-        bRepStarted = false;
-        bRecStarted = false;
-        tmReplay.reset(true);
-        tmRecord.reset(true);
-        bDoneReplay = false;
     }
     
-    private void replay()
+    public void replay()
     {
         Var.bDrive = false;
         
         if(!bRepStarted)
         {
+            tmReplay.start();
             fileReader.open();
             iReaderOpen++;      // DEBUGGER
-            tmReplay.start();
             joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
             bRepStarted = true;
         }
@@ -134,9 +134,9 @@ public class CRecord {
     {
         if(!bRecStarted)
         {
-            fileWriter.open();
-            iWriteOpen++;      //DEBUGGER	
             tmRecord.start();
+            fileWriter.open();
+            iWriteOpen++;      //DEBUGGER
             bRecStarted = true;
         }
         
