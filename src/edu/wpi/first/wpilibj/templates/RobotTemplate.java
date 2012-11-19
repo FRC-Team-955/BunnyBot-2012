@@ -25,10 +25,13 @@ public class RobotTemplate extends IterativeRobot {
     CDrive drive = new CDrive(ps3Joy);
     CRetrieve retrieve = new CRetrieve(ps3Joy);
     CRelease releaser = new CRelease(ps3Joy);
+    CCompressor compressor = new CCompressor(ps3Joy);
     CRecord recorder = new CRecord(ps3Joy, drive, retrieve, releaser);
     
     public void robotInit() {
-		ps3Joy.setAxisChannel(Joystick.AxisType.kX, 2);
+        // Setting to get Tank Drive Working properly on the ps3 Controller
+        // should be 2, 4
+        ps3Joy.setAxisChannel(Joystick.AxisType.kX, 2);
         ps3Joy.setAxisChannel(Joystick.AxisType.kY, 4);
     }
 
@@ -36,7 +39,8 @@ public class RobotTemplate extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        //recorder.replay();
+        
+        recorder.replay();
     }
 
     /**
@@ -47,7 +51,7 @@ public class RobotTemplate extends IterativeRobot {
         drive.run();
         retrieve.run();
         releaser.run();
+        compressor.run();
         recorder.run();
     }
-    
 }

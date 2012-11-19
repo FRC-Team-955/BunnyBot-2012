@@ -37,7 +37,7 @@ public class CFileWriter {
         
         catch (IOException e) 
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     
@@ -63,12 +63,12 @@ public class CFileWriter {
         try
         {
             writer.writeInt(iData);
-			writer.flush(); 
+            writer.flush(); 
         } 
         
         catch (IOException e) 
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     
@@ -77,12 +77,12 @@ public class CFileWriter {
         try
         {
             writer.writeDouble(dData);
-			writer.flush();
+            writer.flush();
         } 
         
         catch (IOException e) 
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     
@@ -91,12 +91,12 @@ public class CFileWriter {
         try
         {
             writer.writeBoolean(bData);
-			writer.flush();
+            writer.flush();
         } 
         
         catch (IOException e) 
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
        
@@ -111,7 +111,7 @@ public class CFileWriter {
         
         catch(IOException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     
@@ -127,7 +127,7 @@ public class CFileWriter {
         
         catch (IOException e) 
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
     
@@ -135,29 +135,4 @@ public class CFileWriter {
     {
         return bIsClosed;
     }
-    
-//    public void reset()
-//    {
-//        try
-//        {
-//            fc.delete();
-//        }
-//        
-//        catch(IOException e)
-//        {
-//            System.out.println(e.getMessage());
-//        }
-//        
-//        try
-//        {
-//            fc = (FileConnection)Connector.open(sFile, Connector.WRITE);
-//            fc.create();
-//            writer = new DataOutputStream(fc.openOutputStream(0));
-//        }
-//        
-//        catch (IOException e) 
-//        {
-//            e.getMessage();
-//        }
-//    }
 }

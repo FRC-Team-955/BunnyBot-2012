@@ -20,17 +20,15 @@ public class Var {
     // PWM
     static final int chnVicDrvRight = 2;
     static final int chnVicDrvLeft = 1;
-//	static final int chnVicDrvRightTwo = 3;
-//    static final int chnVicDrvLeftTwo = 4;
-    static final int chnVicRetrieve = 5;
+    static final int chnVicRetrieve = 3;
 	
     // Solenoids
     // SOLENOID BUMPER CHANNEL 7 OR 8 DOES NOT WORK!!!!!!
     static final int chnSolReleaseUp = 1;
     static final int chnSolReleaseDown = 2;
 	
-	// Digital Stuff ?
-	static final int chnDigiCompressor = 1;
+    // Digital Stuff ?
+    static final int chnDigiCompressor = 1;
 
     // Joysticks and buttons
     static final int btActRetrieve = 3;
@@ -41,15 +39,11 @@ public class Var {
     static final int btTurnOnCompressor = 4;
     
     // Other
-    static final double dMaxRecordingTime = 14.5;
-    static final double dRcrdLimit = 14;
-    static final int chnJoyDrive = 3;
-    static final int iArrayRecrdSize = 12000;
     static boolean bAnotherIsPressed = false;
     static boolean bDrive = true;
-    static double dCompareEnd = -10.0;
-    static String sOutput = "file:///autoval.txt";
+    static double dEndSignal = -10.0;
+    static String sAutoOutput = "file:///autoval.txt";
     
     // Printing to Driverstation lines, 2-6 are available only
-    static final int iRecordStatusLine = 5;
+    static final int iRecordStatusLine = 6;
 }

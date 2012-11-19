@@ -8,7 +8,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.*;
 import javax.microedition.io.Connector;
-
 import com.sun.squawk.io.BufferedReader;
 import com.sun.squawk.microedition.io.FileConnection;
 
@@ -49,7 +48,7 @@ public class CFileReader {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            return -1;
+            return -10;
         }
     }
     
@@ -63,7 +62,7 @@ public class CFileReader {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            return -1;
+            return -10.0;
         }
     }
     
@@ -91,7 +90,7 @@ public class CFileReader {
         
         catch(IOException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 	
@@ -106,7 +105,7 @@ public class CFileReader {
         
         catch(IOException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
     
