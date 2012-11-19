@@ -1,2 +1,10 @@
-/build/
 /nbproject/private/
+suite
+suite/*
+j2meclasses
+j2meclasses/*
+build
+build/*
+/build/
+*.class
+*.jar
