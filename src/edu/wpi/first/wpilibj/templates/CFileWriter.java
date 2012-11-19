@@ -62,8 +62,8 @@ public class CFileWriter {
     {
         try
         {
-            writer.writeInt(iData); 
-            writer.flush();
+            writer.writeInt(iData);
+			writer.flush(); 
         } 
         
         catch (IOException e) 
@@ -77,7 +77,7 @@ public class CFileWriter {
         try
         {
             writer.writeDouble(dData);
-            writer.flush();
+			writer.flush();
         } 
         
         catch (IOException e) 
@@ -90,8 +90,8 @@ public class CFileWriter {
     {
         try
         {
-            writer.writeBoolean(bData); 
-            writer.flush();
+            writer.writeBoolean(bData);
+			writer.flush();
         } 
         
         catch (IOException e) 

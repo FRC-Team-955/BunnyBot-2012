@@ -18,14 +18,19 @@ package edu.wpi.first.wpilibj.templates;
 public class Var {
     
     // PWM
-    static final int chnVicDrvRight = 1;
-    static final int chnVicDrvLeft = 2;
-    static final int chnVicRetrieve = 3;
+    static final int chnVicDrvRight = 2;
+    static final int chnVicDrvLeft = 1;
+//	static final int chnVicDrvRightTwo = 3;
+//    static final int chnVicDrvLeftTwo = 4;
+    static final int chnVicRetrieve = 5;
 	
     // Solenoids
     // SOLENOID BUMPER CHANNEL 7 OR 8 DOES NOT WORK!!!!!!
     static final int chnSolReleaseUp = 1;
     static final int chnSolReleaseDown = 2;
+	
+	// Digital Stuff ?
+	static final int chnDigiCompressor = 1;
 
     // Joysticks and buttons
     static final int btActRetrieve = 3;
@@ -33,7 +38,7 @@ public class Var {
     static final int btReplay = 2;
     static final int btSwitchLayout = 6;
     static final int btReleaseBall = 1;
-    static final int btAllowEdit = 4;
+    static final int btTurnOnCompressor = 4;
     
     // Other
     static final double dMaxRecordingTime = 14.5;

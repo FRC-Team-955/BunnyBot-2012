@@ -28,14 +28,15 @@ public class RobotTemplate extends IterativeRobot {
     CRecord recorder = new CRecord(ps3Joy, drive, retrieve, releaser);
     
     public void robotInit() {
-        //ps3Joy.setAxisChannel(Joystick.AxisType.kX, Var.chnJoyDrive);
+		ps3Joy.setAxisChannel(Joystick.AxisType.kX, 2);
+        ps3Joy.setAxisChannel(Joystick.AxisType.kY, 4);
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        recorder.replay();
+        //recorder.replay();
     }
 
     /**

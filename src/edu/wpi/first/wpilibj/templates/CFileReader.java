@@ -35,7 +35,7 @@ public class CFileReader {
         
         catch (IOException e) 
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class CFileReader {
         } 
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return -1;
         }
     }
@@ -59,9 +59,10 @@ public class CFileReader {
         {           
             return reader.readDouble();
         } 
+		
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return -1;
         }
     }
@@ -74,7 +75,7 @@ public class CFileReader {
         } 
         catch (Exception e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }

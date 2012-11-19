@@ -9,8 +9,8 @@ import java.io.Writer;
  */
 public class CRecord {
     
-    private CFileWriter fileWriter = new CFileWriter(Var.sOutput);		//	<----------------------
-    private CFileReader fileReader = new CFileReader(Var.sOutput);
+    private CFileWriter fileWriter;		//	<----------------------
+    private CFileReader fileReader;
     private CButton btRecord = new CButton(false);
     private CButton btReplay = new CButton(false);
     private CPrintDriver printToDriverSt = new CPrintDriver();
@@ -38,8 +38,6 @@ public class CRecord {
         driver = drive;
         retrieve = retrieval;
         releaser = release;
-        fileReader.close();
-        fileWriter.close();
     }
     
     public void run()
@@ -64,8 +62,8 @@ public class CRecord {
         }
         
         printToDriverSt.print(Var.iRecordStatusLine, sType + sPrintWhat);
-        System.out.println("Writer open/close: " + iWriteOpen + ", " + iWriteClose);    // DEBUGGER
-        System.out.println("Reader open/close: " + iReaderOpen + ", " + iReaderClose);
+//        System.out.print("Writer open/close: " + iWriteOpen + ", " + iWriteClose);    // DEBUGGER
+//        System.out.println(" Reader open/close: " + iReaderOpen + ", " + iReaderClose);
     }
     
     private void reset() // Resets timer and boolean so that you can record or replay again
@@ -98,9 +96,17 @@ public class CRecord {
         if(!bRepStarted)
         {
             tmReplay.start();
-            fileReader.open();
-            iReaderOpen++;      // DEBUGGER
-            joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
+			fileReader = new CFileReader(Var.sOutput);
+			double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
+
+			if(dTemp < Var.dCompareEnd+1)    // done
+				bDoneReplay = true;
+
+			else
+				joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
+            
+			System.out.println( "Joy Data: " + joyAuto.getTimer() + " " + joyAuto.getMtLeft() + " " + joyAuto.getMtRight() + " " + joyAuto.getRetrieve() + " " + joyAuto.getRelease());
+            // DEBUGGER
             bRepStarted = true;
         }
 
@@ -111,10 +117,13 @@ public class CRecord {
             retrieve.set(joyAuto.getRetrieve());
             releaser.set(joyAuto.getRelease());
 
-            if(tmReplay.get() >= joyAuto.getTimer())
+			System.out.println("Joy Data: " + joyAuto.getTimer() + " " + joyAuto.getMtLeft() + " " + joyAuto.getMtRight() + " " + joyAuto.getRetrieve() + " " + joyAuto.getRelease());
+            // DEBUGGER
+			if(tmReplay.get() >= joyAuto.getTimer())
             {
                 double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
 
+				System.out.println("Dtemp = " + dTemp);
                 if(dTemp < Var.dCompareEnd+1)    // done
                     bDoneReplay = true;
 
@@ -135,7 +144,7 @@ public class CRecord {
         if(!bRecStarted)
         {
             tmRecord.start();
-            fileWriter.open();
+			fileWriter = new CFileWriter(Var.sOutput);
             iWriteOpen++;      //DEBUGGER
             bRecStarted = true;
         }
