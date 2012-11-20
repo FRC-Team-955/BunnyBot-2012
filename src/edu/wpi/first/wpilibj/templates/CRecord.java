@@ -1,52 +1,89 @@
 package edu.wpi.first.wpilibj.templates;
 import edu.wpi.first.wpilibj.Joystick;
-import java.io.Writer;
 
 // @author Fauzi
 /*
- * This class will hopefully be responsible for recording the robots 
- * movements and "replaying" them.
+ * This class isresponsible for recording the robots 
+ * movements and "replaying" them. Theoretically, we can record
+ * anything the robot does and "replay" them.
  */
 
 public class CRecord {
     
-    private CFileWriter fileWriter;		//	<----------------------
+    // CONSTANTS
+    private final String sRegOutput = "file:///regVal.txt";
+    private final double dEndSignal = -10.0;
+    
+    private CFileWriter fileWriter;		
     private CFileReader fileReader;
-    private CButton btRecord = new CButton(false);
-    private CButton btReplay = new CButton(false);
-    private CPrintDriver printToDriverSt = new CPrintDriver();
-    private String sPrintWhat = "";
-    private String sType = "";
+    private CSpecialButton btRecord = new CSpecialButton();
+    private CSpecialButton btReplay = new CSpecialButton();
+    private CSpecialButton btChangeMode = new CSpecialButton();
+    private CSpecialButton btAllowEdit = new CSpecialButton();
+    private CJoyEmulator joyAuto = new CJoyEmulator();
+    private Joystick joy;
+    private CDrive driver;
+    private CRetrieve retrieve;
     private CTimer tmRecord = new CTimer();
     private CTimer tmReplay = new CTimer();
     private boolean bRepStarted = false;
     private boolean bRecStarted = false;
     private boolean bDoneReplay = false;
-    private CJoyEmulator joyAuto = new CJoyEmulator();
-    private Joystick joy;
-    private CDrive driver;
-    private CRetrieve retrieve;
-    private CRelease releaser;    
+    private boolean bAutoMode = false;
+    private boolean bAnotherIsPressed = false; 
+    private boolean bAutoEditMode = false;
+    private String sPrintWhat = "Doing Nothing";
+    private String sType = "Reg: ";
+    private String sEditInfo = "Cant Edit Auto";
+    private String sFileType = sRegOutput;
     
-    public CRecord(Joystick joystick, CDrive drive, CRetrieve retrieval, CRelease release)
+    public CRecord(Joystick joystick, CDrive drive, CRetrieve retrieval)
     {
         joy = joystick;
         driver = drive;
         retrieve = retrieval;
-        releaser = release;
     }
     
     public void run()
     {
-        sType = "Auto: ";
-        btRecord.run(joy.getRawButton(Var.btRecord));
-        btReplay.run(joy.getRawButton(Var.btReplay));
+        bAnotherIsPressed = btRecord.run(joy.getRawButton(Var.btRecord), bAnotherIsPressed);
+        bAnotherIsPressed = btReplay.run(joy.getRawButton(Var.btReplay), bAnotherIsPressed);
+        btChangeMode.run(joy.getRawButton(Var.btChangeMode), bAnotherIsPressed);
+        btAllowEdit.run(joy.getRawButton(Var.btAllowEdit), bAnotherIsPressed);
+        
+        if(btAllowEdit.gotPressed())
+        {
+            bAutoEditMode = !bAutoEditMode;
+            
+            if(bAutoEditMode)
+                sEditInfo = "WARNING EDIT MODE";
+            
+            else
+                sEditInfo = "Can NOT edit";
+        }
+        
+        if(btChangeMode.gotPressed())
+        {
+            bAutoMode = !bAutoMode;
+            
+            if(bAutoMode)
+            {
+                sType = "Auto: ";
+                sFileType = Var.sAutoOutput;
+            }
+            
+            else
+            {
+                sType = "Reg: ";
+                sFileType = sRegOutput;
+            }
+        }
 
         if(btRecord.getSwitch())   
-            record();
+            record(sFileType);
 
         else if(btReplay.getSwitch())
-            replay();
+            replay(sFileType);
         
         else
         {
@@ -54,7 +91,8 @@ public class CRecord {
             reset();
         }
         
-        printToDriverSt.print(Var.iRecordStatusLine, sType + sPrintWhat);
+        Var.drvStationPrinter.print(Var.iRecordStatusLine, sType + sPrintWhat);
+        Var.drvStationPrinter.print(Var.iEditAutoMode, sEditInfo);
     }
     
     private void reset() // Resets timer and booleans so that you can record or replay again
@@ -63,7 +101,7 @@ public class CRecord {
         
         if(bRecStarted)
         {
-            fileWriter.writeDouble(Var.dEndSignal);
+            fileWriter.writeDouble(dEndSignal);
             fileWriter.close();
             tmRecord.reset(true);
             bRecStarted = false;
@@ -80,55 +118,61 @@ public class CRecord {
         }
     }
     
-    public void replay()
+    public void replay(String sFileName)
     {
         Var.bDrive = false;
                 
-        if(!bRepStarted)
-        {
-            sPrintWhat = "Replaying";
-            fileReader = new CFileReader(Var.sAutoOutput);
-            tmReplay.start();
-            bRepStarted = true;
-        }
-
-        if(!bDoneReplay)
-        {
-            driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
-            retrieve.set(joyAuto.getRetrieve());
-            releaser.set(joyAuto.getRelease());
-
-            if(tmReplay.get() >= joyAuto.getTimer())
-            {
-                double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
-
-                if(dTemp < Var.dEndSignal+1) // If true, means we're done replaying
-                    bDoneReplay = true;
-
-                else
-                    joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean(), fileReader.readBoolean());
-            }
-        }
-		
+        if(bAutoEditMode == false && sFileName == Var.sAutoOutput)
+            sPrintWhat = "Can't Edit Autofile";
+        
         else
         {
-            sPrintWhat = "Done Replaying";
-            driver.setSpeed(0, 0);
-            fileReader.close();
-            tmReplay.stop();
+            if(!bRepStarted)
+            {
+                sPrintWhat = "Replaying";
+                fileReader = new CFileReader(sFileName);
+                joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
+                tmReplay.start();
+                bRepStarted = true;
+            }
+
+            if(!bDoneReplay)
+            {
+                driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
+                retrieve.set(joyAuto.getRetrieve());
+
+                if(tmReplay.get() >= joyAuto.getTimer())
+                {
+                    double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
+
+                    if(dTemp < dEndSignal+1) // If true, means we're done replaying
+                        bDoneReplay = true;
+
+                    else
+                        joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
+                }
+            }
+
+            else
+            {
+                sPrintWhat = "Done Replaying";
+                driver.setSpeed(0, 0);
+                fileReader.close();
+                tmReplay.stop();
+            }
         }
     }
     
-    private void record()
+    private void record(String sFileName)
     {
         if(!bRecStarted)
         {
             sPrintWhat = "Recording";
-            fileWriter = new CFileWriter(Var.sAutoOutput);
+            fileWriter = new CFileWriter(sFileName);
             tmRecord.start();
             bRecStarted = true;
         }
         
-        fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus(), releaser.getReleaseStatus());
+        fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus());
     }
 }

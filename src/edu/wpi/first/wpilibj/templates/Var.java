@@ -18,8 +18,8 @@ package edu.wpi.first.wpilibj.templates;
 public class Var {
     
     // PWM
-    static final int chnVicDrvRight = 2;
     static final int chnVicDrvLeft = 1;
+    static final int chnVicDrvRight = 2;
     static final int chnVicRetrieve = 3;
 	
     // Solenoids
@@ -31,19 +31,22 @@ public class Var {
     static final int chnDigiCompressor = 1;
 
     // Joysticks and buttons
-    static final int btActRetrieve = 3;
-    static final int btRecord = 9;
-    static final int btReplay = 2;
-    static final int btSwitchLayout = 6;
     static final int btReleaseBall = 1;
+    static final int btReplay = 2;
+    static final int btActRetrieve = 3;
     static final int btTurnOnCompressor = 4;
+    static final int btChangeMode = 7;
+    static final int btChangeDrive = 8;
+    static final int btRecord = 9;
+    static final int btAllowEdit = 10;
     
     // Other
-    static boolean bAnotherIsPressed = false;
+    static CPrintDriver drvStationPrinter = new CPrintDriver();
     static boolean bDrive = true;
-    static double dEndSignal = -10.0;
-    static String sAutoOutput = "file:///autoval.txt";
+    static final String sAutoOutput = "file:///autoval.txt";
     
     // Printing to Driverstation lines, 2-6 are available only
+    static final int iDriveStatusLine = 2;
+    static final int iEditAutoMode = 5;
     static final int iRecordStatusLine = 6;
 }

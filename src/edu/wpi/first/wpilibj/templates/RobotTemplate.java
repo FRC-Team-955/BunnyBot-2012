@@ -16,23 +16,20 @@ import edu.wpi.first.wpilibj.*;
  * directory.
  */
 public class RobotTemplate extends IterativeRobot {
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
 
     Joystick ps3Joy = new Joystick(1);
     CDrive drive = new CDrive(ps3Joy);
     CRetrieve retrieve = new CRetrieve(ps3Joy);
     CRelease releaser = new CRelease(ps3Joy);
     CCompressor compressor = new CCompressor(ps3Joy);
-    CRecord recorder = new CRecord(ps3Joy, drive, retrieve, releaser);
+    CRecord recorder = new CRecord(ps3Joy, drive, retrieve);
     
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
     public void robotInit() {
-        // Setting to get Tank Drive Working properly on the ps3 Controller
-        // should be 2, 4
-        ps3Joy.setAxisChannel(Joystick.AxisType.kX, 2);
-        ps3Joy.setAxisChannel(Joystick.AxisType.kY, 4);
+ 
     }
 
     /**
@@ -40,7 +37,7 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         
-        recorder.replay();
+        recorder.replay(Var.sAutoOutput);
     }
 
     /**

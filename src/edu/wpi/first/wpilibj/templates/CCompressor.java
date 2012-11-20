@@ -11,23 +11,23 @@ import edu.wpi.first.wpilibj.*;
  */
 public class CCompressor {
 	
-	DigitalOutput digiCompressor = new DigitalOutput(Var.chnDigiCompressor);
-	CButton btCompressor = new CButton(true);
-	Joystick joy;
-	
-	public CCompressor(Joystick joystick)
-	{
-		joy = joystick;
-	}
-	
-	public void run()
-	{
-		btCompressor.run(joy.getRawButton(Var.btTurnOnCompressor));
-		
-		if(btCompressor.getSwitch())
-			digiCompressor.set(true);
-		
-		else
-			digiCompressor.set(false);
-	}
+    DigitalOutput digiCompressor = new DigitalOutput(Var.chnDigiCompressor);
+    CButton btCompressor = new CButton();
+    Joystick joy;
+
+    public CCompressor(Joystick joystick)
+    {
+        joy = joystick;
+    }
+
+    public void run()
+    {
+        btCompressor.run(joy.getRawButton(Var.btTurnOnCompressor));
+
+        if(btCompressor.getSwitch())
+            digiCompressor.set(true);
+
+        else
+            digiCompressor.set(false);
+    }
 }

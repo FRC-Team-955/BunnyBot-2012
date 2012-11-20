@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.*;
 public class CRelease {
     
     private CSolenoid m_solRelease = new CSolenoid(Var.chnSolReleaseDown, Var.chnSolReleaseUp, true);
-    private CButton m_btReleaseBall = new CButton(true);
+    private CButton m_btReleaseBall = new CButton();
     private boolean m_bRelease = false;
     private Joystick m_Joy;
     

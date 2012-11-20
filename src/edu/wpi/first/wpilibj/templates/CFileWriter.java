@@ -41,7 +41,7 @@ public class CFileWriter {
         }
     }
     
-    public void writeData(double dTime, double dMtLeft, double dMtRight, boolean bRtrveStat, boolean bReleaseStat)
+    public void writeData(double dTime, double dMtLeft, double dMtRight, boolean bRtrveStat)
     {
         try
         {
@@ -49,7 +49,6 @@ public class CFileWriter {
             writer.writeDouble(dMtLeft);
             writer.writeDouble(dMtRight);
             writer.writeBoolean(bRtrveStat);
-            writer.writeBoolean(bReleaseStat);
         }
         
         catch(IOException e)

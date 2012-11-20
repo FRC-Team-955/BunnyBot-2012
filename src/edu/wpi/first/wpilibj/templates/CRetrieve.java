@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.*;
 public class CRetrieve {
     
     private Victor m_mtRetrieve = new Victor(Var.chnVicRetrieve);
-    private CButton m_btRetrieve = new CButton(true);
+    private CButton m_btRetrieve = new CButton();
     private boolean m_bRetrieveStatus = false;
     private Joystick m_joy;
     

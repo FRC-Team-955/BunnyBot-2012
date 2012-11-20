@@ -7,11 +7,16 @@ import edu.wpi.first.wpilibj.*;
 
 public class CDrive {
     
+    // CONSTANTS 
+    private double dMinSpeed = 0.05;
+    
     private Victor mtRight = new Victor(Var.chnVicDrvRight);
     private Victor mtLeft = new Victor(Var.chnVicDrvLeft);
     private double mtRightSpeed = 0;
     private double mtLeftSpeed = 0;
     private Joystick joy;
+    private CButton btChangeDrive = new CButton();
+    private String sPrintWhat = "";
     
     public CDrive(Joystick joystick)
     {
@@ -20,19 +25,50 @@ public class CDrive {
     
     public void run()
     {      
-        mtLeftSpeed = -joy.getX() * Math.abs(joy.getX());
-        mtRightSpeed = joy.getY() * Math.abs(joy.getY());
+        btChangeDrive.run(joy.getRawButton(Var.btChangeDrive));
         
         if(Var.bDrive)
         {
-            if(Math.abs(mtRightSpeed) + Math.abs(mtLeftSpeed) > 0.05)
+            if(btChangeDrive.getSwitch())
+            {
+                // Setting to get Tank Drive Working properly on the ps3 Controller
+                // should be 2, 4
+                joy.setAxisChannel(Joystick.AxisType.kX, 2);
+                joy.setAxisChannel(Joystick.AxisType.kY, 4);
+                
+                sPrintWhat = "Tank Drive";
+                mtLeftSpeed = -joy.getX() * Math.abs(joy.getX());
+                mtRightSpeed = joy.getY() * Math.abs(joy.getY());
+            }
+
+            else
+            {	
+                // Setting to get regular drive Working properly on the ps3 Controller
+                // should be 3, v2
+                joy.setAxisChannel(Joystick.AxisType.kX, 3);
+                joy.setAxisChannel(Joystick.AxisType.kY, 2);
+                
+                sPrintWhat = "Regular Drive";
+                double y = joy.getY() * Math.abs(joy.getY());
+                double x = joy.getX() * Math.abs(joy.getX());
+
+                mtRightSpeed = (-y+x);
+                mtLeftSpeed = (y+x);
+            }
+            
+            if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
                 this.setSpeed(mtLeftSpeed, mtRightSpeed);
 
             else
-                this.setSpeed(0, 0);
+                this.setSpeed(0, 0);   
         }
-    } 
-		
+        
+        else
+            sPrintWhat = "Disabled";
+        
+        Var.drvStationPrinter.print(Var.iDriveStatusLine, sPrintWhat);
+    }
+    
     public void setSpeed(double setMtLeft, double setMtRight)
     {
         mtLeft.set(setMtLeft);
@@ -48,28 +84,4 @@ public class CDrive {
     {
         return mtLeftSpeed;
     }
-    
-// For regular Standard Drive, might be called "Arcade" ...
-//    public void run()
-//    {		
-//        double y = joy.getY() * Math.abs(joy.getY());
-//        double x = joy.getX() * Math.abs(joy.getX());
-//
-//		mtRightSpeed = (-y+x);
-//		mtLeftSpeed = (y+x);
-//        if(Var.bDrive)
-//        {
-//            if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > 0.1)
-//            {
-//                mtRight.set(mtRightSpeed);
-//                mtLeft.set(mtLeftSpeed);
-//            }
-//
-//            else
-//            {
-//                mtRight.set(0);
-//                mtLeft.set(0);
-//            }
-//        }
-//    }
 }
