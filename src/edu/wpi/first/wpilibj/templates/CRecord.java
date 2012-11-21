@@ -34,7 +34,7 @@ public class CRecord {
     private boolean bAutoEditMode = false;
     private String sPrintWhat = "Doing Nothing";
     private String sType = "Reg: ";
-    private String sEditInfo = "Cant Edit Auto";
+    private String sEditInfo = "WARNING EDIT MODE";
     private String sFileType = sRegOutput;
     
     public CRecord(Joystick joystick, CDrive drive, CRetrieve retrieval)
@@ -91,8 +91,8 @@ public class CRecord {
             reset();
         }
         
-        Var.drvStationPrinter.print(Var.iRecordStatusLine, sType + sPrintWhat);
         Var.drvStationPrinter.print(Var.iEditAutoMode, sEditInfo);
+        Var.drvStationPrinter.print(Var.iRecordStatusLine, sType + sPrintWhat);
     }
     
     private void reset() // Resets timer and booleans so that you can record or replay again
@@ -121,58 +121,58 @@ public class CRecord {
     public void replay(String sFileName)
     {
         Var.bDrive = false;
-                
-        if(bAutoEditMode == false && sFileName == Var.sAutoOutput)
-            sPrintWhat = "Can't Edit Autofile";
-        
+         
+        if(!bRepStarted)
+        {
+            sPrintWhat = "Replaying";
+            fileReader = new CFileReader(sFileName);
+            joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
+            tmReplay.start();
+            bRepStarted = true;
+        }
+
+        if(!bDoneReplay)
+        {
+            driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
+            retrieve.set(joyAuto.getRetrieve());
+
+            if(tmReplay.get() >= joyAuto.getTimer())
+            {
+                double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
+
+                if(dTemp < dEndSignal+1) // If true, means we're done replaying
+                    bDoneReplay = true;
+
+                else
+                    joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
+            }
+        }
+
         else
         {
-            if(!bRepStarted)
-            {
-                sPrintWhat = "Replaying";
-                fileReader = new CFileReader(sFileName);
-                joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
-                tmReplay.start();
-                bRepStarted = true;
-            }
-
-            if(!bDoneReplay)
-            {
-                driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
-                retrieve.set(joyAuto.getRetrieve());
-
-                if(tmReplay.get() >= joyAuto.getTimer())
-                {
-                    double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
-
-                    if(dTemp < dEndSignal+1) // If true, means we're done replaying
-                        bDoneReplay = true;
-
-                    else
-                        joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
-                }
-            }
-
-            else
-            {
-                sPrintWhat = "Done Replaying";
-                driver.setSpeed(0, 0);
-                fileReader.close();
-                tmReplay.stop();
-            }
+            sPrintWhat = "Done Replaying";
+            driver.setSpeed(0, 0);
+            fileReader.close();
+            tmReplay.stop();
         }
     }
     
     private void record(String sFileName)
     {
-        if(!bRecStarted)
-        {
-            sPrintWhat = "Recording";
-            fileWriter = new CFileWriter(sFileName);
-            tmRecord.start();
-            bRecStarted = true;
-        }
+        if(bAutoEditMode == false && sFileName == Var.sAutoOutput)
+            sPrintWhat = "Can't Edit Autofile";
         
-        fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus());
+        else
+        {
+            if(!bRecStarted)
+            {
+                sPrintWhat = "Recording";
+                fileWriter = new CFileWriter(sFileName);
+                tmRecord.start();
+                bRecStarted = true;
+            }
+
+            fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus());
+        }
     }
 }

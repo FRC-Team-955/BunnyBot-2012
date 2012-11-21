@@ -44,7 +44,7 @@ public class CDrive {
             else
             {	
                 // Setting to get regular drive Working properly on the ps3 Controller
-                // should be 3, v2
+                // should be 3, 2
                 joy.setAxisChannel(Joystick.AxisType.kX, 3);
                 joy.setAxisChannel(Joystick.AxisType.kY, 2);
                 
