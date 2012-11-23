@@ -34,7 +34,7 @@ public class CRecord {
     private boolean bAutoEditMode = false;
     private String sPrintWhat = "Doing Nothing";
     private String sType = "Reg: ";
-    private String sEditInfo = "WARNING EDIT MODE";
+    private String sEditInfo = "Can NOT edit";
     private String sFileType = sRegOutput;
     
     public CRecord(Joystick joystick, CDrive drive, CRetrieve retrieval)
