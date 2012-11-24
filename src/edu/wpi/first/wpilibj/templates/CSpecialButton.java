@@ -43,4 +43,21 @@ public class CSpecialButton {
     {
         return bSwitch;
     }
+	
+	public boolean set(boolean bSet)
+	{
+		if(bAnotherIsPressed && bSwitch)
+		{   
+			bAnotherIsPressed = false;
+			bSwitch = false;
+		}
+
+		else if(!bAnotherIsPressed)
+		{
+			bAnotherIsPressed = true;
+			bSwitch = true;
+		}
+		
+		return bAnotherIsPressed;
+	}
 }

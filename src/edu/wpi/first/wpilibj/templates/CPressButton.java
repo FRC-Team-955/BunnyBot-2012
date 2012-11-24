@@ -23,19 +23,7 @@ public class CPressButton {
     
     public boolean gotPressed()
     {
-		if(bCurState == true && bLastState == false)
-		{
-			if(bAnotherIsPressed == false)
-				return true;
-			
-			else
-				return false;
-		}
-		
-		else
-			return false;
-			
-        //return bCurState == true && bLastState == false && bAnotherIsPressed == false;
+        return bCurState == true && bLastState == false && bAnotherIsPressed == false;
     }
 	
     public boolean isHeld()

@@ -26,9 +26,9 @@ public class CRecord {
     private CRetrieve retrieve;
     private CTimer tmRecord = new CTimer();
     private CTimer tmReplay = new CTimer();
-    private boolean bRepStarted = false;
+    boolean bRepStarted = false;
+	boolean bDoneReplay = false;
     private boolean bRecStarted = false;
-    private boolean bDoneReplay = false;
     private boolean bAutoMode = false;
     private boolean bAnotherIsPressed = false; 
     private boolean bAutoEditMode = false;
@@ -54,8 +54,7 @@ public class CRecord {
         if(btAllowEdit.gotPressed())
         {
             bAutoEditMode = !bAutoEditMode;
-			System.out.println("Allow Edit got Pressed" + bAutoEditMode);
-            
+			
             if(bAutoEditMode)
                 sEditInfo = "WARNING EDIT MODE";
             
@@ -176,4 +175,12 @@ public class CRecord {
             fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus());
         }
     }
+	
+	public void EndReplay()
+	{
+		if(btReplay.getSwitch())
+			btReplay.set(false);
+		
+		reset();
+	}
 }
