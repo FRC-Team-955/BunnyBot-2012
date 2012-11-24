@@ -29,6 +29,8 @@ public class Var {
 	
     // Digital Stuff ?
     static final int chnDigiCompressor = 1;
+	static final int chnDigiSensor = 2;
+	static final int chnRelay = 3;
 
     // Joysticks and buttons
     static final int btReleaseBall = 1;
