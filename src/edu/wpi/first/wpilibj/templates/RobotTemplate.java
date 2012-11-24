@@ -23,6 +23,9 @@ public class RobotTemplate extends IterativeRobot {
     CRelease releaser = new CRelease(ps3Joy);
     CCompressor compressor = new CCompressor(ps3Joy);
     CRecord recorder = new CRecord(ps3Joy, drive, retrieve);
+	CSpecialButton btTest = new CSpecialButton();
+	CButton btMoo = new CButton();
+	boolean bTest = false;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -45,6 +48,14 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
        
+		btTest.run(ps3Joy.getRawButton(5), bTest);
+		btMoo.run((ps3Joy.getRawButton(5)));
+		
+		System.out.println(bTest);
+		
+//		if(btTest.gotPressed())
+//			System.out.println("Test got pressed!");		
+		
         drive.run();
         retrieve.run();
         releaser.run();

@@ -20,7 +20,7 @@ public class CSpecialButton {
         
         bLastState = bCurState;
         bCurState = button;
-        
+		
         if(bCurState == true && bLastState == false) // For setting the button switch value
         {
             if(bAnotherIsPressed && bSwitch)
@@ -38,23 +38,9 @@ public class CSpecialButton {
         
         return bAnotherIsPressed;
     }
-    
-    public boolean gotPressed()
-    {
-        return bCurState == true && bLastState == false && bAnotherIsPressed == false;
-    }
-
+	
     public boolean getSwitch()
     {
         return bSwitch;
-    }
-        
-    public boolean isHeld()
-    {
-        if(bCurState == true && bLastState == true && bAnotherIsPressed == false)
-            return true;
-
-        else
-            return false;
     }
 }

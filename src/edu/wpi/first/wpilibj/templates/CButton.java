@@ -13,13 +13,12 @@ public class CButton {
     private boolean bCurState = false;
     private boolean bLastState = false;
     private boolean bSwitch = false;
-    private boolean bIsTrue = false;
     
     public void run(boolean button)
     {
         bLastState = bCurState;
         bCurState = button;
-        
+		
         if(bCurState == true && bLastState == false)
             bSwitch = !bSwitch;
     }
@@ -31,7 +30,7 @@ public class CButton {
 
     public boolean getSwitch()
     {
-        return bIsTrue;
+        return bSwitch;
     }
         
     public boolean isHeld()

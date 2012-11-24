@@ -35,7 +35,7 @@ public class Var {
     static final int btReplay = 2;
     static final int btActRetrieve = 3;
     static final int btTurnOnCompressor = 4;
-    static final int btChangeMode = 7;
+    static final int btChangeFile = 7;
     static final int btChangeDrive = 8;
     static final int btRecord = 9;
     static final int btAllowEdit = 10;

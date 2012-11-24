@@ -18,8 +18,8 @@ public class CRecord {
     private CFileReader fileReader;
     private CSpecialButton btRecord = new CSpecialButton();
     private CSpecialButton btReplay = new CSpecialButton();
-    private CSpecialButton btChangeMode = new CSpecialButton();
-    private CSpecialButton btAllowEdit = new CSpecialButton();
+    private CPressButton btChangeMode = new CPressButton();
+    private CPressButton btAllowEdit = new CPressButton();
     private CJoyEmulator joyAuto = new CJoyEmulator();
     private Joystick joy;
     private CDrive driver;
@@ -48,12 +48,13 @@ public class CRecord {
     {
         bAnotherIsPressed = btRecord.run(joy.getRawButton(Var.btRecord), bAnotherIsPressed);
         bAnotherIsPressed = btReplay.run(joy.getRawButton(Var.btReplay), bAnotherIsPressed);
-        btChangeMode.run(joy.getRawButton(Var.btChangeMode), bAnotherIsPressed);
+        btChangeMode.run(joy.getRawButton(Var.btChangeFile), bAnotherIsPressed);
         btAllowEdit.run(joy.getRawButton(Var.btAllowEdit), bAnotherIsPressed);
-        
+		
         if(btAllowEdit.gotPressed())
         {
             bAutoEditMode = !bAutoEditMode;
+			System.out.println("Allow Edit got Pressed" + bAutoEditMode);
             
             if(bAutoEditMode)
                 sEditInfo = "WARNING EDIT MODE";
@@ -80,10 +81,10 @@ public class CRecord {
         }
 
         if(btRecord.getSwitch())   
-            record(sFileType);
+			record(sFileType);		
 
         else if(btReplay.getSwitch())
-            replay(sFileType);
+			replay(sFileType);
         
         else
         {
