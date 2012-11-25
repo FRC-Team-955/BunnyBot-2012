@@ -30,37 +30,10 @@ public class CDrive {
         if(Var.bDrive)
         {
             if(btChangeDrive.getSwitch())
-            {
-                // Setting to get Tank Drive Working properly on the ps3 Controller
-                // should be 2, 4
-                joy.setAxisChannel(Joystick.AxisType.kX, 2);
-                joy.setAxisChannel(Joystick.AxisType.kY, 4);
-                
-                sPrintWhat = "Tank Drive";
-                mtLeftSpeed = -joy.getX() * Math.abs(joy.getX());
-                mtRightSpeed = joy.getY() * Math.abs(joy.getY());
-            }
+				tankDrive();
 
             else
-            {	
-                // Setting to get regular drive Working properly on the ps3 Controller
-                // should be 3, 2
-                joy.setAxisChannel(Joystick.AxisType.kX, 3);
-                joy.setAxisChannel(Joystick.AxisType.kY, 2);
-                
-                sPrintWhat = "Regular Drive";
-                double y = joy.getY() * Math.abs(joy.getY());
-                double x = joy.getX() * Math.abs(joy.getX());
-
-                mtRightSpeed = (-y+x);
-                mtLeftSpeed = (y+x);
-            }
-            
-            if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
-                this.setSpeed(mtLeftSpeed, mtRightSpeed);
-
-            else
-                this.setSpeed(0, 0);   
+				regDrive();
         }
         
         else
@@ -69,6 +42,45 @@ public class CDrive {
         Var.drvStationPrinter.print(Var.iDriveStatusLine, sPrintWhat);
     }
     
+	private void tankDrive()
+	{
+		// Setting to get Tank Drive Working properly on the ps3 Controller
+		// should be 2, 4
+		joy.setAxisChannel(Joystick.AxisType.kX, 2);
+		joy.setAxisChannel(Joystick.AxisType.kY, 4);
+
+		sPrintWhat = "Tank Drive";
+		mtLeftSpeed = -joy.getX() * Math.abs(joy.getX());
+		mtRightSpeed = joy.getY() * Math.abs(joy.getY());
+		
+		if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
+			this.setSpeed(mtLeftSpeed, mtRightSpeed);
+
+		else
+			this.setSpeed(0, 0);   
+	}
+	
+	private void regDrive()
+	{
+		// Setting to get regular drive Working properly on the ps3 Controller
+		// should be 3, 2
+		joy.setAxisChannel(Joystick.AxisType.kX, 3);
+		joy.setAxisChannel(Joystick.AxisType.kY, 2);
+
+		sPrintWhat = "Regular Drive";
+		double y = joy.getY() * Math.abs(joy.getY());
+		double x = joy.getX() * Math.abs(joy.getX());
+
+		mtRightSpeed = (-y+x);
+		mtLeftSpeed = (y+x);
+	
+		if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
+			this.setSpeed(mtLeftSpeed, mtRightSpeed);
+
+		else
+			this.setSpeed(0, 0);   
+	}
+	
     public void setSpeed(double setMtLeft, double setMtRight)
     {
         mtLeft.set(setMtLeft);

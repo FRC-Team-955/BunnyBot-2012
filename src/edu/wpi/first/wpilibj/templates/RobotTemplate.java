@@ -21,7 +21,7 @@ public class RobotTemplate extends IterativeRobot {
     CDrive drive = new CDrive(ps3Joy);
     CRetrieve retrieve = new CRetrieve(ps3Joy);
     CRelease releaser = new CRelease(ps3Joy);
-    CCompressor compressor = new CCompressor(ps3Joy);
+    CCompressor compressor = new CCompressor();
     CAutonomous autonomous = new CAutonomous(ps3Joy, drive, retrieve);
 
     
@@ -46,7 +46,6 @@ public class RobotTemplate extends IterativeRobot {
         autonomous.resetAutonomous(); // Resets the replay to false if it was true before
     }
 
-    
     // This function is called periodically during operator control
     public void teleopPeriodic(){
         

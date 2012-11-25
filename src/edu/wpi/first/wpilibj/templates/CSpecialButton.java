@@ -41,22 +41,7 @@ public class CSpecialButton {
         return bAnotherIsPressed;
     }
 	
-    public boolean gotPressed()
-    {
-        if(bCurState == true && bLastState == false)
-        {
-            if((bAnotherIsPressed == true && bSwitch == true) || !bAnotherIsPressed)
-                return true;
-            
-            else 
-                return false;
-        }
-        
-        else
-            return false;
-    }
-    
-    public boolean getSwitch()
+	public boolean getSwitch()
     {
         return bSwitch;
     }
@@ -77,4 +62,19 @@ public class CSpecialButton {
 
         return bAnotherIsPressed;
     }
+	
+//    public boolean gotPressed()
+//    {
+//        if(bCurState == true && bLastState == false)
+//        {
+//            if((bAnotherIsPressed == true && bSwitch == true) || !bAnotherIsPressed)
+//                return true;
+//            
+//            else 
+//                return false;
+//        }
+//        
+//        else
+//            return false;
+//    }
 }

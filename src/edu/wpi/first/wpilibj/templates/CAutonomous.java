@@ -17,8 +17,8 @@ public class CAutonomous {
     
     private CSpecialButton btRecord = new CSpecialButton();
     private CSpecialButton btReplay = new CSpecialButton();
-    private CSpecialButton btChangeMode = new CSpecialButton();
-    private CSpecialButton btAllowEdit = new CSpecialButton();
+    private CButton btChangeMode = new CButton();
+    private CButton btAllowEdit = new CButton();
     private boolean bAutoFileMode = false;
     private boolean bAnotherIsPressed = false; 
     private boolean bAutoEditMode = false;
@@ -42,36 +42,42 @@ public class CAutonomous {
     {
         bAnotherIsPressed = btRecord.run(joy.getRawButton(Var.btRecord), bAnotherIsPressed);
         bAnotherIsPressed = btReplay.run(joy.getRawButton(Var.btReplay), bAnotherIsPressed);
-        btChangeMode.run(joy.getRawButton(Var.btChangeFile), bAnotherIsPressed);
-        btAllowEdit.run(joy.getRawButton(Var.btAllowEdit), bAnotherIsPressed);
+        btChangeMode.run(joy.getRawButton(Var.btChangeFile));
+        btAllowEdit.run(joy.getRawButton(Var.btAllowEdit));
 		
-        if(btAllowEdit.gotPressed())
-        {
-            bAutoEditMode = !bAutoEditMode;
-			
-            if(bAutoEditMode)
-                sEditInfo = "WARNING EDIT MODE";
-            
-            else
-                sEditInfo = "Can NOT edit";
-        }
+		if(!btRecord.getSwitch() && !btReplay.getSwitch())
+		{
+			if(btAllowEdit.gotPressed())
+			{
+				bAutoEditMode = !bAutoEditMode;
+
+				if(bAutoEditMode)
+					sEditInfo = "WARNING EDIT MODE";
+
+				else
+					sEditInfo = "Can NOT edit";
+			}
+		}
         
-        if(btChangeMode.gotPressed())
-        {
-            bAutoFileMode = !bAutoFileMode;
-            
-            if(bAutoFileMode)
-            {
-                sType = "Auto: ";
-                sFileType = Var.sAutoOutput;
-            }
-            
-            else
-            {
-                sType = "Reg: ";
-                sFileType = sRegOutput;
-            }
-        }
+		if(!btRecord.getSwitch() && !btReplay.getSwitch())
+		{
+			if(btChangeMode.gotPressed())
+			{
+				bAutoFileMode = !bAutoFileMode;
+
+				if(bAutoFileMode)
+				{
+					sType = "Auto: ";
+					sFileType = Var.sAutoOutput;
+				}
+
+				else
+				{
+					sType = "Reg: ";
+					sFileType = sRegOutput;
+				}
+			}
+		}
 
         if(btRecord.getSwitch())   
             sPrintWhat = record(sFileType);		
