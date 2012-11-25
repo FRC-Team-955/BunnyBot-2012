@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.*;
 public class CCompressor {
 	
     DigitalOutput digOutCompressor = new DigitalOutput(Var.chnDigiCompressor);
-	DigitalInput digInSensor = new DigitalInput(Var.chnDigiSensor);
-	Relay relay = new Relay(Var.chnRelay);
+    DigitalInput digInSensor = new DigitalInput(Var.chnDigiSensor);
+    Relay relay = new Relay(Var.chnRelay);
     CButton btCompressor = new CButton();
     Joystick joy;
 	
@@ -27,9 +27,13 @@ public class CCompressor {
         btCompressor.run(joy.getRawButton(Var.btTurnOnCompressor));
 
         if(btCompressor.getSwitch())
+        {
             digOutCompressor.set(true);
-
+        }
+        
         else
+        {
             digOutCompressor.set(false);
+        }
     }
 }

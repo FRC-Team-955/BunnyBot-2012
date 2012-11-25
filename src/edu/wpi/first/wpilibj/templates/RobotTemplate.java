@@ -22,7 +22,7 @@ public class RobotTemplate extends IterativeRobot {
     CRetrieve retrieve = new CRetrieve(ps3Joy);
     CRelease releaser = new CRelease(ps3Joy);
     CCompressor compressor = new CCompressor(ps3Joy);
-    CRecord recorder = new CRecord(ps3Joy, drive, retrieve);
+    CAutonomous autonomous = new CAutonomous(ps3Joy, drive, retrieve);
 
     
     /**
@@ -33,27 +33,27 @@ public class RobotTemplate extends IterativeRobot {
  
     }
 
-    /**
-     * This function is called periodically during autonomous
-     */
+    
+    // This function is called periodically during autonomous
     public void autonomousPeriodic() {
 		
-        recorder.replay(Var.sAutoOutput);
+        autonomous.replay(Var.sAutoOutput);
     }
 	
-	public void disabledInit()
-	{
-		recorder.EndReplay();
-	}
+    // This function is called when we disable the robot.
+    public void disabledInit()
+    {
+        autonomous.resetAutonomous(); // Resets the replay to false if it was true before
+    }
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
+    
+    // This function is called periodically during operator control
+    public void teleopPeriodic(){
+        
         drive.run();
         retrieve.run();
         releaser.run();
         compressor.run();
-        recorder.run();
+        autonomous.run();
     }
 }
