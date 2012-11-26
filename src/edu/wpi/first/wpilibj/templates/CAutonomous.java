@@ -13,19 +13,20 @@ import edu.wpi.first.wpilibj.Joystick;
 public class CAutonomous {
     
     // CONSTANTS
-    private final String sRegOutput = "file:///regVal.txt";
+    private final String sAutoCenter = "file:///autoval.txt";
+    private final String sAutoLeft = "file:///autoLeft.txt";
+    private final String sAutoRight = "file:///autoRight.txt";
     
     private CSpecialButton btRecord = new CSpecialButton();
     private CSpecialButton btReplay = new CSpecialButton();
     private CButton btChangeMode = new CButton();
     private CButton btAllowEdit = new CButton();
-    private boolean bAutoFileMode = false;
     private boolean bAnotherIsPressed = false; 
     private boolean bAutoEditMode = false;
+    private int iFileMode = 0;
     private String sPrintWhat = "Doing Nothing";
     private String sType = "Reg: ";
     private String sEditInfo = "Can NOT edit";
-    private String sFileType = sRegOutput;
     private CRecorder recorder;
     private CReplayer replayer; 
     private Joystick joy;
@@ -45,45 +46,36 @@ public class CAutonomous {
         btChangeMode.run(joy.getRawButton(Var.btChangeFile));
         btAllowEdit.run(joy.getRawButton(Var.btAllowEdit));
 		
-		if(!btRecord.getSwitch() && !btReplay.getSwitch())
-		{
-			if(btAllowEdit.gotPressed())
-			{
-				bAutoEditMode = !bAutoEditMode;
+        if(!btRecord.getSwitch() && !btReplay.getSwitch())
+        {
+            if(btAllowEdit.gotPressed())
+            {
+                bAutoEditMode = !bAutoEditMode;
 
-				if(bAutoEditMode)
-					sEditInfo = "WARNING EDIT MODE";
+                if(bAutoEditMode)
+                    sEditInfo = "WARNING EDIT MODE";
 
-				else
-					sEditInfo = "Can NOT edit";
-			}
-		}
-        
-		if(!btRecord.getSwitch() && !btReplay.getSwitch())
-		{
-			if(btChangeMode.gotPressed())
-			{
-				bAutoFileMode = !bAutoFileMode;
+                else
+                    sEditInfo = "Can NOT edit";
+            }
+        }
 
-				if(bAutoFileMode)
-				{
-					sType = "Auto: ";
-					sFileType = Var.sAutoOutput;
-				}
+        if(!btRecord.getSwitch() && !btReplay.getSwitch())
+        {
+            if(btChangeMode.gotPressed())
+            {
+                if(iFileMode++ >= Var.iFileMax)
+                    iFileMode = 0;
 
-				else
-				{
-					sType = "Reg: ";
-					sFileType = sRegOutput;
-				}
-			}
-		}
+                changeFile(iFileMode);
+            }
+        }
 
         if(btRecord.getSwitch())   
-            sPrintWhat = record(sFileType);		
+            sPrintWhat = record(Var.sFileType);		
 
         else if(btReplay.getSwitch())
-            sPrintWhat = replay(sFileType);
+            sPrintWhat = replay(Var.sFileType);
         
         else
         {
@@ -121,5 +113,39 @@ public class CAutonomous {
             bAnotherIsPressed = btRecord.setOppisite();
 
         reset();
+    }
+    
+    private void changeFile(int iFileType)
+    {
+        switch (iFileMode)
+        {
+            case 0:
+            {
+                sType = "Reg: ";
+                Var.sFileType = Var.sRegOutput;
+                break;
+            }
+
+            case 1:
+            {
+                sType = "AutoCenter: ";
+                Var.sFileType = sAutoCenter; 
+                break;
+            } 
+
+            case 2:
+            {
+                sType = "AutoLeft: ";
+                Var.sFileType = sAutoLeft;
+                break;
+            }
+
+            case 3:
+            {
+                sType = "AutoRight: ";
+                Var.sFileType = sAutoRight; 
+                break;
+            }
+        }
     }
 }

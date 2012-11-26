@@ -45,8 +45,10 @@ public class Var {
     // Other
     static final double dENDSIGNAL = -10.0;
     static CPrintDriver drvStationPrinter = new CPrintDriver();
+    static final int iFileMax = 4;
     static boolean bDrive = true;
-    static final String sAutoOutput = "file:///autoval.txt";
+    static final String sRegOutput = "file:///regVal.txt";
+    static String sFileType = sRegOutput;
     
     // Printing to Driverstation lines, 2-6 are available only
     static final int iDriveStatusLine = 2;

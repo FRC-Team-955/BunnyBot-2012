@@ -25,7 +25,7 @@ public class CRecorder {
     
     public String record(String sFileName, boolean bAutoEditMode)
     {
-        if(bAutoEditMode == false && sFileName == Var.sAutoOutput)
+        if(bAutoEditMode == false && sFileName != Var.sRegOutput)
             sPrintWhat = "Can't Edit Autofile";
         
         else
