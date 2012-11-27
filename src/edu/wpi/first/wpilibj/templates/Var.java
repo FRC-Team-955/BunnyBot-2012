@@ -43,8 +43,9 @@ public class Var {
     static final int btReplay = 12;
     
     // Other
+    static final int chnAnalogFileSwitcher = 1;
     static final double dENDSIGNAL = -10.0;
-    static CPrintDriver drvStationPrinter = new CPrintDriver();
+    static final CPrintDriver drvStationPrinter = new CPrintDriver();
     static final int iFileMax = 4;
     static boolean bDrive = true;
     static final String sRegOutput = "file:///regVal.txt";

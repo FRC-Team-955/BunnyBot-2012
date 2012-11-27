@@ -23,6 +23,7 @@ public class RobotTemplate extends IterativeRobot {
     CRelease releaser = new CRelease(ps3Joy);
     CCompressor compressor = new CCompressor();
     CAutonomous autonomous = new CAutonomous(ps3Joy, drive, retrieve);
+    boolean bReplayStarted = false;
 
     
     /**
@@ -37,6 +38,12 @@ public class RobotTemplate extends IterativeRobot {
     // This function is called periodically during autonomous
     public void autonomousPeriodic() {
 		
+        if(!bReplayStarted)
+        {
+            autonomous.changeFile((int)DriverStation.getInstance().getAnalogIn(Var.chnAnalogFileSwitcher));
+            bReplayStarted = true;
+        }
+        
         autonomous.replay(Var.sFileType);
     }
 	
@@ -44,6 +51,7 @@ public class RobotTemplate extends IterativeRobot {
     public void disabledInit()
     {
         autonomous.resetAutonomous(); // Resets the replay to false if it was true before
+        bReplayStarted = false;
     }
 
     // This function is called periodically during operator control

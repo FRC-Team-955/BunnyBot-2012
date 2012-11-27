@@ -115,7 +115,7 @@ public class CAutonomous {
         reset();
     }
     
-    private void changeFile(int iFileType)
+    public void changeFile(int iFileType)
     {
         switch (iFileMode)
         {
@@ -144,6 +144,13 @@ public class CAutonomous {
             {
                 sType = "AutoRight: ";
                 Var.sFileType = sAutoRight; 
+                break;
+            }
+                
+            default:
+            {
+                sType = "AutoCenter: ";
+                Var.sFileType = sAutoCenter; 
                 break;
             }
         }
