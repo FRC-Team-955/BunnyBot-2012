@@ -64,10 +64,10 @@ public class CAutonomous {
         {
             if(btChangeMode.gotPressed())
             {
-                if(iFileMode++ >= Var.iFileMax)
+                if(++iFileMode >= Var.iFileMax)
                     iFileMode = 0;
 
-                changeFile(iFileMode);
+                changeFile(iFileMode); // Changes the file 
             }
         }
 
