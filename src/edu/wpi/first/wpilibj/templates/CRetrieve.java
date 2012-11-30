@@ -15,6 +15,7 @@ public class CRetrieve {
     private Victor m_mtRetrieve = new Victor(Var.chnVicRetrieve);
     private CButton m_btRetrieve = new CButton();
     private boolean m_bRetrieveStatus = false;
+    private double m_dRetrieveSpeed = 0;
     private Joystick m_joy;
     
     public CRetrieve(Joystick joystick)
@@ -24,13 +25,14 @@ public class CRetrieve {
     
     public void run()
     {
+        m_dRetrieveSpeed = DriverStation.getInstance().getAnalogIn(Var.chnAnalogRetrieveSpeed);
         m_btRetrieve.run(m_joy.getRawButton(Var.btActRetrieve));
         
         if(m_btRetrieve.gotPressed())
             m_bRetrieveStatus = !m_bRetrieveStatus;
         
         if(m_bRetrieveStatus)
-            m_mtRetrieve.set(1);
+            m_mtRetrieve.set(m_dRetrieveSpeed);
         
         else
             m_mtRetrieve.set(0);
@@ -44,7 +46,7 @@ public class CRetrieve {
     public void set(boolean bStatus)
     {
         if(bStatus)
-            m_mtRetrieve.set(1);
+            m_mtRetrieve.set(m_dRetrieveSpeed);
         
         else
             m_mtRetrieve.set(0);

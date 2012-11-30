@@ -44,6 +44,7 @@ public class Var {
     
     // Other
     static final int chnAnalogFileSwitcher = 1;
+    static final int chnAnalogRetrieveSpeed = 2;
     static final double dENDSIGNAL = -10.0;
     static final CPrintDriver drvStationPrinter = new CPrintDriver();
     static final int iFileMax = 4;

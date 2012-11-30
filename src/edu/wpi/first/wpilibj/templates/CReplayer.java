@@ -14,7 +14,7 @@ public class CReplayer {
     private boolean bDoneReplay = false;
     private CJoyEmulator joyAuto = new CJoyEmulator();
     private CTimer tmReplay = new CTimer();
-    private String sPrintWhat = "";
+    private String sReplayStatus = "";
     private CFileReader fileReader;
     private CDrive driver;
     private CRetrieve retrieve;
@@ -31,7 +31,7 @@ public class CReplayer {
          
         if(!bRepStarted)
         {
-            sPrintWhat = "Replaying";
+            sReplayStatus = "Replaying";
             fileReader = new CFileReader(sFileName);
             joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
             tmReplay.start();
@@ -57,13 +57,13 @@ public class CReplayer {
 
         else
         {
-            sPrintWhat = "Done Replaying";
+            sReplayStatus = "Done Replaying";
             driver.setSpeed(0, 0);
             fileReader.close();
             tmReplay.stop();
         }
         
-        return sPrintWhat;
+        return sReplayStatus;
     }
     
     public void reset()

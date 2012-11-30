@@ -23,35 +23,29 @@ public class RobotTemplate extends IterativeRobot {
     CRelease releaser = new CRelease(ps3Joy);
     CCompressor compressor = new CCompressor();
     CAutonomous autonomous = new CAutonomous(ps3Joy, drive, retrieve);
-    boolean bReplayStarted = false;
-
     
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
+    // This function is run when the robot is first started up and should be
+    // used for any initialization code.
     public void robotInit() {
  
     }
 
-    
-    // This function is called periodically during autonomous
-    public void autonomousPeriodic() {
-		
-        if(!bReplayStarted)
-        {
-            autonomous.changeFile((int)DriverStation.getInstance().getAnalogIn(Var.chnAnalogFileSwitcher));
-            bReplayStarted = true;
-        }
-        
-        autonomous.replay(Var.sFileType);
-    }
-	
     // This function is called when we disable the robot.
     public void disabledInit()
     {
         autonomous.resetAutonomous(); // Resets the replay to false if it was true before
-        bReplayStarted = false;
+    }
+    
+    // Called once in autonomous
+    public void autonomousInit()
+    {
+        int iFileType = (int)DriverStation.getInstance().getAnalogIn(Var.chnAnalogFileSwitcher);
+        autonomous.changeFile(iFileType);
+    }
+    
+    // This function is called periodically during autonomous
+    public void autonomousPeriodic() {
+        autonomous.replay(Var.sFileType);
     }
 
     // This function is called periodically during operator control

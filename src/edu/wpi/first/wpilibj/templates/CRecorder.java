@@ -10,7 +10,7 @@ package edu.wpi.first.wpilibj.templates;
  */
 public class CRecorder {
 
-    private String sPrintWhat = "";
+    private String sRecordStaus = "";
     private boolean bRecStarted = false;
     private CFileWriter fileWriter;
     private CTimer tmRecord = new CTimer();
@@ -26,13 +26,13 @@ public class CRecorder {
     public String record(String sFileName, boolean bAutoEditMode)
     {
         if(bAutoEditMode == false && sFileName != Var.sRegOutput)
-            sPrintWhat = "Can't Edit Autofile";
+            sRecordStaus = "Can't Edit Autofile";
         
         else
         {
             if(!bRecStarted)
             {
-                sPrintWhat = "Recording";
+                sRecordStaus = "Recording";
                 fileWriter = new CFileWriter(sFileName);
                 tmRecord.start();
                 bRecStarted = true;
@@ -41,7 +41,7 @@ public class CRecorder {
             fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus());
         }
         
-        return sPrintWhat;
+        return sRecordStaus;
     }
     
     public void reset()

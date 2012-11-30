@@ -24,8 +24,8 @@ public class CAutonomous {
     private boolean bAnotherIsPressed = false; 
     private boolean bAutoEditMode = false;
     private int iFileMode = 0;
-    private String sPrintWhat = "Doing Nothing";
-    private String sType = "Reg: ";
+    private String sAutonmousStatus = "Doing Nothing";
+    private String sFileType = "Reg: ";
     private String sEditInfo = "Can NOT edit";
     private CRecorder recorder;
     private CReplayer replayer; 
@@ -72,19 +72,19 @@ public class CAutonomous {
         }
 
         if(btRecord.getSwitch())   
-            sPrintWhat = record(Var.sFileType);		
+            sAutonmousStatus = record(Var.sFileType);		
 
         else if(btReplay.getSwitch())
-            sPrintWhat = replay(Var.sFileType);
+            sAutonmousStatus = replay(Var.sFileType);
         
         else
         {
-            sPrintWhat = "Doing Nothing";
+            sAutonmousStatus = "Doing Nothing";
             reset();
         }
         
         Var.drvStationPrinter.print(Var.iEditAutoMode, sEditInfo);
-        Var.drvStationPrinter.print(Var.iRecordStatusLine, sType + sPrintWhat);
+        Var.drvStationPrinter.print(Var.iRecordStatusLine, sFileType + sAutonmousStatus);
     }
     
     public String replay(String sFileName)
@@ -121,38 +121,40 @@ public class CAutonomous {
         {
             case 0:
             {
-                sType = "Reg: ";
+                sFileType = "Reg: ";
                 Var.sFileType = Var.sRegOutput;
                 break;
             }
 
             case 1:
             {
-                sType = "AutoCenter: ";
+                sFileType = "AutoCenter: ";
                 Var.sFileType = sAutoCenter; 
                 break;
             } 
 
             case 2:
             {
-                sType = "AutoLeft: ";
+                sFileType = "AutoLeft: ";
                 Var.sFileType = sAutoLeft;
                 break;
             }
 
             case 3:
             {
-                sType = "AutoRight: ";
+                sFileType = "AutoRight: ";
                 Var.sFileType = sAutoRight; 
                 break;
             }
                 
             default:
             {
-                sType = "AutoCenter: ";
+                sFileType = "AutoCenter: ";
                 Var.sFileType = sAutoCenter; 
                 break;
             }
         }
+        
+        reset(); // DEBUGGER
     }
 }

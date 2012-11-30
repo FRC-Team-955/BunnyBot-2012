@@ -16,7 +16,7 @@ public class CDrive {
     private double mtLeftSpeed = 0;
     private Joystick joy;
     private CButton btChangeDrive = new CButton();
-    private String sPrintWhat = "";
+    private String sDriveStatus = "";
     
     public CDrive(Joystick joystick)
     {
@@ -37,9 +37,9 @@ public class CDrive {
         }
         
         else
-            sPrintWhat = "Disabled";
+            sDriveStatus = "Disabled";
         
-        Var.drvStationPrinter.print(Var.iDriveStatusLine, sPrintWhat);
+        Var.drvStationPrinter.print(Var.iDriveStatusLine, sDriveStatus);
     }
     
     private void tankDrive()
@@ -49,7 +49,7 @@ public class CDrive {
         joy.setAxisChannel(Joystick.AxisType.kX, 2);
         joy.setAxisChannel(Joystick.AxisType.kY, 4);
 
-        sPrintWhat = "Tank Drive";
+        sDriveStatus = "Tank Drive";
         mtLeftSpeed = -joy.getX() * Math.abs(joy.getX());
         mtRightSpeed = joy.getY() * Math.abs(joy.getY());
 
@@ -67,7 +67,7 @@ public class CDrive {
         joy.setAxisChannel(Joystick.AxisType.kX, 3);
         joy.setAxisChannel(Joystick.AxisType.kY, 2);
 
-        sPrintWhat = "Regular Drive";
+        sDriveStatus = "Regular Drive";
         double y = joy.getY() * Math.abs(joy.getY());
         double x = joy.getX() * Math.abs(joy.getX());
 
@@ -75,10 +75,10 @@ public class CDrive {
         mtLeftSpeed = (y+x);
 
         if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
-                this.setSpeed(mtLeftSpeed, mtRightSpeed);
+            this.setSpeed(mtLeftSpeed, mtRightSpeed);
 
         else
-                this.setSpeed(0, 0);   
+            this.setSpeed(0, 0);   
     }
 	
     public void setSpeed(double setMtLeft, double setMtRight)
