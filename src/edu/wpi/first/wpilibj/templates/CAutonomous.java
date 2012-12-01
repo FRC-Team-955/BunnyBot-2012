@@ -117,7 +117,7 @@ public class CAutonomous {
     
     public void changeFile(int iFileType)
     {
-        switch (iFileMode)
+        switch (iFileType)
         {
             case 0:
             {
@@ -154,7 +154,5 @@ public class CAutonomous {
                 break;
             }
         }
-        
-        reset(); // DEBUGGER
     }
 }
