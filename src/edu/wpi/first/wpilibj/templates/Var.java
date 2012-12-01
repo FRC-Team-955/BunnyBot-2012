@@ -43,14 +43,19 @@ public class Var {
     static final int btReplay = 12;
     
     // Other
-    static final int chnAnalogFileSwitcher = 1;
-    static final int chnAnalogRetrieveSpeed = 2;
     static final double dENDSIGNAL = -10.0;
     static final CPrintDriver drvStationPrinter = new CPrintDriver();
     static final int iFileMax = 4;
     static boolean bDrive = true;
     static final String sRegOutput = "file:///regVal.txt";
     static String sFileType = sRegOutput;
+    
+    // DriverStation Channels
+    static final int chnDigInReg = 0;
+    static final int chnDigInAutoCtr = 1;
+    static final int chnDigInAutoLft = 2;
+    static final int chnDigInAutoRght = 3;
+    static final int chnAnlgRetrieveSpeed = 1;
     
     // Printing to Driverstation lines, 2-6 are available only
     static final int iDriveStatusLine = 2;

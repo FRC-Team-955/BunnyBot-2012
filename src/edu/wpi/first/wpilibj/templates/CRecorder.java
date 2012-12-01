@@ -10,48 +10,42 @@ package edu.wpi.first.wpilibj.templates;
  */
 public class CRecorder {
 
-    private String sRecordStaus = "";
-    private boolean bRecStarted = false;
-    private CFileWriter fileWriter;
-    private CTimer tmRecord = new CTimer();
-    private CDrive driver;
-    private CRetrieve retrieve;
+    private String m_sRecordStaus = "";
+    private boolean m_bRecStarted = false;
+    private CFileWriter m_fileWriter;
+    private CTimer m_tmRecord = new CTimer();
+    private CDrive m_driver;
+    private CRetrieve m_retrieve;
     
     public CRecorder(CDrive drive, CRetrieve retrieval)
     {
-        driver = drive;
-        retrieve = retrieval;
+        m_driver = drive;
+        m_retrieve = retrieval;
     }
     
     public String record(String sFileName, boolean bAutoEditMode)
     {
-        if(bAutoEditMode == false && sFileName != Var.sRegOutput)
-            sRecordStaus = "Can't Edit Autofile";
-        
-        else
+        if(!m_bRecStarted)
         {
-            if(!bRecStarted)
-            {
-                sRecordStaus = "Recording";
-                fileWriter = new CFileWriter(sFileName);
-                tmRecord.start();
-                bRecStarted = true;
-            }
-
-            fileWriter.writeData(tmRecord.get(), driver.getMtLeftSpeed(), driver.getMtRightSpeed(), retrieve.getStatus());
+            m_sRecordStaus = "Recording";
+            m_fileWriter = new CFileWriter(sFileName);
+            m_tmRecord.start();
+            m_bRecStarted = true;
         }
-        
-        return sRecordStaus;
+
+        m_fileWriter.writeData(m_tmRecord.get(), m_driver.getMtLeftSpeed(), m_driver.getMtRightSpeed(), m_retrieve.getStatus());
+
+        return m_sRecordStaus;
     }
     
     public void reset()
     {
-        if(bRecStarted)
+        if(m_bRecStarted)
         {
-            fileWriter.writeDouble(Var.dENDSIGNAL);
-            fileWriter.close();
-            tmRecord.reset(true);
-            bRecStarted = false;
+            m_fileWriter.writeDouble(Var.dENDSIGNAL);
+            m_fileWriter.close();
+            m_tmRecord.reset(true);
+            m_bRecStarted = false;
         }
     }
 }

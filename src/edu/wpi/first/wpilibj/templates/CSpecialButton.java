@@ -11,70 +11,55 @@ package edu.wpi.first.wpilibj.templates;
 
 // This class allows only one button to pressed at a time
 public class CSpecialButton {
-    private boolean bCurState = false;
-    private boolean bLastState = false;
-    private boolean bSwitch = false;
-    private boolean bAnotherIsPressed = false;
+    private boolean m_bCurState = false;
+    private boolean m_bLastState = false;
+    private boolean m_bSwitch = false;
+    private boolean m_bAnotherIsPressed = false;
     
     public boolean run(boolean button, boolean bCanWePress)
     {
-        bAnotherIsPressed = bCanWePress;
+        m_bAnotherIsPressed = bCanWePress;
         
-        bLastState = bCurState;
-        bCurState = button;
+        m_bLastState = m_bCurState;
+        m_bCurState = button;
 		
-        if(bCurState == true && bLastState == false) // For setting the button switch value
+        if(m_bCurState == true && m_bLastState == false) // For setting the button switch value
         {
-            if(bAnotherIsPressed && bSwitch)
+            if(m_bAnotherIsPressed && m_bSwitch)
             {   
-                bAnotherIsPressed = false;
-                bSwitch = false;
+                m_bAnotherIsPressed = false;
+                m_bSwitch = false;
             }
 
-            else if(!bAnotherIsPressed)
+            else if(!m_bAnotherIsPressed)
             {
-                bAnotherIsPressed = true;
-                bSwitch = true;
+                m_bAnotherIsPressed = true;
+                m_bSwitch = true;
             } 
         }
         
-        return bAnotherIsPressed;
+        return m_bAnotherIsPressed;
     }
 	
 	public boolean getSwitch()
     {
-        return bSwitch;
+        return m_bSwitch;
     }
 	
     public boolean setOppisite()
     {
-        if(bAnotherIsPressed && bSwitch)
+        if(m_bAnotherIsPressed && m_bSwitch)
         {   
-            bAnotherIsPressed = false;
-            bSwitch = false;
+            m_bAnotherIsPressed = false;
+            m_bSwitch = false;
         }
 
-        else if(!bAnotherIsPressed)
+        else if(!m_bAnotherIsPressed)
         {
-            bAnotherIsPressed = true;
-            bSwitch = true;
+            m_bAnotherIsPressed = true;
+            m_bSwitch = true;
         }
 
-        return bAnotherIsPressed;
+        return m_bAnotherIsPressed;
     }
-	
-//    public boolean gotPressed()
-//    {
-//        if(bCurState == true && bLastState == false)
-//        {
-//            if((bAnotherIsPressed == true && bSwitch == true) || !bAnotherIsPressed)
-//                return true;
-//            
-//            else 
-//                return false;
-//        }
-//        
-//        else
-//            return false;
-//    }
 }

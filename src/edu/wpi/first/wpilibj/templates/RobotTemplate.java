@@ -37,9 +37,21 @@ public class RobotTemplate extends IterativeRobot {
     }
     
     // Called once in autonomous
+    // Tells autonomous which file to play based on
+    // the value of "iFileType"
     public void autonomousInit()
     {
-        int iFileType = (int)DriverStation.getInstance().getAnalogIn(Var.chnAnalogFileSwitcher);
+        int iFileType = Var.chnDigInReg;
+        
+        if(DriverStation.getInstance().getDigitalIn(Var.chnDigInAutoCtr))
+            iFileType = Var.chnDigInAutoCtr;
+        
+        else if(DriverStation.getInstance().getDigitalIn(Var.chnDigInAutoLft))
+            iFileType = Var.chnDigInAutoLft;
+        
+        else if(DriverStation.getInstance().getDigitalIn(Var.chnDigInAutoRght))
+            iFileType = Var.chnDigInAutoRght;
+        
         autonomous.changeFile(iFileType);
     }
     

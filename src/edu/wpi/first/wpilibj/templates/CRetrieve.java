@@ -25,7 +25,7 @@ public class CRetrieve {
     
     public void run()
     {
-        m_dRetrieveSpeed = DriverStation.getInstance().getAnalogIn(Var.chnAnalogRetrieveSpeed);
+        m_dRetrieveSpeed = DriverStation.getInstance().getAnalogIn(Var.chnAnlgRetrieveSpeed);
         m_btRetrieve.run(m_joy.getRawButton(Var.btActRetrieve));
         
         if(m_btRetrieve.gotPressed())

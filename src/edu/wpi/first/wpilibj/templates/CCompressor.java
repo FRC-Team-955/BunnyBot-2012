@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.*;
  */
 public class CCompressor {
 	
-    DigitalInput digInSensor = new DigitalInput(Var.chnDigiSensor);
-    Relay relay = new Relay(Var.chnRelay);
+    DigitalInput m_digInSensor = new DigitalInput(Var.chnDigiSensor);
+    Relay m_relay = new Relay(Var.chnRelay);
 	
     public void run()
     {
-		if(digInSensor.get())
-			relay.set(Relay.Value.kOn);
-		
-		else
-			relay.set(Relay.Value.kOff);
+        if(m_digInSensor.get())
+            m_relay.set(Relay.Value.kOn);
+
+        else
+            m_relay.set(Relay.Value.kOff);
     }
 }

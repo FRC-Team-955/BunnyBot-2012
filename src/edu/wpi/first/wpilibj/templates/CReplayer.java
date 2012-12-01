@@ -10,72 +10,72 @@ package edu.wpi.first.wpilibj.templates;
  */
 public class CReplayer {
     
-    private boolean bRepStarted = false;
-    private boolean bDoneReplay = false;
-    private CJoyEmulator joyAuto = new CJoyEmulator();
-    private CTimer tmReplay = new CTimer();
-    private String sReplayStatus = "";
-    private CFileReader fileReader;
-    private CDrive driver;
-    private CRetrieve retrieve;
+    private boolean m_bRepStarted = false;
+    private boolean m_bDoneReplay = false;
+    private CJoyEmulator m_joyAuto = new CJoyEmulator();
+    private CTimer m_tmReplay = new CTimer();
+    private String m_sReplayStatus = "";
+    private CFileReader m_fileReader;
+    private CDrive m_driver;
+    private CRetrieve m_retrieve;
     
     public CReplayer(CDrive drive, CRetrieve retriever)
     {
-        driver = drive;
-        retrieve = retriever;
+        m_driver = drive;
+        m_retrieve = retriever;
     }
     
     public String replay(String sFileName)
     {
         Var.bDrive = false;
          
-        if(!bRepStarted)
+        if(!m_bRepStarted)
         {
-            sReplayStatus = "Replaying";
-            fileReader = new CFileReader(sFileName);
-            joyAuto.add(fileReader.readDouble(), fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
-            tmReplay.start();
-            bRepStarted = true;
+            m_sReplayStatus = "Replaying";
+            m_fileReader = new CFileReader(sFileName);
+            m_joyAuto.add(m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readBoolean());
+            m_tmReplay.start();
+            m_bRepStarted = true;
         }
 
-        if(!bDoneReplay)
+        if(!m_bDoneReplay)
         {
-            driver.setSpeed(joyAuto.getMtLeft(), joyAuto.getMtRight());
-            retrieve.set(joyAuto.getRetrieve());
+            m_driver.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
+            m_retrieve.set(m_joyAuto.getRetrieve());
 
-            if(tmReplay.get() >= joyAuto.getTimer())
+            if(m_tmReplay.get() >= m_joyAuto.getTimer())
             {
-                double dTemp = fileReader.readDouble(); // Temp var to see if we're done replay
+                double dTemp = m_fileReader.readDouble(); // Temp var to see if we're done replay
 
                 if(dTemp < Var.dENDSIGNAL+1) // If true, means we're done replaying
-                    bDoneReplay = true;
+                    m_bDoneReplay = true;
 
                 else
-                    joyAuto.add(dTemp, fileReader.readDouble(), fileReader.readDouble(), fileReader.readBoolean());
+                    m_joyAuto.add(dTemp, m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readBoolean());
             }
         }
 
         else
         {
-            sReplayStatus = "Done Replaying";
-            driver.setSpeed(0, 0);
-            fileReader.close();
-            tmReplay.stop();
+            m_sReplayStatus = "Done Replaying";
+            m_driver.setSpeed(0, 0);
+            m_fileReader.close();
+            m_tmReplay.stop();
         }
         
-        return sReplayStatus;
+        return m_sReplayStatus;
     }
     
     public void reset()
     {
-        if(bRepStarted)
+        if(m_bRepStarted)
         {
-            if(!fileReader.isClosed())
-                fileReader.close();
+            if(!m_fileReader.isClosed())
+                m_fileReader.close();
             
-            tmReplay.reset(true);
-            bDoneReplay = false;
-            bRepStarted = false;
+            m_tmReplay.reset(true);
+            m_bDoneReplay = false;
+            m_bRepStarted = false;
         }
     }
 }

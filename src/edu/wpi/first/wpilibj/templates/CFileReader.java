@@ -17,19 +17,19 @@ import com.sun.squawk.microedition.io.FileConnection;
  */
 public class CFileReader {
 
-    private String sFile;
-    private FileConnection fc;
-    private DataInputStream reader;
-    private boolean bIsClosed = false;
+    private String m_sFile;
+    private FileConnection m_fc;
+    private DataInputStream m_reader;
+    private boolean m_bIsClosed = false;
     
     public CFileReader(String sFileName)
     {
-        sFile = sFileName;
+        m_sFile = sFileName;
         
         try
         {
-            fc = (FileConnection)Connector.open(sFile, Connector.READ);
-            reader = new DataInputStream(fc.openInputStream());
+            m_fc = (FileConnection)Connector.open(m_sFile, Connector.READ);
+            m_reader = new DataInputStream(m_fc.openInputStream());
         }
         
         catch (IOException e) 
@@ -43,7 +43,7 @@ public class CFileReader {
     {
         try 
         {           
-            return reader.readInt();
+            return m_reader.readInt();
         } 
         catch (Exception e)
         {
@@ -56,7 +56,7 @@ public class CFileReader {
     {
         try 
         {           
-            return reader.readDouble();
+            return m_reader.readDouble();
         } 
 		
         catch (Exception e)
@@ -70,7 +70,7 @@ public class CFileReader {
     {
         try 
         {           
-            return reader.readBoolean();
+            return m_reader.readBoolean();
         } 
         catch (Exception e)
         {
@@ -83,9 +83,9 @@ public class CFileReader {
     {
         try
         {
-            fc = (FileConnection)Connector.open(sFile, Connector.READ);
-            reader = new DataInputStream(fc.openInputStream());
-            bIsClosed = false;
+            m_fc = (FileConnection)Connector.open(m_sFile, Connector.READ);
+            m_reader = new DataInputStream(m_fc.openInputStream());
+            m_bIsClosed = false;
         }
         
         catch(IOException e)
@@ -98,9 +98,9 @@ public class CFileReader {
     {
         try
         {
-            reader.close();
-            fc.close();
-            bIsClosed = true;
+            m_reader.close();
+            m_fc.close();
+            m_bIsClosed = true;
         }
         
         catch(IOException e)
@@ -111,7 +111,7 @@ public class CFileReader {
     
     public boolean isClosed()
     {
-        return bIsClosed;
+        return m_bIsClosed;
     }
 }
 

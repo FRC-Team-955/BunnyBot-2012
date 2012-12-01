@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class CTimer {
     
-    Timer m_Timer = new Timer();
-    boolean m_bIsRunning = false;
+    private Timer m_Timer = new Timer();
+    private boolean m_bIsRunning = false;
     
     public void start()
     {

@@ -10,36 +10,36 @@ package edu.wpi.first.wpilibj.templates;
  */
 public class CButton {
     
-    private boolean bCurState = false;
-    private boolean bLastState = false;
-    private boolean bSwitch = false;
+    private boolean m_bCurState = false;
+    private boolean m_bLastState = false;
+    private boolean m_bSwitch = false;
     
     public void run(boolean button)
     {
-        bLastState = bCurState;
-        bCurState = button;
+        m_bLastState = m_bCurState;
+        m_bCurState = button;
 		
-        if(bCurState == true && bLastState == false)
-            bSwitch = !bSwitch;
+        if(m_bCurState == true && m_bLastState == false)
+            m_bSwitch = !m_bSwitch;
     }
     
     public boolean gotPressed()
     {
-        return bCurState == true && bLastState == false;
+        return m_bCurState == true && m_bLastState == false;
     }
 
     public boolean getSwitch()
     {
-        return bSwitch;
+        return m_bSwitch;
     }
         
     public boolean isHeld()
     {
-        return bCurState == true && bLastState == true;
+        return m_bCurState == true && m_bLastState == true;
     }
     
     public void set(boolean bSetTo)
     {
-        bSwitch = bSetTo;
+        m_bSwitch = bSetTo;
     }
 }

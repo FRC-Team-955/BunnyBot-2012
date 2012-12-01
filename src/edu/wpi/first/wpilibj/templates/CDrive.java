@@ -8,28 +8,28 @@ import edu.wpi.first.wpilibj.*;
 public class CDrive {
     
     // CONSTANTS 
-    private double dMinSpeed = 0.05;
+    private final double m_dMinSpeed = 0.05;
     
-    private Victor mtRight = new Victor(Var.chnVicDrvRight);
-    private Victor mtLeft = new Victor(Var.chnVicDrvLeft);
-    private double mtRightSpeed = 0;
-    private double mtLeftSpeed = 0;
-    private Joystick joy;
-    private CButton btChangeDrive = new CButton();
-    private String sDriveStatus = "";
+    private Victor m_mtRight = new Victor(Var.chnVicDrvRight);
+    private Victor m_mtLeft = new Victor(Var.chnVicDrvLeft);
+    private double m_mtRightSpeed = 0;
+    private double m_mtLeftSpeed = 0;
+    private Joystick m_joy;
+    private CButton m_btChangeDrive = new CButton();
+    private String m_sDriveStatus = "";
     
     public CDrive(Joystick joystick)
     {
-        joy = joystick;
+        m_joy = joystick;
     }
     
     public void run()
     {      
-        btChangeDrive.run(joy.getRawButton(Var.btChangeDrive));
+        m_btChangeDrive.run(m_joy.getRawButton(Var.btChangeDrive));
         
         if(Var.bDrive)
         {
-            if(btChangeDrive.getSwitch())
+            if(m_btChangeDrive.getSwitch())
                 tankDrive();
 
             else
@@ -37,24 +37,24 @@ public class CDrive {
         }
         
         else
-            sDriveStatus = "Disabled";
+            m_sDriveStatus = "Disabled";
         
-        Var.drvStationPrinter.print(Var.iDriveStatusLine, sDriveStatus);
+        Var.drvStationPrinter.print(Var.iDriveStatusLine, m_sDriveStatus);
     }
     
     private void tankDrive()
     {
         // Setting to get Tank Drive Working properly on the ps3 Controller
         // should be 2, 4
-        joy.setAxisChannel(Joystick.AxisType.kX, 2);
-        joy.setAxisChannel(Joystick.AxisType.kY, 4);
+        m_joy.setAxisChannel(Joystick.AxisType.kX, 2);
+        m_joy.setAxisChannel(Joystick.AxisType.kY, 4);
 
-        sDriveStatus = "Tank Drive";
-        mtLeftSpeed = -joy.getX() * Math.abs(joy.getX());
-        mtRightSpeed = joy.getY() * Math.abs(joy.getY());
+        m_sDriveStatus = "Tank Drive";
+        m_mtLeftSpeed = -m_joy.getX() * Math.abs(m_joy.getX());
+        m_mtRightSpeed = m_joy.getY() * Math.abs(m_joy.getY());
 
-        if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
-            this.setSpeed(mtLeftSpeed, mtRightSpeed);
+        if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
+            this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
 
         else
             this.setSpeed(0, 0);   
@@ -64,18 +64,18 @@ public class CDrive {
     {
         // Setting to get regular drive Working properly on the ps3 Controller
         // should be 3, 2
-        joy.setAxisChannel(Joystick.AxisType.kX, 3);
-        joy.setAxisChannel(Joystick.AxisType.kY, 2);
+        m_joy.setAxisChannel(Joystick.AxisType.kX, 3);
+        m_joy.setAxisChannel(Joystick.AxisType.kY, 2);
 
-        sDriveStatus = "Regular Drive";
-        double y = joy.getY() * Math.abs(joy.getY());
-        double x = joy.getX() * Math.abs(joy.getX());
+        m_sDriveStatus = "Regular Drive";
+        double y = m_joy.getY() * Math.abs(m_joy.getY());
+        double x = m_joy.getX() * Math.abs(m_joy.getX());
 
-        mtRightSpeed = (-y+x);
-        mtLeftSpeed = (y+x);
+        m_mtRightSpeed = (-y+x);
+        m_mtLeftSpeed = (y+x);
 
-        if(Math.abs(mtLeftSpeed) + Math.abs(mtRightSpeed) > dMinSpeed)
-            this.setSpeed(mtLeftSpeed, mtRightSpeed);
+        if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
+            this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
 
         else
             this.setSpeed(0, 0);   
@@ -83,17 +83,17 @@ public class CDrive {
 	
     public void setSpeed(double setMtLeft, double setMtRight)
     {
-        mtLeft.set(setMtLeft);
-        mtRight.set(setMtRight);
+        m_mtLeft.set(setMtLeft);
+        m_mtRight.set(setMtRight);
     }
     
     public double getMtRightSpeed()
     {
-        return mtRightSpeed;
+        return m_mtRightSpeed;
     }
     
     public double getMtLeftSpeed()
     {
-        return mtLeftSpeed;
+        return m_mtLeftSpeed;
     }
 }

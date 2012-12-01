@@ -19,52 +19,52 @@ import edu.wpi.first.wpilibj.*;
 public class CSolenoid 
 {
 
-    private Solenoid solUp;
-    private Solenoid solDown;
-    private boolean bSetDown;
+    private Solenoid m_solUp;
+    private Solenoid m_solDown;
+    private boolean m_bSetDown;
     
     public CSolenoid(int solDownChannel, int solUpChannel, boolean bDown)
     {
-        bSetDown = bDown;
-        solUp = new Solenoid(solUpChannel);
-        solDown = new Solenoid(solDownChannel);
-        solUp.set(!bSetDown);
-        solDown.set(bSetDown);
+        m_bSetDown = bDown;
+        m_solUp = new Solenoid(solUpChannel);
+        m_solDown = new Solenoid(solDownChannel);
+        m_solUp.set(!m_bSetDown);
+        m_solDown.set(m_bSetDown);
     }
     
     public void turnOn()
     {
-        solUp.set(bSetDown);
-        solDown.set(!bSetDown);
+        m_solUp.set(m_bSetDown);
+        m_solDown.set(!m_bSetDown);
     }
     
     public void turnOff()
     {
-        solUp.set(!bSetDown);
-        solDown.set(bSetDown); 
+        m_solUp.set(!m_bSetDown);
+        m_solDown.set(m_bSetDown); 
     }
     
     public void set(boolean bVal)
     {
         if(bVal)
         {
-            solUp.set(true);
-            solDown.set(false);
+            m_solUp.set(true);
+            m_solDown.set(false);
         }
         else
         {
-            solUp.set(false);
-            solDown.set(true);
+            m_solUp.set(false);
+            m_solDown.set(true);
         }
     }
     
     public boolean getUp()
     {
-        return solUp.get();
+        return m_solUp.get();
     }
 
     public boolean getDown()
     {
-        return solDown.get();
+        return m_solDown.get();
     }
 }
