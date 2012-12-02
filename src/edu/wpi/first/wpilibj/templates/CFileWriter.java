@@ -4,12 +4,8 @@
  */
 package edu.wpi.first.wpilibj.templates;
 import java.io.IOException;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.*;
 import javax.microedition.io.Connector;
-
-import com.sun.squawk.io.BufferedReader;
 import com.sun.squawk.microedition.io.FileConnection;
 
 /**

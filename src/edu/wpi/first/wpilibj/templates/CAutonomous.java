@@ -32,11 +32,11 @@ public class CAutonomous {
     private Joystick m_joy;
     
     
-    public CAutonomous(Joystick joystick, CDrive drive, CRetrieve retrieval)
+    public CAutonomous(Joystick joystick, CRobot bot)
     {
         m_joy = joystick;
-        m_recorder = new CRecorder(drive, retrieval);
-        m_replayer = new CReplayer(drive, retrieval);
+        m_recorder = new CRecorder(bot);
+        m_replayer = new CReplayer(bot);
     }
     
     public void run()

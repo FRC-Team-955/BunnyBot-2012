@@ -14,13 +14,11 @@ public class CRecorder {
     private boolean m_bRecStarted = false;
     private CFileWriter m_fileWriter;
     private CTimer m_tmRecord = new CTimer();
-    private CDrive m_driver;
-    private CRetrieve m_retrieve;
+    private CRobot m_bot;
     
-    public CRecorder(CDrive drive, CRetrieve retrieval)
+    public CRecorder(CRobot robot)
     {
-        m_driver = drive;
-        m_retrieve = retrieval;
+        m_bot = robot;
     }
     
     public String record(String sFileName, boolean bAutoEditMode)
@@ -33,7 +31,7 @@ public class CRecorder {
             m_bRecStarted = true;
         }
 
-        m_fileWriter.writeData(m_tmRecord.get(), m_driver.getMtLeftSpeed(), m_driver.getMtRightSpeed(), m_retrieve.getStatus());
+        m_fileWriter.writeData(m_tmRecord.get(), m_bot.getMtLeft(), m_bot.getMtRight(), m_bot.getRetrieveStat());
 
         return m_sRecordStaus;
     }

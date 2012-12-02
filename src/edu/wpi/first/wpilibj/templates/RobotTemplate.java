@@ -18,11 +18,9 @@ import edu.wpi.first.wpilibj.*;
 public class RobotTemplate extends IterativeRobot {
 
     Joystick ps3Joy = new Joystick(1);
-    CDrive drive = new CDrive(ps3Joy);
-    CRetrieve retrieve = new CRetrieve(ps3Joy);
-    CRelease releaser = new CRelease(ps3Joy);
+    CRobot bot = new CRobot(ps3Joy);
     CCompressor compressor = new CCompressor();
-    CAutonomous autonomous = new CAutonomous(ps3Joy, drive, retrieve);
+    CAutonomous autonomous = new CAutonomous(ps3Joy, bot);
     
     // This function is run when the robot is first started up and should be
     // used for any initialization code.
@@ -63,9 +61,7 @@ public class RobotTemplate extends IterativeRobot {
     // This function is called periodically during operator control
     public void teleopPeriodic(){
         
-        drive.run();
-        retrieve.run();
-        releaser.run();
+        bot.run();
         compressor.run();
         autonomous.run();
     }

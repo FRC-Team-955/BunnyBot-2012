@@ -16,13 +16,11 @@ public class CReplayer {
     private CTimer m_tmReplay = new CTimer();
     private String m_sReplayStatus = "";
     private CFileReader m_fileReader;
-    private CDrive m_driver;
-    private CRetrieve m_retrieve;
+    private CRobot m_bot;
     
-    public CReplayer(CDrive drive, CRetrieve retriever)
+    public CReplayer(CRobot robot)
     {
-        m_driver = drive;
-        m_retrieve = retriever;
+        m_bot = robot;
     }
     
     public String replay(String sFileName)
@@ -40,8 +38,8 @@ public class CReplayer {
 
         if(!m_bDoneReplay)
         {
-            m_driver.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
-            m_retrieve.set(m_joyAuto.getRetrieve());
+            m_bot.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
+            m_bot.setRetrieve(m_joyAuto.getRetrieve());
 
             if(m_tmReplay.get() >= m_joyAuto.getTimer())
             {
@@ -58,7 +56,7 @@ public class CReplayer {
         else
         {
             m_sReplayStatus = "Done Replaying";
-            m_driver.setSpeed(0, 0);
+            m_bot.setSpeed(0, 0);
             m_fileReader.close();
             m_tmReplay.stop();
         }
