@@ -34,6 +34,12 @@ public class CDrive {
 
             else
                 regDrive();
+            
+            if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
+                this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
+
+            else
+                this.setSpeed(0, 0);
         }
         
         else
@@ -51,13 +57,7 @@ public class CDrive {
 
         m_sDriveStatus = "Tank Drive";
         m_mtLeftSpeed = m_joy.getX() * Math.abs(m_joy.getX());
-        m_mtRightSpeed = -m_joy.getY() * Math.abs(m_joy.getY());
-
-        if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
-            this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
-
-        else
-            this.setSpeed(0, 0);   
+        m_mtRightSpeed = -m_joy.getY() * Math.abs(m_joy.getY());  
     }
 
     private void regDrive()
@@ -72,13 +72,7 @@ public class CDrive {
         double x = m_joy.getX() * Math.abs(m_joy.getX());
 
         m_mtRightSpeed = (-y+x);
-        m_mtLeftSpeed = (y+x);
-
-        if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
-            this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
-
-        else
-            this.setSpeed(0, 0);   
+        m_mtLeftSpeed = (y+x);  
     }
 	
     public void setSpeed(double setMtLeft, double setMtRight)
