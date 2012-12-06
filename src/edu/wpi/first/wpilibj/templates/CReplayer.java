@@ -29,7 +29,6 @@ public class CReplayer {
          
         if(!m_bRepStarted)
         {
-            m_sReplayStatus = "Replaying";
             m_fileReader = new CFileReader(sFileName);
             m_joyAuto.add(m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readBoolean());
             m_tmReplay.start();
@@ -38,6 +37,7 @@ public class CReplayer {
 
         if(!m_bDoneReplay)
         {
+            m_sReplayStatus = "Replaying: " + String.valueOf(m_tmReplay.get());
             m_bot.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
             m_bot.setRetrieve(m_joyAuto.getRetrieve());
 

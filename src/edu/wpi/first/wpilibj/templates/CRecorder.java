@@ -25,12 +25,12 @@ public class CRecorder {
     {
         if(!m_bRecStarted)
         {
-            m_sRecordStaus = "Recording";
             m_fileWriter = new CFileWriter(sFileName);
             m_tmRecord.start();
             m_bRecStarted = true;
         }
 
+        m_sRecordStaus = "Recording: " + String.valueOf(m_tmRecord.get());
         m_fileWriter.writeData(m_tmRecord.get(), m_bot.getMtLeft(), m_bot.getMtRight(), m_bot.getRetrieveStat());
 
         return m_sRecordStaus;
