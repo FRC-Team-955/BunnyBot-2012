@@ -45,10 +45,7 @@ public class Var {
     // Other
     static final double dENDSIGNAL = -10.0;
     static final CPrintDriver drvStationPrinter = new CPrintDriver();
-    static final int iFileMax = 4;
     static boolean bDrive = true;
-    static final String sRegOutput = "file:///regVal.txt";
-    static String sFileType = sRegOutput;
     
     // DriverStation Channels
     static final int chnDigInReg = 0;

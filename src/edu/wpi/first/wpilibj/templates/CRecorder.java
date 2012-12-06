@@ -21,7 +21,7 @@ public class CRecorder {
         m_bot = robot;
     }
     
-    public String record(String sFileName, boolean bAutoEditMode)
+    public String record(String sFileName)
     {
         if(!m_bRecStarted)
         {

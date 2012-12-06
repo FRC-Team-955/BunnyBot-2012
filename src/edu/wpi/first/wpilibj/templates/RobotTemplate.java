@@ -55,7 +55,7 @@ public class RobotTemplate extends IterativeRobot {
     
     // This function is called periodically during autonomous
     public void autonomousPeriodic() {
-        autonomous.replay(Var.sFileType);
+        autonomous.replay();
     }
 
     // This function is called periodically during operator control
