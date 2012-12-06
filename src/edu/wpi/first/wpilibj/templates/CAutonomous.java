@@ -16,6 +16,8 @@ public class CAutonomous {
     private final String m_sAutoCenter = "file:///autoval.txt";
     private final String m_sAutoLeft = "file:///autoLeft.txt";
     private final String m_sAutoRight = "file:///autoRight.txt";
+    private final String m_sRegOutput = "file:///regVal.txt";
+    private final int m_iFileMax = 4;
     
     private CSpecialButton m_btRecord = new CSpecialButton();
     private CSpecialButton m_btReplay = new CSpecialButton();
@@ -27,6 +29,7 @@ public class CAutonomous {
     private String m_sAutonmousStatus = "Doing Nothing";
     private String m_sFileType = "Reg: ";
     private String m_sEditInfo = "Can NOT edit";
+    private String m_sFileName = m_sRegOutput; 
     private CRecorder m_recorder;
     private CReplayer m_replayer; 
     private Joystick m_joy;
@@ -61,7 +64,7 @@ public class CAutonomous {
             
             if(m_btChangeMode.gotPressed())
             {
-                if(++m_iFileMode >= Var.iFileMax)
+                if(++m_iFileMode >= m_iFileMax)
                     m_iFileMode = 0;
 
                 changeFile(m_iFileMode); // Changes the file 
@@ -69,10 +72,10 @@ public class CAutonomous {
         }
         
         if(m_btRecord.getSwitch())   
-            m_sAutonmousStatus = record(Var.sFileType);		
+            m_sAutonmousStatus = record();		
 
         else if(m_btReplay.getSwitch())
-            m_sAutonmousStatus = replay(Var.sFileType);
+            m_sAutonmousStatus = replay();
         
         else
         {
@@ -84,18 +87,18 @@ public class CAutonomous {
         Var.drvStationPrinter.print(Var.iRecordStatusLine, m_sFileType + m_sAutonmousStatus);
     }
     
-    public String replay(String sFileName)
+    public String replay()
     {
-        return m_replayer.replay(sFileName);
+        return m_replayer.replay(m_sFileName);
     }
     
-    private String record(String sFileName)
+    private String record()
     {
-        if(m_bAutoEditMode == false && sFileName != Var.sRegOutput)
+        if(canEdit())
             return "Can't Edit Autofile";
         
         else
-            return m_recorder.record(sFileName, m_bAutoEditMode);
+            return m_recorder.record(m_sFileName);
     }
     
     private void reset() // Resets timer and booleans so that you can record or replay again
@@ -116,6 +119,14 @@ public class CAutonomous {
         reset();
     }
     
+    private boolean canEdit()
+    {
+       if(m_bAutoEditMode == false && m_sFileName != m_sRegOutput)
+            return false;
+       
+       return true;
+    }
+    
     public void changeFile(int iFileType)
     {
         switch (iFileType)
@@ -123,35 +134,35 @@ public class CAutonomous {
             case Var.chnDigInReg:   // 0
             {
                 m_sFileType = "Reg: ";
-                Var.sFileType = Var.sRegOutput;
+                m_sFileName = m_sRegOutput;
                 break;
             }
 
             case Var.chnDigInAutoCtr:   // 1
             {
                 m_sFileType = "AutoCenter: ";
-                Var.sFileType = m_sAutoCenter; 
+                m_sFileName = m_sAutoCenter; 
                 break;
             } 
 
             case Var.chnDigInAutoLft:   // 2
             {
                 m_sFileType = "AutoLeft: ";
-                Var.sFileType = m_sAutoLeft;
+                m_sFileName = m_sAutoLeft;
                 break;
             }
 
             case Var.chnDigInAutoRght:  // 3
             {
                 m_sFileType = "AutoRight: ";
-                Var.sFileType = m_sAutoRight; 
+                m_sFileName = m_sAutoRight; 
                 break;
             }
                 
             default:
             {
                 m_sFileType = "AutoCenter: ";
-                Var.sFileType = m_sAutoCenter; 
+                m_sFileName = m_sAutoCenter; 
                 break;
             }
         }
