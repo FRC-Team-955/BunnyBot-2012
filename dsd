@@ -1,0 +1,253 @@
+commit 83518e2b0f56bb3954e553a6cbb1d68edaf3abd0
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Mon Dec 3 18:59:17 2012 -0800
+
+    Removed uneeded code
+
+commit d88191f8a8892f70ed339e313b575ab344ff1fb8
+Author: Team 955 <captain@cvhsrobotics.com>
+Date:   Sun Dec 2 16:55:09 2012 -0800
+
+    Tank Drive is working correctlty now, was reversed before
+
+commit 714038500b74611e0eac984a0109f1c90385655c
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sat Dec 1 17:06:52 2012 -0800
+
+    Added CRobot class that has all the robot related classes, driver, releaser etc..
+
+commit 89555abb861249d7691b4e68dc497808bc08624e
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sat Dec 1 15:57:46 2012 -0800
+
+    Changed all variables to private and changed most prefixes in classes, change autonomous file with switches in autonomous now
+
+commit 2e38b8e7701ad9aa6cd48bd85540b52f33944457
+Author: Team 955 <captain@cvhsrobotics.com>
+Date:   Fri Nov 30 18:28:16 2012 -0800
+
+    Fixed file changer function, was using wrong variable..... EVERYTHING WORKS NOW!!!! :3
+
+commit 9715ff71c76f25648f05bbbc96e1749b7f478d09
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Thu Nov 29 19:26:08 2012 -0800
+
+    Speed for ball collector can be controlled from the Driver Station now, add autonomousInit()
+
+commit 49ea522557c065a377f128cc39be55682f4afad9
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Wed Nov 28 18:05:26 2012 -0800
+
+    Changed file increment order
+
+commit b0174fc12f5c030fd8aeaa84f663df4dfa4c1dce
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Mon Nov 26 17:36:59 2012 -0800
+
+    Can choose which files to run during autonomous from Driverstation now
+
+commit 19fa8a3aa7b5c303a5c9fa64d765bf33488a1866
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sun Nov 25 19:05:40 2012 -0800
+
+    Now had files for center, left and right.
+
+commit f63056bd02016cc3b01cb15b509f0eb5e59f79fb
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sun Nov 25 15:20:26 2012 -0800
+
+    Final working Version git status! :D 2
+
+commit e8cdfa7bcf2b38ca116091d9911903800f8dcdc3
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sun Nov 25 11:33:31 2012 -0800
+
+    Split up the recording class into seperate classes, renamed it. Still has it incase new one doesn't work
+
+commit 419b51bc7494c5f64a0e67b5094705cb0201a539
+Author: Team 955 <captain@cvhsrobotics.com>
+Date:   Fri Nov 23 19:08:54 2012 -0800
+
+    Added relay, not finished though
+
+commit 097e9fd56126a62a52961a4a38f77c24c44d000a
+Author: Team 955 <captain@cvhsrobotics.com>
+Date:   Fri Nov 23 17:10:41 2012 -0800
+
+    Everything works now, Autonmous , Teleop, EVERYTHING. Just need to add the spike relay now
+
+commit 6a289bfdf4f0c97aaf8fe891290aff0bb00454a3
+Author: Team 955 <captain@cvhsrobotics.com>
+Date:   Fri Nov 23 16:26:48 2012 -0800
+
+    All recording things work now
+
+commit 6332a9f0ea461a06f287c750e477748fb61a85db
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Fri Nov 23 13:34:04 2012 -0800
+
+    Changed the inital value of a variable in the Recording class
+
+commit 70465d017a4ed6314100a04769d412aa895cbb28
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Tue Nov 20 17:21:34 2012 -0800
+
+    Fixed little mistake, put some code in wrong places ...
+
+commit 34262878fab2971b4dc699de64df431ec3483870
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Tue Nov 20 11:28:44 2012 -0800
+
+    Modified Recording to able to record 2 files now, removed recording the Release
+    status, can only record if a button is pressed Ready for further testing!
+
+commit a9051a05eac15649f6a56fc8fdfc5282a78aa624
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Mon Nov 19 10:44:12 2012 -0800
+
+    Update .gitignore
+
+commit e511fecec5424a74c60fd8d015c3f23fad3a99e2
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Mon Nov 19 08:39:19 2012 -0800
+
+    Changed the number to 2012
+
+commit e27cf8aecf83921bc44bcb1192a9f81424101f48
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Mon Nov 19 08:18:57 2012 -0800
+
+    Update README.md
+
+commit b15ce7875f008e667933c7bc1ee400ff5dce8815
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Sun Nov 18 20:08:36 2012 -0800
+
+    Complete Final Version, ready for testing
+
+commit e7fdc8eaa53f830b68da63b87d5b869f3ea18c63
+Author: Team 955 <captain@cvhsrobotics.com>
+Date:   Sun Nov 18 17:53:34 2012 -0800
+
+    Recording Works!!! Has Minor glitches though
+
+commit f0e5f29821ce1cb3141449be972216d09223f915
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Sat Nov 17 12:26:20 2012 -0800
+
+    Changed the organization of the reset() in the CRecording class
+
+commit 3cd8a8c4266ba4e09357edf48005dc03006eacc7
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sat Nov 17 12:18:50 2012 -0800
+
+    Changed it back to normal
+
+commit c5601626c5ea259723808a20680bce9f8ba71f34
+Merge: e5fe462 e445dc7
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Thu Nov 15 16:56:42 2012 -0800
+
+    Merge branch 'master' of https://github.com/Merfoo/Team955-BunnyBot-2013
+
+commit e5fe46256386c9ea766d49b2e0c7ba1ab2c08c1c
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Thu Nov 15 16:29:16 2012 -0800
+
+    Removed changed variable name to see if we're done reading a file
+
+commit e445dc72a2938346009e3f98364f81f2d827c1eb
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Thu Nov 15 16:23:04 2012 -0800
+
+    Update .gitignore
+
+commit 3dc2cd2022fd07737fda944dee4935d94a1f6016
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sun Nov 11 16:50:07 2012 -0800
+
+    Doesn't check if the file is closed before opening, testing purposes
+
+commit 429e6a1c2e6be5e8f5472fdef8619b92854b8148
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Sun Nov 11 09:44:53 2012 -0800
+
+    Now its actually closing and opening files, removed dedicated button just for clearing recording memory, printing to Netbeans amount of times files are being closed and openend
+
+commit d0bde50830999f55c9e0ff0dd6ecd7c5bc2a117f
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Fri Nov 9 22:01:15 2012 -0800
+
+    Fixed opening and closing files, need to be tested.
+
+commit 60749b4a42fdf65d87cdac1e51d9a1e7b4b2f77e
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Fri Nov 9 10:56:51 2012 -0800
+
+    Changed the way to check if we're done reading the recording file
+
+commit b3b781344f539d16a9a7ab1154a610b3d5237583
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Thu Nov 8 10:44:31 2012 -0800
+
+    Added end value at end of file so that it'd stop reading, need to test
+
+commit b58dc427595c691d0ab1f0b727c2879ee868f604
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Wed Nov 7 21:19:11 2012 -0800
+
+    Recording doesn't work, need to fix some timing variables
+
+commit 520d093f863a040a483e9f62889965008fd742f2
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Tue Nov 6 10:25:11 2012 -0800
+
+    Deleted and opened files correctly this time
+
+commit 718607892545a406299322a274ecdafdebd94887
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Mon Nov 5 16:03:32 2012 -0800
+
+    Changed recording class to save file to Crio, needs testing
+
+commit ccc467a2d780343b80545a7c29a9bfbc77ffc674
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Fri Nov 2 22:42:51 2012 -0700
+
+    Ready for testing, cant save a file to CRio yet though
+
+commit 3ddbf4a92e69fa2f3030453a4fe396e11de50919
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Fri Nov 2 20:10:38 2012 -0700
+
+    Added newer version of CRecording, JoySimulator, CTimer class
+
+commit 56eaba81f35f14e9814bf67272924019cdedf7db
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Thu Nov 1 18:19:56 2012 -0700
+
+    Changed all class members to Private
+
+commit 374095bc131e8b736b21c47d73e2b67b8f800b9e
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Tue Oct 30 18:28:55 2012 -0700
+
+    Added recording class for autonomous and helper classers like CButton, CSolenoids
+
+commit d58a23c393d04dfe33bcc139687002f1327ed2b4
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Thu Oct 25 11:15:15 2012 -0700
+
+    Added a CDrive class for driving the robot
+
+commit a25c5f51f86b2cb45df695f6fe6fd0b703f36826
+Author: Fauzi <fauzimerfoo@gmail.com>
+Date:   Sat Oct 20 13:11:28 2012 -0700
+
+    Added Iterative FRC Project for Bunnybot 2013
+
+commit 940b4593c44a377db6a77730ac2888a9d50c061c
+Author: Merfoo <fauzimerfoo@gmail.com>
+Date:   Sat Oct 20 12:54:16 2012 -0700
+
+    Initial commit
