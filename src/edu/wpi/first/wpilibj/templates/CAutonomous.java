@@ -6,10 +6,7 @@ package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-/**
- *
- * @author fauzi
- */
+ // @author fauzi      
 // Records robots movements and replays it later, used for autonomous
 // Working on having a function to modify the autonomous
 public class CAutonomous {
