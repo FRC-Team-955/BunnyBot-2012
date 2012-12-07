@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * @author fauzi
  */
 // Records robots movements and replays it later, used for autonomous
+// Working on having a function to modify the autonomous
 public class CAutonomous {
     
     // CONSTANTS
