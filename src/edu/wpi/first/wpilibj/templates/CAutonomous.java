@@ -126,7 +126,7 @@ public class CAutonomous {
     
     private void reset() // Resets timer and booleans so that you can record or replay again
     {  
-              Var.bDrive = true;
+        Var.bDrive = true;
         m_replayer.reset();
         m_recorder.reset();
     }
