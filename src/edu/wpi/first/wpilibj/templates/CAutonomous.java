@@ -4,9 +4,10 @@
  */
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 
- // @author fauzi      
+// @author fauzi      
 // Records robots movements and replays it later, used for autonomous
 // Working on having a function to modify the autonomous
 public class CAutonomous {
@@ -17,23 +18,30 @@ public class CAutonomous {
     private final String m_sAutoRight = "file:///autoRight.txt";
     private final String m_sRegOutput = "file:///regVal.txt";
     private final int m_iFileMax = 4;
-    
-    private CSpecialButton m_btRecord = new CSpecialButton();
-    private CSpecialButton m_btReplay = new CSpecialButton();
-    private CButton m_btChangeMode = new CButton();
-    private CButton m_btAllowEdit = new CButton();
-    private boolean m_bAnotherIsPressed = false; 
-    private boolean m_bAutoEditMode = false;
-    private int m_iFileMode = 0;
+        
     private String m_sAutonmousStatus = "Doing Nothing";
     private String m_sFileType = "Reg: ";
     private String m_sEditInfo = "Can NOT edit";
     private String m_sFileName = m_sRegOutput; 
+    private CSpecialButton m_btRecord = new CSpecialButton();
+    private CSpecialButton m_btReplay = new CSpecialButton();
+    private CButton m_btChangeMode = new CButton();
+    private CButton m_btAllowEdit = new CButton();
+    private CButton m_btPrintFile = new CButton();
+    private CButton m_btModifyAuto = new CButton();
+    private CEditAuto m_editAuto = new CEditAuto();    
     private CRecorder m_recorder;
     private CReplayer m_replayer; 
     private Joystick m_joy;
-    
-    
+    private boolean m_bAnotherIsPressed = false; 
+    private boolean m_bAutoEditMode = false;
+    private int m_iFileMode = 0;
+    private int m_iRetrieve = -1;
+    private double m_dMin = -1;
+    private double m_dMax = -1;
+    private double m_dMtLeft = -1;
+    private double m_dMtRight = -1;
+
     public CAutonomous(Joystick joystick, CRobot bot)
     {
         m_joy = joystick;
@@ -47,6 +55,8 @@ public class CAutonomous {
         m_bAnotherIsPressed = m_btReplay.run(m_joy.getRawButton(Var.btReplay), m_bAnotherIsPressed);
         m_btChangeMode.run(m_joy.getRawButton(Var.btChangeFile));
         m_btAllowEdit.run(m_joy.getRawButton(Var.btAllowEdit));
+        m_btPrintFile.run(m_joy.getRawButton(Var.btPrintFile));
+        m_btModifyAuto.run(m_joy.getRawButton(Var.btModifyAuto));
 		
         if(!m_btRecord.getSwitch() && !m_btReplay.getSwitch())
         {
@@ -67,6 +77,20 @@ public class CAutonomous {
                     m_iFileMode = 0;
 
                 changeFile(m_iFileMode); // Changes the file 
+            }
+            
+            if(m_bAutoEditMode)
+            {
+                m_dMin = DriverStation.getInstance().getAnalogIn(Var.chnAngMin);
+                m_dMax = DriverStation.getInstance().getAnalogIn(Var.chnAngMax);
+                m_dMtLeft = DriverStation.getInstance().getAnalogIn(Var.chnAngMtLeft);
+                m_dMtRight = DriverStation.getInstance().getAnalogIn(Var.chnAngMtRight);
+                
+                if(m_btPrintFile.gotPressed())
+                    m_editAuto.printFile(m_sFileName);
+                
+                else if(m_btModifyAuto.gotPressed())
+                    m_editAuto.modify(m_dMin, m_dMax, m_dMtLeft, m_dMtRight);
             }
         }
         

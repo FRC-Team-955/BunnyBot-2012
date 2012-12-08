@@ -36,6 +36,8 @@ public class Var {
     static final int btReleaseBall = 1;
     static final int btActRetrieve = 3;
     static final int btTurnOnCompressor = 4;
+    static final int btPrintFile = 5;
+    static final int btModifyAuto = 6;
     static final int btChangeDrive = 8;
     static final int btRecord = 9;
     static final int btAllowEdit = 10;
@@ -52,7 +54,10 @@ public class Var {
     static final int chnDigInAutoCtr = 1;
     static final int chnDigInAutoLft = 2;
     static final int chnDigInAutoRght = 3;
-    static final int chnAnlgRetrieveSpeed = 1;
+    static final int chnAngMin = 1;
+    static final int chnAngMax = 2;
+    static final int chnAngMtLeft = 3;
+    static final int chnAngMtRight = 4;
     
     // Printing to Driverstation lines, 2-6 are available only
     static final int iDriveStatusLine = 2;
