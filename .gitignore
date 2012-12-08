@@ -1,6 +1,4 @@
 /nbproject/private/
-suite/*
-j2meclasses/*
-build/*
-*.class
-*.jar
+suite/
+j2meclasses/
+build/
