@@ -94,10 +94,10 @@ public class CAutonomous {
     private String record()
     {
         if(canEdit())
-            return "Can't Edit Autofile";
+            return m_recorder.record(m_sFileName);
         
         else
-            return m_recorder.record(m_sFileName);
+            return "Can't Edit Autofile";
     }
     
     private void reset() // Resets timer and booleans so that you can record or replay again
