@@ -4,6 +4,8 @@
  */
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  *
  * @author fauzi
@@ -13,7 +15,7 @@ public class CReplayer {
     private boolean m_bRepStarted = false;
     private boolean m_bDoneReplay = false;
     private CJoyEmulator m_joyAuto = new CJoyEmulator();
-    private CTimer m_tmReplay = new CTimer();
+    private Timer m_tmReplay = new Timer();
     private String m_sReplayStatus = "";
     private CFileReader m_fileReader;
     private CRobot m_bot;
@@ -37,7 +39,7 @@ public class CReplayer {
 
         if(!m_bDoneReplay)
         {
-            m_sReplayStatus = "Replaying: " + String.valueOf(m_tmReplay.get());
+            m_sReplayStatus = "Replaying: " + Var.setPrecision(m_tmReplay.get());
             m_bot.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
             m_bot.setRetrieve(m_joyAuto.getRetrieve());
 
@@ -71,7 +73,7 @@ public class CReplayer {
             if(!m_fileReader.isClosed())
                 m_fileReader.close();
             
-            m_tmReplay.reset(true);
+            m_tmReplay.stop();
             m_bDoneReplay = false;
             m_bRepStarted = false;
         }

@@ -4,16 +4,18 @@
  */
 package edu.wpi.first.wpilibj.templates;
 
+
 /**
  *
  * @author fauzi
  */
+import edu.wpi.first.wpilibj.Timer;
 public class CRecorder {
 
     private String m_sRecordStaus = "";
     private boolean m_bRecStarted = false;
     private CFileWriter m_fileWriter;
-    private CTimer m_tmRecord = new CTimer();
+    private Timer m_tmRecord = new Timer();
     private CRobot m_bot;
     
     public CRecorder(CRobot robot)
@@ -29,8 +31,8 @@ public class CRecorder {
             m_tmRecord.start();
             m_bRecStarted = true;
         }
-
-        m_sRecordStaus = "Recording: " + String.valueOf(m_tmRecord.get());
+        
+        m_sRecordStaus = "Recording: " + Var.setPrecision(m_tmRecord.get());
         m_fileWriter.writeData(m_tmRecord.get(), m_bot.getMtLeft(), m_bot.getMtRight(), m_bot.getRetrieveStat());
 
         return m_sRecordStaus;
@@ -42,7 +44,7 @@ public class CRecorder {
         {
             m_fileWriter.writeDouble(Var.dENDSIGNAL);
             m_fileWriter.close();
-            m_tmRecord.reset(true);
+            m_tmRecord.stop();
             m_bRecStarted = false;
         }
     }

@@ -36,6 +36,8 @@ public class Var {
     static final int btReleaseBall = 1;
     static final int btActRetrieve = 3;
     static final int btTurnOnCompressor = 4;
+    static final int btPrintFile = 5;
+    static final int btModifyAuto = 6;
     static final int btChangeDrive = 8;
     static final int btRecord = 9;
     static final int btAllowEdit = 10;
@@ -44,6 +46,7 @@ public class Var {
     
     // Other
     static final double dENDSIGNAL = -10.0;
+    static final double dPrecision = 2;
     static final CPrintDriver drvStationPrinter = new CPrintDriver();
     static boolean bDrive = true;
     
@@ -52,10 +55,38 @@ public class Var {
     static final int chnDigInAutoCtr = 1;
     static final int chnDigInAutoLft = 2;
     static final int chnDigInAutoRght = 3;
-    static final int chnAnlgRetrieveSpeed = 1;
+    static final int chnAngMin = 1;
+    static final int chnAngMax = 2;
+    static final int chnAngMtLeft = 3;
+    static final int chnAngMtRight = 4;
     
     // Printing to Driverstation lines, 2-6 are available only
     static final int iDriveStatusLine = 2;
+    static final int iEditFileStat = 4;
     static final int iEditAutoMode = 5;
     static final int iRecordStatusLine = 6;
+    
+    public static String setPrecision(double dDouble)
+    {
+        String sArg = Double.toString(dDouble);
+        String sReturn = "";
+        boolean bAfterDec = false;
+        int iSpaceAfter = 0;
+        
+        for(int index = 0; index < sArg.length(); index++)
+        {
+            sReturn += sArg.charAt(index);
+            
+            if(sArg.charAt(index) == '.')
+                bAfterDec = true;
+            
+            else if(bAfterDec)
+                iSpaceAfter++;
+                
+            if(iSpaceAfter == dPrecision)
+                break;
+        }
+        
+        return sReturn;
+    }
 }
