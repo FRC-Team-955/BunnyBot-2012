@@ -10,13 +10,14 @@ package edu.wpi.first.wpilibj.templates;
 
 // Meant to modfify a autonomous file a bit
 public class CEditAuto {
-    
+    private final int iArraySize = 1500;
+	
     private CFileReader m_fileReader;
     private CFileWriter m_fileWriter;
-    private double[] m_dTimer;
-    private double[] m_dMtLeft;
-    private double[] m_dMtRight;
-    private boolean[] m_bRetrieve;
+    private double[] m_dTimer = new double[iArraySize];
+    private double[] m_dMtLeft = new double[iArraySize];
+    private double[] m_dMtRight = new double[iArraySize];
+    private boolean[] m_bRetrieve = new boolean[iArraySize];
     private int m_iArrayLength = 0;
     private String m_sFileName;
             
@@ -29,10 +30,15 @@ public class CEditAuto {
                 
         while((dTemp = m_fileReader.readDouble()) > Var.dENDSIGNAL + 1)
         {
-            System.out.print((m_dTimer[index] = dTemp) + "-");
-            System.out.print((m_dMtLeft[index] = m_fileReader.readDouble()) + "-");
-            System.out.print((m_dMtRight[index] = m_fileReader.readDouble()) + "-");
-            System.out.println((m_bRetrieve[index] = m_fileReader.readBoolean()) + "-");
+			m_dTimer[index] = dTemp;
+			m_dMtLeft[index] = m_fileReader.readDouble();
+			m_dMtRight[index] = m_fileReader.readDouble();
+			m_bRetrieve[index] = m_fileReader.readBoolean();
+			
+            System.out.print(m_dTimer[index] + "-");
+            System.out.print(m_dMtLeft[index] + "-");
+            System.out.print(m_dMtRight[index] + "-");
+            System.out.println(m_bRetrieve[index] + "-");
             m_iArrayLength = ++index;
         }
     }
@@ -43,7 +49,7 @@ public class CEditAuto {
         
         for(int index = 0; index < m_iArrayLength; index++)
         {
-            if(m_dTimer[index] <= dMin && m_dTimer[index] >= dMax)
+            if(m_dTimer[index] >= dMin && m_dTimer[index] <= dMax)
             {   
                 if(dMtLeft > -1)
                     m_dMtLeft[index] = dMtLeft;
