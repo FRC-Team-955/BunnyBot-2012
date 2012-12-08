@@ -17,30 +17,40 @@ public class CPrintDriver {
         {
             case 2:
             {
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, "");
+                DriverStationLCD.getInstance().updateLCD(); 
                 DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, sMessage);
                 break;
             }
                 
             case 3:
             {
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "");
+                DriverStationLCD.getInstance().updateLCD(); 
                 DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, sMessage);
                 break;
             }
                 
             case 4:
             {
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 1, "");
+                DriverStationLCD.getInstance().updateLCD(); 
                 DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser4, 1, sMessage);
                 break;
             }
                 
             case 5:
             {
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, "");
+                DriverStationLCD.getInstance().updateLCD(); 
                 DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser5, 1, sMessage);
                 break;
             }
                 
             case 6:
             {
+                DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, sMessage);
+                DriverStationLCD.getInstance().updateLCD(); 
                 DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser6, 1, sMessage);
                 break;
             }

@@ -46,6 +46,7 @@ public class Var {
     
     // Other
     static final double dENDSIGNAL = -10.0;
+    static final double dPrecision = 2;
     static final CPrintDriver drvStationPrinter = new CPrintDriver();
     static boolean bDrive = true;
     
@@ -61,6 +62,31 @@ public class Var {
     
     // Printing to Driverstation lines, 2-6 are available only
     static final int iDriveStatusLine = 2;
+    static final int iEditFileStat = 4;
     static final int iEditAutoMode = 5;
     static final int iRecordStatusLine = 6;
+    
+    public static String setPrecision(double dDouble)
+    {
+        String sArg = Double.toString(dDouble);
+        String sReturn = "";
+        boolean bAfterDec = false;
+        int iSpaceAfter = 0;
+        
+        for(int index = 0; index < sArg.length(); index++)
+        {
+            sReturn += sArg.charAt(index);
+            
+            if(sArg.charAt(index) == '.')
+                bAfterDec = true;
+            
+            else if(bAfterDec)
+                iSpaceAfter++;
+                
+            if(iSpaceAfter == dPrecision)
+                break;
+        }
+        
+        return sReturn;
+    }
 }

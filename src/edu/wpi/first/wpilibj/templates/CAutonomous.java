@@ -22,6 +22,7 @@ public class CAutonomous {
     private String m_sAutonmousStatus = "Doing Nothing";
     private String m_sFileType = "Reg: ";
     private String m_sEditInfo = "Can NOT edit";
+    private String m_sFileEdit = "File Edit: ";
     private String m_sFileName = m_sRegOutput; 
     private CSpecialButton m_btRecord = new CSpecialButton();
     private CSpecialButton m_btReplay = new CSpecialButton();
@@ -36,11 +37,10 @@ public class CAutonomous {
     private boolean m_bAnotherIsPressed = false; 
     private boolean m_bAutoEditMode = false;
     private int m_iFileMode = 0;
-    private int m_iRetrieve = -1;
-    private double m_dMin = -1;
-    private double m_dMax = -1;
-    private double m_dMtLeft = -1;
-    private double m_dMtRight = -1;
+    private double m_dMin = 0;
+    private double m_dMax = 0;
+    private double m_dMtLeft = 0;
+    private double m_dMtRight = 0;
 
     public CAutonomous(Joystick joystick, CRobot bot)
     {
@@ -87,10 +87,10 @@ public class CAutonomous {
                 m_dMtRight = DriverStation.getInstance().getAnalogIn(Var.chnAngMtRight);
                 
                 if(m_btPrintFile.gotPressed())
-                    m_editAuto.printFile(m_sFileName);
+                    m_sFileEdit += m_editAuto.printFile(m_sFileName);
                 
                 else if(m_btModifyAuto.gotPressed())
-                    m_editAuto.modify(m_dMin, m_dMax, m_dMtLeft, m_dMtRight);
+                    m_sFileEdit += m_editAuto.modify(m_dMin, m_dMax, m_dMtLeft, m_dMtRight);
             }
         }
         
@@ -103,6 +103,7 @@ public class CAutonomous {
         else
         {
             m_sAutonmousStatus = "Doing Nothing";
+            m_sFileEdit = "File Edit: Nothing";
             reset();
         }
         
