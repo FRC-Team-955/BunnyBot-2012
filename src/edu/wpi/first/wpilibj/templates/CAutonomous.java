@@ -20,9 +20,9 @@ public class CAutonomous {
     private final int m_iFileMax = 4;
         
     private String m_sAutonmousStatus = "Doing Nothing";
-    private String m_sFileType = "Reg: ";
-    private String m_sEditInfo = "Can NOT edit";
-    private String m_sFileEdit = "File Edit: ";
+    private String m_sFileTypeStat = "Reg: ";
+    private String m_sEditInfoStat = "Can NOT edit";
+    private String m_sFileEditStat = "File Edit: ";
     private String m_sFileName = m_sRegOutput; 
     private CSpecialButton m_btRecord = new CSpecialButton();
     private CSpecialButton m_btReplay = new CSpecialButton();
@@ -65,10 +65,10 @@ public class CAutonomous {
                 m_bAutoEditMode = !m_bAutoEditMode;
 
                 if(m_bAutoEditMode)
-                    m_sEditInfo = "WARNING EDIT MODE";
+                    m_sEditInfoStat = "WARNING EDIT MODE";
 
                 else
-                    m_sEditInfo = "Can NOT edit";
+                    m_sEditInfoStat = "Can NOT edit";
             }
             
             if(m_btChangeMode.gotPressed())
@@ -79,7 +79,7 @@ public class CAutonomous {
                 changeFile(m_iFileMode); // Changes the file 
             }
             
-            if(m_bAutoEditMode)
+            if(canEdit())
             {
                 m_dMin = DriverStation.getInstance().getAnalogIn(Var.chnAngMin);
                 m_dMax = DriverStation.getInstance().getAnalogIn(Var.chnAngMax);
@@ -87,10 +87,10 @@ public class CAutonomous {
                 m_dMtRight = DriverStation.getInstance().getAnalogIn(Var.chnAngMtRight);
                 
                 if(m_btPrintFile.gotPressed())
-                    m_sFileEdit += m_editAuto.printFile(m_sFileName);
+                    m_sFileEditStat += m_editAuto.printFile(m_sFileName);
                 
                 else if(m_btModifyAuto.gotPressed())
-                    m_sFileEdit += m_editAuto.modify(m_dMin, m_dMax, m_dMtLeft, m_dMtRight);
+                    m_sFileEditStat += m_editAuto.modify(m_dMin, m_dMax, m_dMtLeft, m_dMtRight);
             }
         }
         
@@ -103,12 +103,13 @@ public class CAutonomous {
         else
         {
             m_sAutonmousStatus = "Doing Nothing";
-            m_sFileEdit = "File Edit: Nothing";
+            m_sFileEditStat = "File Edit: Nothing";
             reset();
         }
         
-        Var.drvStationPrinter.print(Var.iEditAutoMode, m_sEditInfo);
-        Var.drvStationPrinter.print(Var.iRecordStatusLine, m_sFileType + m_sAutonmousStatus);
+        Var.drvStationPrinter.print(Var.iEditAutoMode, m_sEditInfoStat);
+        Var.drvStationPrinter.print(Var.iEditFileStat, m_sFileEditStat);
+        Var.drvStationPrinter.print(Var.iRecordStatusLine, m_sFileTypeStat + m_sAutonmousStatus);
     }
     
     public String replay()
@@ -157,35 +158,35 @@ public class CAutonomous {
         {
             case Var.chnDigInReg:   // 0
             {
-                m_sFileType = "Reg: ";
+                m_sFileTypeStat = "Reg: ";
                 m_sFileName = m_sRegOutput;
                 break;
             }
 
             case Var.chnDigInAutoCtr:   // 1
             {
-                m_sFileType = "AutoCenter: ";
+                m_sFileTypeStat = "AutoCenter: ";
                 m_sFileName = m_sAutoCenter; 
                 break;
             } 
 
             case Var.chnDigInAutoLft:   // 2
             {
-                m_sFileType = "AutoLeft: ";
+                m_sFileTypeStat = "AutoLeft: ";
                 m_sFileName = m_sAutoLeft;
                 break;
             }
 
             case Var.chnDigInAutoRght:  // 3
             {
-                m_sFileType = "AutoRight: ";
+                m_sFileTypeStat = "AutoRight: ";
                 m_sFileName = m_sAutoRight; 
                 break;
             }
                 
             default:
             {
-                m_sFileType = "AutoCenter: ";
+                m_sFileTypeStat = "AutoCenter: ";
                 m_sFileName = m_sAutoCenter; 
                 break;
             }

@@ -49,16 +49,16 @@ public class CEditAuto {
             if(m_dTimer[index] >= dMin && m_dTimer[index] <= dMax)
             {   
                 if(dMtLeft <=1)
-                    m_dMtLeft[index] = dMtLeft;
+                    m_dMtLeft[index] = -dMtLeft;
 
                 else if(dMtLeft >= 1 && dMtLeft <=2)
-                    m_dMtLeft[index] = -(dMtLeft-1);
+                    m_dMtLeft[index] = (dMtLeft-1);
                 
                 if(dMtRight <= 1)
-                    m_dMtRight[index] = dMtRight;
+                    m_dMtRight[index] = -dMtRight;
                 
                 else if(dMtRight >= 1 && dMtRight <=2)
-                    m_dMtRight[index] = -(dMtRight-1);
+                    m_dMtRight[index] = (dMtRight-1);
             }
             
             m_fileWriter.writeData(m_dTimer[index], m_dMtLeft[index], m_dMtRight[index], m_bRetrieve[index]);
