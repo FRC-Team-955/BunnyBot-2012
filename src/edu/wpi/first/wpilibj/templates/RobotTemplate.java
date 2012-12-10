@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj.*;
 public class RobotTemplate extends IterativeRobot {
 
     Joystick ps3Joy = new Joystick(1);
-    CRobot bot = new CRobot(ps3Joy);
-    CCompressor compressor = new CCompressor();
-    CAutonomous autonomous = new CAutonomous(ps3Joy, bot);
+    Robot bot = new Robot(ps3Joy);
+    Compressor compressor = new Compressor();
+    Autonomous autonomous = new Autonomous(ps3Joy, bot);
     
     // This function is run when the robot is first started up and should be
     // used for any initialization code.

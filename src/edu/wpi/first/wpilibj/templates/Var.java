@@ -28,9 +28,9 @@ public class Var {
     static final int chnSolReleaseDown = 2;
 	
     // Digital Stuff ?
-    static final int chnDigiCompressor = 1;
-    static final int chnDigiSensor = 2;
-    static final int chnRelay = 3;
+    //static final int chnDigiCompressor = 8;
+    static final int chnDigiSensor = 14;
+    static final int chnCompressor = 3;
 
     // Joysticks and buttons
     static final int btReleaseBall = 1;
@@ -47,8 +47,9 @@ public class Var {
     // Other
     static final double dENDSIGNAL = -10.0;
     static final double dPrecision = 2;
-    static final CPrintDriver drvStationPrinter = new CPrintDriver();
+    static final PrintDriver drvStationPrinter = new PrintDriver();
     static boolean bDrive = true;
+    static final String sRegOutput = "file:///regVal.txt";
     
     // DriverStation Channels
     static final int chnDigInReg = 0;
