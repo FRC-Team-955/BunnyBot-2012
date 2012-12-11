@@ -34,6 +34,7 @@ public class Vars {
 
     // Joysticks and buttons
     public static final int btReleaseBall = 1;
+    public static final int btReverseDrive = 2;
     public static final int btActRetrieve = 3;
     public static final int btTurnOnCompressor = 4;
     public static final int btPrintFile = 5;

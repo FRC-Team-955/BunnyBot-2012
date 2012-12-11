@@ -19,6 +19,7 @@ public class Drive {
     private double m_mtLeftSpeed = 0;
     private Joystick m_joy;
     private Button m_btChangeDrive = new Button();
+    private Button m_btReverseDrive = new Button();
     private String m_sDriveStatus = "";
     
     public Drive(Joystick joystick)
@@ -29,6 +30,7 @@ public class Drive {
     public void run()
     {      
         m_btChangeDrive.run(m_joy.getRawButton(Vars.btChangeDrive));
+        m_btReverseDrive.run(m_joy.getRawButton(Vars.btReverseDrive));
         
         if(Vars.bDrive)
         {
@@ -37,6 +39,12 @@ public class Drive {
 
             else
                 regDrive();
+            
+            if(m_btReverseDrive.getSwitch())
+            {
+                m_mtLeftSpeed = -m_mtLeftSpeed;
+                m_mtRightSpeed = -m_mtRightSpeed;
+            }
             
             if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
                 this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
