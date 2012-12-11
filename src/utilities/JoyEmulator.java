@@ -1,8 +1,8 @@
-package autonomous;
+package utilities;
 
 // @author Fauzi
 
-class JoyEmulator{
+public class JoyEmulator{
     private double m_dTimer = 0;
     private double m_dMtLeft = 0;
     private double m_dMtRight = 0;

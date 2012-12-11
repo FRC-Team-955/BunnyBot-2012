@@ -4,6 +4,8 @@
  */
 package autonomous;
 
+import utilities.FileWriter;
+import utilities.FileReader;
 import utilities.Vars;
 
 /**

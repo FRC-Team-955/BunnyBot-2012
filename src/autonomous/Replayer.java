@@ -4,6 +4,8 @@
  */
 package autonomous;
 
+import utilities.JoyEmulator;
+import utilities.FileReader;
 import utilities.Robot;
 import utilities.Vars;
 import edu.wpi.first.wpilibj.Timer;

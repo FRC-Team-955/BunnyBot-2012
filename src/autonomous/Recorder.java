@@ -9,6 +9,7 @@ package autonomous;
  *
  * @author fauzi
  */
+import utilities.FileWriter;
 import utilities.Robot;
 import utilities.Vars;
 import edu.wpi.first.wpilibj.Timer;

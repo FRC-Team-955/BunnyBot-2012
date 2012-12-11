@@ -19,9 +19,9 @@ public class Compressor {
     public void run()
     {
         if(m_digInSensor.get())
-			m_Compressor.set(true);
+            m_Compressor.set(true);
 
         else
-			m_Compressor.set(false);
+            m_Compressor.set(false);
     }
 }
