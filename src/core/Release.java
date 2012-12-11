@@ -16,7 +16,6 @@ public class Release {
     
     private MySolenoid m_solRelease = new MySolenoid(Vars.chnSolReleaseDown, Vars.chnSolReleaseUp, true);
     private Button m_btReleaseBall = new Button();
-    private boolean m_bRelease = false;
     private Joystick m_Joy;
     
     public Release(Joystick joystick)
@@ -28,23 +27,10 @@ public class Release {
     {
         m_btReleaseBall.run(m_Joy.getRawButton(Vars.btReleaseBall));
         
-        if(m_btReleaseBall.gotPressed())
-            m_bRelease = !m_bRelease;
-        
-        if(m_bRelease)
+        if(m_btReleaseBall.getSwitch())
             m_solRelease.turnOn();
         
         else
             m_solRelease.turnOff();
-    }
-    
-    public boolean getReleaseStatus()
-    {
-        return m_bRelease;
-    }
-    
-    public void set(boolean bReleaseStatus)
-    {
-        m_solRelease.set(bReleaseStatus);
     }
 }

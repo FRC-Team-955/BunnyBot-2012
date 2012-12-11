@@ -45,11 +45,6 @@ public class Robot {
         return m_drive.getMtRightSpeed();
     }
     
-    public boolean getReleaseStat()
-    {
-        return m_release.getReleaseStatus();
-    }
-    
     public boolean getRetrieveStat()
     {
         return m_retrieve.getStatus();
@@ -58,11 +53,6 @@ public class Robot {
     public void setSpeed(double dLeft, double dRight)
     {
         m_drive.setSpeed(dLeft, dRight);
-    }
-    
-    public void setRelease(boolean bOut)
-    {
-        m_release.set(bOut);
     }
     
     public void setRetrieve(boolean bOn)
