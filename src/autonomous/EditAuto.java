@@ -41,6 +41,7 @@ public class EditAuto {
             m_iArrayLength = ++index;
         }
         
+        m_fileReader.close();
         return "Printed file Data";
     }
     
