@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
+package core;
+import utilities.Vars;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 
 /**
  *
@@ -11,8 +13,8 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Compressor {
 	
-    DigitalInput m_digInSensor = new DigitalInput(Var.chnDigiSensor);
-    DigitalOutput m_Compressor = new DigitalOutput(Var.chnCompressor);
+    DigitalInput m_digInSensor = new DigitalInput(Vars.chnDigiSensor);
+    DigitalOutput m_Compressor = new DigitalOutput(Vars.chnCompressor);
 	
     public void run()
     {

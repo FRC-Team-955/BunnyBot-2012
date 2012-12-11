@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
+package autonomous;
 
+import utilities.Robot;
+import utilities.Vars;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -30,7 +32,7 @@ public class Replayer {
     
     public String replay(String sFileName)
     {
-        Var.bDrive = false;
+        Vars.bDrive = false;
          
         if(!m_bRepStarted)
         {
@@ -42,18 +44,18 @@ public class Replayer {
 
         if(!m_bDoneReplay)
         {
-            m_sReplayStatus = "Replaying: " + Var.setPrecision(m_tmReplay.get());
+            m_sReplayStatus = "Replaying: " + Vars.setPrecision(m_tmReplay.get());
             m_bot.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
             m_bot.setRetrieve(m_joyAuto.getRetrieve());
 
-            if(m_tmReplay.get() >= m_dMaxReplay && !sFileName.equalsIgnoreCase(Var.sRegOutput))
+            if(m_tmReplay.get() >= m_dMaxReplay && !sFileName.equalsIgnoreCase(Vars.sRegOutput))
                 m_bDoneReplay = true;
             
             else if(m_tmReplay.get() >= m_joyAuto.getTimer())
             {
                 double dTemp = m_fileReader.readDouble(); // Temp var to see if we're done replay
 
-                if(dTemp < Var.dENDSIGNAL+1) // If true, means we're done replaying
+                if(dTemp < Vars.dENDSIGNAL+1) // If true, means we're done replaying
                     m_bDoneReplay = true;
 
                 else

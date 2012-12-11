@@ -2,13 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
+package autonomous;
 
 
 /**
  *
  * @author fauzi
  */
+import utilities.Robot;
+import utilities.Vars;
 import edu.wpi.first.wpilibj.Timer;
 public class Recorder {
 
@@ -32,7 +34,7 @@ public class Recorder {
             m_bRecStarted = true;
         }
         
-        m_sRecordStaus = "Recording: " + Var.setPrecision(m_tmRecord.get());
+        m_sRecordStaus = "Recording: " + Vars.setPrecision(m_tmRecord.get());
         m_fileWriter.writeData(m_tmRecord.get(), m_bot.getMtLeft(), m_bot.getMtRight(), m_bot.getRetrieveStat());
 
         return m_sRecordStaus;
@@ -42,7 +44,7 @@ public class Recorder {
     {
         if(m_bRecStarted)
         {
-            m_fileWriter.writeDouble(Var.dENDSIGNAL);
+            m_fileWriter.writeDouble(Vars.dENDSIGNAL);
             m_fileWriter.close();
             m_tmRecord.stop();
             m_bRecStarted = false;

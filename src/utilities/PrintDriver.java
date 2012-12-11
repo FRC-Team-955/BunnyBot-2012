@@ -2,8 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
+package utilities;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 
 /**
  *
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class PrintDriver {
     
-    void print(int iLine, String sMessage)
+    public void print(int iLine, String sMessage)
     {
         switch(iLine)
         {

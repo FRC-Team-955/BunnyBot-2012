@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
+package core;
 
-import edu.wpi.first.wpilibj.*;
+import utilities.Vars;
+import utilities.Button;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *
@@ -12,7 +15,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Retrieve {
     
-    private Victor m_mtRetrieve = new Victor(Var.chnVicRetrieve);
+    private Victor m_mtRetrieve = new Victor(Vars.chnVicRetrieve);
     private Button m_btRetrieve = new Button();
     private boolean m_bRetrieveStatus = false;
     private double m_dRetrieveSpeed = -1;
@@ -25,8 +28,8 @@ public class Retrieve {
     
     public void run()
     {
-        //m_dRetrieveSpeed = DriverStation.getInstance().getAnalogIn(Var.chnAnlgRetrieveSpeed);
-        m_btRetrieve.run(m_joy.getRawButton(Var.btActRetrieve));
+        //m_dRetrieveSpeed = DriverStation.getInstance().getAnalogIn(Vars.chnAnlgRetrieveSpeed);
+        m_btRetrieve.run(m_joy.getRawButton(Vars.btActRetrieve));
         
         if(m_btRetrieve.gotPressed())
             m_bRetrieveStatus = !m_bRetrieveStatus;

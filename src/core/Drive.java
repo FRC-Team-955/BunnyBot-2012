@@ -1,5 +1,8 @@
-package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
+package core;
+import utilities.Vars;
+import utilities.Button;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * @author fauzi
@@ -10,8 +13,8 @@ public class Drive {
     // CONSTANTS 
     private final double m_dMinSpeed = 0.05;
     
-    private Victor m_mtRight = new Victor(Var.chnVicDrvRight);
-    private Victor m_mtLeft = new Victor(Var.chnVicDrvLeft);
+    private Victor m_mtRight = new Victor(Vars.chnVicDrvRight);
+    private Victor m_mtLeft = new Victor(Vars.chnVicDrvLeft);
     private double m_mtRightSpeed = 0;
     private double m_mtLeftSpeed = 0;
     private Joystick m_joy;
@@ -25,9 +28,9 @@ public class Drive {
     
     public void run()
     {      
-        m_btChangeDrive.run(m_joy.getRawButton(Var.btChangeDrive));
+        m_btChangeDrive.run(m_joy.getRawButton(Vars.btChangeDrive));
         
-        if(Var.bDrive)
+        if(Vars.bDrive)
         {
             if(m_btChangeDrive.getSwitch())
                 tankDrive();
@@ -45,7 +48,7 @@ public class Drive {
         else
             m_sDriveStatus = "Disabled";
         
-        Var.drvStationPrinter.print(Var.iDriveStatusLine, m_sDriveStatus);
+        Vars.drvStationPrinter.print(Vars.iDriveStatusLine, m_sDriveStatus);
     }
     
     private void tankDrive()

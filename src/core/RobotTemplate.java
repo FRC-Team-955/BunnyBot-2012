@@ -5,8 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
+package core;
+import autonomous.Autonomous;
+import utilities.Robot;
+import utilities.Vars;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,16 +44,16 @@ public class RobotTemplate extends IterativeRobot {
     // the value of "iFileType"
     public void autonomousInit()
     {
-        int iFileType = Var.chnDigInReg;
+        int iFileType = Vars.chnDigInReg;
         
-        if(DriverStation.getInstance().getDigitalIn(Var.chnDigInAutoCtr))
-            iFileType = Var.chnDigInAutoCtr;
+        if(DriverStation.getInstance().getDigitalIn(Vars.chnDigInAutoCtr))
+            iFileType = Vars.chnDigInAutoCtr;
         
-        else if(DriverStation.getInstance().getDigitalIn(Var.chnDigInAutoLft))
-            iFileType = Var.chnDigInAutoLft;
+        else if(DriverStation.getInstance().getDigitalIn(Vars.chnDigInAutoLft))
+            iFileType = Vars.chnDigInAutoLft;
         
-        else if(DriverStation.getInstance().getDigitalIn(Var.chnDigInAutoRght))
-            iFileType = Var.chnDigInAutoRght;
+        else if(DriverStation.getInstance().getDigitalIn(Vars.chnDigInAutoRght))
+            iFileType = Vars.chnDigInAutoRght;
         
         autonomous.changeFile(iFileType);
     }

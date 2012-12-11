@@ -2,8 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
+package autonomous;
 
+import utilities.Robot;
+import utilities.Vars;;
+import utilities.SpecialButton;
+import utilities.Button;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -22,7 +26,7 @@ public class Autonomous {
     private String m_sFileTypeStat = "Reg: ";
     private String m_sEditInfoStat = "Can NOT edit";
     private String m_sFileEditStat = "File Edit: ";
-    private String m_sFileName = Var.sRegOutput; 
+    private String m_sFileName = Vars.sRegOutput; 
     private SpecialButton m_btRecord = new SpecialButton();
     private SpecialButton m_btReplay = new SpecialButton();
     private Button m_btChangeMode = new Button();
@@ -50,12 +54,12 @@ public class Autonomous {
     
     public void run()
     {
-        m_bAnotherIsPressed = m_btRecord.run(m_joy.getRawButton(Var.btRecord), m_bAnotherIsPressed);
-        m_bAnotherIsPressed = m_btReplay.run(m_joy.getRawButton(Var.btReplay), m_bAnotherIsPressed);
-        m_btChangeMode.run(m_joy.getRawButton(Var.btChangeFile));
-        m_btAllowEdit.run(m_joy.getRawButton(Var.btAllowEdit));
-        m_btPrintFile.run(m_joy.getRawButton(Var.btPrintFile));
-        m_btModifyAuto.run(m_joy.getRawButton(Var.btModifyAuto));
+        m_bAnotherIsPressed = m_btRecord.run(m_joy.getRawButton(Vars.btRecord), m_bAnotherIsPressed);
+        m_bAnotherIsPressed = m_btReplay.run(m_joy.getRawButton(Vars.btReplay), m_bAnotherIsPressed);
+        m_btChangeMode.run(m_joy.getRawButton(Vars.btChangeFile));
+        m_btAllowEdit.run(m_joy.getRawButton(Vars.btAllowEdit));
+        m_btPrintFile.run(m_joy.getRawButton(Vars.btPrintFile));
+        m_btModifyAuto.run(m_joy.getRawButton(Vars.btModifyAuto));
 		
         if(!m_btRecord.getSwitch() && !m_btReplay.getSwitch())
         {
@@ -80,10 +84,10 @@ public class Autonomous {
             
             if(canEdit())
             {
-                m_dMin = DriverStation.getInstance().getAnalogIn(Var.chnAngMin);
-                m_dMax = DriverStation.getInstance().getAnalogIn(Var.chnAngMax);
-                m_dMtLeft = DriverStation.getInstance().getAnalogIn(Var.chnAngMtLeft);
-                m_dMtRight = DriverStation.getInstance().getAnalogIn(Var.chnAngMtRight);
+                m_dMin = DriverStation.getInstance().getAnalogIn(Vars.chnAngMin);
+                m_dMax = DriverStation.getInstance().getAnalogIn(Vars.chnAngMax);
+                m_dMtLeft = DriverStation.getInstance().getAnalogIn(Vars.chnAngMtLeft);
+                m_dMtRight = DriverStation.getInstance().getAnalogIn(Vars.chnAngMtRight);
                 
                 if(m_btPrintFile.gotPressed())
                     m_sFileEditStat = m_editAuto.printFile(m_sFileName);
@@ -105,9 +109,9 @@ public class Autonomous {
             reset();
         }
         
-        Var.drvStationPrinter.print(Var.iEditAutoMode, m_sEditInfoStat);
-        Var.drvStationPrinter.print(Var.iEditFileStat, m_sFileEditStat);
-        Var.drvStationPrinter.print(Var.iRecordStatusLine, m_sFileTypeStat + m_sAutonmousStatus);
+        Vars.drvStationPrinter.print(Vars.iEditAutoMode, m_sEditInfoStat);
+        Vars.drvStationPrinter.print(Vars.iEditFileStat, m_sFileEditStat);
+        Vars.drvStationPrinter.print(Vars.iRecordStatusLine, m_sFileTypeStat + m_sAutonmousStatus);
     }
     
     public String replay()
@@ -126,7 +130,7 @@ public class Autonomous {
     
     private void reset() // Resets timer and booleans so that you can record or replay again
     {  
-        Var.bDrive = true;
+        Vars.bDrive = true;
         m_replayer.reset();
         m_recorder.reset();
     }
@@ -144,7 +148,7 @@ public class Autonomous {
     
     private boolean canEdit()
     {
-       if(m_bAutoEditMode == false && !m_sFileName.equalsIgnoreCase(Var.sRegOutput))
+       if(m_bAutoEditMode == false && !m_sFileName.equalsIgnoreCase(Vars.sRegOutput))
             return false;
        
        return true;
@@ -154,28 +158,28 @@ public class Autonomous {
     {
         switch (iFileType)
         {
-            case Var.chnDigInReg:   // 0
+            case Vars.chnDigInReg:   // 0
             {
                 m_sFileTypeStat = "Reg: ";
-                m_sFileName = Var.sRegOutput;
+                m_sFileName = Vars.sRegOutput;
                 break;
             }
 
-            case Var.chnDigInAutoCtr:   // 1
+            case Vars.chnDigInAutoCtr:   // 1
             {
                 m_sFileTypeStat = "AutoCenter: ";
                 m_sFileName = m_sAutoCenter; 
                 break;
             } 
 
-            case Var.chnDigInAutoLft:   // 2
+            case Vars.chnDigInAutoLft:   // 2
             {
                 m_sFileTypeStat = "AutoLeft: ";
                 m_sFileName = m_sAutoLeft;
                 break;
             }
 
-            case Var.chnDigInAutoRght:  // 3
+            case Vars.chnDigInAutoRght:  // 3
             {
                 m_sFileTypeStat = "AutoRight: ";
                 m_sFileName = m_sAutoRight; 

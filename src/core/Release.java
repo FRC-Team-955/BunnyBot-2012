@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.wpilibj.templates;
-import edu.wpi.first.wpilibj.*;
+package core;
+import utilities.Vars;
+import utilities.MySolenoid;
+import utilities.Button;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *
@@ -11,7 +14,7 @@ import edu.wpi.first.wpilibj.*;
  */
 public class Release {
     
-    private MySolenoid m_solRelease = new MySolenoid(Var.chnSolReleaseDown, Var.chnSolReleaseUp, true);
+    private MySolenoid m_solRelease = new MySolenoid(Vars.chnSolReleaseDown, Vars.chnSolReleaseUp, true);
     private Button m_btReleaseBall = new Button();
     private boolean m_bRelease = false;
     private Joystick m_Joy;
@@ -23,7 +26,7 @@ public class Release {
     
     public void run()
     {
-        m_btReleaseBall.run(m_Joy.getRawButton(Var.btReleaseBall));
+        m_btReleaseBall.run(m_Joy.getRawButton(Vars.btReleaseBall));
         
         if(m_btReleaseBall.gotPressed())
             m_bRelease = !m_bRelease;
