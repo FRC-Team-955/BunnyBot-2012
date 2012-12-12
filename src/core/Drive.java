@@ -13,6 +13,7 @@ public class Drive {
     // CONSTANTS 
     private final double m_dMinSpeed = 0.05;
     private final double m_dMaxIncrease = .1;
+    private final double m_dMuiltiplier = 5;
     
     private Victor m_mtRight = new Victor(Vars.chnVicDrvRight);
     private Victor m_mtLeft = new Victor(Vars.chnVicDrvLeft);
@@ -126,32 +127,18 @@ public class Drive {
     
     private void overDrive(double dLeftSpeed, double dRightSpeed)
     {
-        // Get the difference between the current speed and new speed,
-        // times the current speed by the difference to subtract/add it
-        // added one to the difference incase the difference is zero 
-        // in which case the speed change
+        /*
+         * Gets the difference between the wanted speed and the current speed,
+         * muiltiplies it by a constant and adds it the current speed for a 
+         * better response from the motors, thus called "overdrive"
+         */
         
-        final double dMuiltiplier = 1.25;
         final double dCurrentLeft = m_mtLeft.get();
         final double dCurrentRight = m_mtRight.get();
-        final double dLeftDiff = Math.abs(Math.abs(dCurrentLeft) - Math.abs(dLeftSpeed)) * dMuiltiplier;
-        final double dRightDiff = Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) * dMuiltiplier;
-        double dSetLeftSpeed = dLeftSpeed;
-        double dSetRightSpeed = dRightSpeed;
+        final double dLeftDiff = dLeftSpeed - dCurrentLeft;
+        final double dRightDiff = dRightSpeed - dCurrentRight;
         
-        if(dLeftSpeed < dCurrentLeft)
-            dSetLeftSpeed = dCurrentLeft - dLeftDiff;
-        
-        else if(dLeftSpeed > dCurrentLeft)
-            dSetLeftSpeed = dCurrentLeft + dLeftDiff;
-        
-        if(dLeftSpeed < dCurrentLeft)
-            dSetRightSpeed = dCurrentRight - dRightDiff;
-        
-        else if(dLeftSpeed > dCurrentLeft)
-            dSetRightSpeed = dCurrentRight + dRightDiff;
-        
-        m_mtLeft.set(dSetLeftSpeed);
-        m_mtRight.set(dSetRightSpeed);
+        m_mtLeft.set(dCurrentLeft + (m_dMuiltiplier * dLeftDiff));
+        m_mtRight.set(dCurrentRight + (m_dMuiltiplier * dRightDiff));
     }
 }
