@@ -127,16 +127,31 @@ public class Drive {
     private void overDrive(double dLeftSpeed, double dRightSpeed)
     {
         // Get the difference between the current speed and new speed,
-        // times the current speed by the difference to amplify it
+        // times the current speed by the difference to subtract/add it
         // added one to the difference incase the difference is zero 
         // in which case the speed change
         
+        final double dMuiltiplier = 1.25;
         final double dCurrentLeft = m_mtLeft.get();
         final double dCurrentRight = m_mtRight.get();
-        final double dLeftDiff = Math.abs(Math.abs(dCurrentLeft) - Math.abs(dLeftSpeed)) + 1;
-        final double dRightDiff = Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) + 1;
+        final double dLeftDiff = Math.abs(Math.abs(dCurrentLeft) - Math.abs(dLeftSpeed)) * dMuiltiplier;
+        final double dRightDiff = Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) * dMuiltiplier;
+        double dSetLeftSpeed = dLeftSpeed;
+        double dSetRightSpeed = dRightSpeed;
         
-        m_mtLeft.set(dCurrentLeft * dLeftDiff);
-        m_mtRight.set(dCurrentRight * dRightDiff);
+        if(dLeftSpeed < dCurrentLeft)
+            dSetLeftSpeed = dCurrentLeft - dLeftDiff;
+        
+        else if(dLeftSpeed > dCurrentLeft)
+            dSetLeftSpeed = dCurrentLeft + dLeftDiff;
+        
+        if(dLeftSpeed < dCurrentLeft)
+            dSetRightSpeed = dCurrentRight - dRightDiff;
+        
+        else if(dLeftSpeed > dCurrentLeft)
+            dSetRightSpeed = dCurrentRight + dRightDiff;
+        
+        m_mtLeft.set(dSetLeftSpeed);
+        m_mtRight.set(dSetRightSpeed);
     }
 }
