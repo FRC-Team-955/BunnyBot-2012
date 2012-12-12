@@ -89,7 +89,8 @@ public class Drive {
 	
     public void setSpeed(double setMtLeft, double setMtRight)
     {
-        ramp(setMtLeft, setMtRight);
+        overDrive(setMtLeft, setMtRight);
+        //ramp(setMtLeft, setMtRight);
     }
     
     public double getMtRightSpeed()
@@ -121,5 +122,21 @@ public class Drive {
         
         if(Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) > m_dMaxIncrease)
             m_mtRight.set(dRightSpeed < 0 ? dCurrentRight - m_dMaxIncrease : dCurrentRight + m_dMaxIncrease);
+    }
+    
+    private void overDrive(double dLeftSpeed, double dRightSpeed)
+    {
+        // Get the difference between the current speed and new speed,
+        // times the current speed by the difference to amplify it
+        // added one to the difference incase the difference is zero 
+        // in which case the speed change
+        
+        final double dCurrentLeft = m_mtLeft.get();
+        final double dCurrentRight = m_mtRight.get();
+        final double dLeftDiff = Math.abs(Math.abs(dCurrentLeft) - Math.abs(dLeftSpeed)) + 1;
+        final double dRightDiff = Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) + 1;
+        
+        m_mtLeft.set(dCurrentLeft * dLeftDiff);
+        m_mtRight.set(dCurrentRight * dRightDiff);
     }
 }
