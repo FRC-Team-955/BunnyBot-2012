@@ -12,11 +12,12 @@ public class Drive {
     
     // CONSTANTS 
     private final double m_dMinSpeed = 0.05;
+    private final double m_dMaxIncrease = .1;
     
     private Victor m_mtRight = new Victor(Vars.chnVicDrvRight);
     private Victor m_mtLeft = new Victor(Vars.chnVicDrvLeft);
-    private double m_mtRightSpeed = 0;
-    private double m_mtLeftSpeed = 0;
+    private double m_dRightSpeed = 0;
+    private double m_dLeftSpeed = 0;
     private Button m_btChangeDrive = new Button();
     private Button m_btReverseDrive = new Button();
     private String m_sDriveStatus = "";
@@ -42,12 +43,12 @@ public class Drive {
             
             if(m_btReverseDrive.getSwitch())
             {
-                m_mtLeftSpeed = -m_mtLeftSpeed;
-                m_mtRightSpeed = -m_mtRightSpeed;
+                m_dLeftSpeed = -m_dLeftSpeed;
+                m_dRightSpeed = -m_dRightSpeed;
             }
             
-            if(Math.abs(m_mtLeftSpeed) + Math.abs(m_mtRightSpeed) > m_dMinSpeed)
-                this.setSpeed(m_mtLeftSpeed, m_mtRightSpeed);
+            if(Math.abs(m_dLeftSpeed) + Math.abs(m_dRightSpeed) > m_dMinSpeed)
+                this.setSpeed(m_dLeftSpeed, m_dRightSpeed);
 
             else
                 this.setSpeed(0, 0);
@@ -67,8 +68,8 @@ public class Drive {
         m_joy.setAxisChannel(Joystick.AxisType.kY, 4);
 
         m_sDriveStatus = "Tank Drive";
-        m_mtLeftSpeed = m_joy.getX() * Math.abs(m_joy.getX());
-        m_mtRightSpeed = -m_joy.getY() * Math.abs(m_joy.getY());  
+        m_dLeftSpeed = m_joy.getX() * Math.abs(m_joy.getX());
+        m_dRightSpeed = -m_joy.getY() * Math.abs(m_joy.getY());  
     }
 
     private void regDrive()
@@ -82,24 +83,23 @@ public class Drive {
         double y = m_joy.getY() * Math.abs(m_joy.getY());
         double x = m_joy.getX() * Math.abs(m_joy.getX());
 
-        m_mtRightSpeed = (-y+x);
-        m_mtLeftSpeed = (y+x);  
+        m_dRightSpeed = (-y+x);
+        m_dLeftSpeed = (y+x);  
     }
 	
     public void setSpeed(double setMtLeft, double setMtRight)
     {
-        m_mtLeft.set(setMtLeft);
-        m_mtRight.set(setMtRight);
+        ramp(setMtLeft, setMtRight);
     }
     
     public double getMtRightSpeed()
     {
-        return m_mtRightSpeed;
+        return m_dRightSpeed;
     }
     
     public double getMtLeftSpeed()
     {
-        return m_mtLeftSpeed;
+        return m_dLeftSpeed;
     }
     
     private String getReverseStat()
@@ -109,5 +109,17 @@ public class Drive {
         
         else
             return "";
+    }
+    
+    private void ramp(double dLeftSpeed, double dRightSpeed)
+    {
+        final double dCurrentLeft = m_mtLeft.get();
+        final double dCurrentRight = m_mtRight.get();
+        
+        if(Math.abs(Math.abs(dCurrentLeft) - Math.abs(dLeftSpeed)) > m_dMaxIncrease)
+            m_mtLeft.set(dLeftSpeed < 0 ? dCurrentLeft - m_dMaxIncrease : dCurrentLeft + m_dMaxIncrease);
+        
+        if(Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) > m_dMaxIncrease)
+            m_mtRight.set(dRightSpeed < 0 ? dCurrentRight - m_dMaxIncrease : dCurrentRight + m_dMaxIncrease);
     }
 }
