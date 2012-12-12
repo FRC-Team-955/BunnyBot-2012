@@ -195,3 +195,90 @@ public class Autonomous {
         }
     }
 }
+//
+//package utilities;
+//import edu.wpi.first.wpilibj.Joystick;
+//
+///**
+// * @author fauzi
+// */
+//public class PS3Joystick extends Joystick{
+//    
+//    // Joysticks and buttons
+//    private final int btReleaseBall = 1;
+//    private final int btReverseDrive = 2;
+//    private final int btActRetrieve = 3;
+//    private final int btTurnOnCompressor = 4;
+//    private final int btPrintFile = 5;
+//    private final int btModifyAuto = 6;
+//    private final int btChangeDrive = 8;
+//    private final int btRecord = 9;
+//    private final int btAllowEdit = 10;
+//    private final int btChangeFile = 11;
+//    private final int btReplay = 12;
+//    
+//    public void run()
+//    {
+//        
+//    }
+//    
+//    public PS3Joystick(int iPort)
+//    {
+//        super(iPort);
+//    }
+//    
+//    public boolean btReleaseBall()
+//    {
+//        return super.getRawButton(btReleaseBall);
+//    }
+//    
+//    public boolean btReverseDrive()
+//    {
+//        return super.getRawButton(btReverseDrive);
+//    }
+//    
+//    public boolean btActRetrieval()
+//    {
+//        return super.getRawButton(btActRetrieve);
+//    }
+//    
+//    public boolean btActCompressor()
+//    {
+//        return super.getRawButton(btTurnOnCompressor);
+//    }
+//    
+//    public boolean btPrintFile()
+//    {
+//        return super.getRawButton(btPrintFile);
+//    }
+//    
+//    public boolean btModifyAuto()
+//    {
+//        return super.getRawButton(btModifyAuto);
+//    }
+//    
+//    public boolean btChangeDrive()
+//    {
+//        return super.getRawButton(btChangeDrive);
+//    }
+//    
+//    public boolean btRecord()
+//    {
+//        return super.getRawButton(btRecord);
+//    }
+//    
+//    public boolean btAllowEdit()
+//    {
+//        return super.getRawButton(btAllowEdit);
+//    }
+//    
+//    public boolean btChangeFile()
+//    {
+//        return super.getRawButton(btChangeFile);
+//    }
+//    
+//    public boolean btReplay()
+//    {
+//        return super.getRawButton(btReplay);
+//    }
+//}

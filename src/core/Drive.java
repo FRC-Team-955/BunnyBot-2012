@@ -17,10 +17,10 @@ public class Drive {
     private Victor m_mtLeft = new Victor(Vars.chnVicDrvLeft);
     private double m_mtRightSpeed = 0;
     private double m_mtLeftSpeed = 0;
-    private Joystick m_joy;
     private Button m_btChangeDrive = new Button();
     private Button m_btReverseDrive = new Button();
     private String m_sDriveStatus = "";
+    private Joystick m_joy;
     
     public Drive(Joystick joystick)
     {
@@ -56,7 +56,7 @@ public class Drive {
         else
             m_sDriveStatus = "Disabled";
         
-        Vars.drvStationPrinter.print(Vars.iDriveStatusLine, m_sDriveStatus);
+        Vars.drvStationPrinter.print(Vars.iDriveStatusLine, m_sDriveStatus + getReverseStat());
     }
     
     private void tankDrive()
@@ -100,5 +100,14 @@ public class Drive {
     public double getMtLeftSpeed()
     {
         return m_mtLeftSpeed;
+    }
+    
+    private String getReverseStat()
+    {
+        if(m_btReverseDrive.getSwitch())
+            return "Reversed";
+        
+        else
+            return "";
     }
 }
