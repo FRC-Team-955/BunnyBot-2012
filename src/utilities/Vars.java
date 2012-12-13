@@ -63,7 +63,7 @@ public class Vars {
     public static final int iEditAutoMode = 5;
     public static final int iRecordStatusLine = 6;
     
-    public static String setPrecision(double dDouble)
+    public static Double setPrecision(double dDouble)
     {
         String sArg = Double.toString(dDouble);
         String sReturn = "";
@@ -75,15 +75,20 @@ public class Vars {
             sReturn += sArg.charAt(index);
             
             if(sArg.charAt(index) == '.')
+            {
                 bAfterDec = true;
+                continue;
+            }
             
-            else if(bAfterDec)
+            if(bAfterDec)
+            {
                 iSpaceAfter++;
                 
-            if(iSpaceAfter == dPrecision)
-                break;
+                if(iSpaceAfter == 2)
+                    break;
+            }
         }
         
-        return sReturn;
+        return Double.valueOf(sReturn);
     }
 }
