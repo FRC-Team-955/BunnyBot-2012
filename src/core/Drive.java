@@ -11,66 +11,42 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Drive {
     
     // CONSTANTS 
-    private final double m_dMinSpeed = 0.05;
-    private final double m_dMaxIncrease = .1;
-    private final double m_dMuiltiplier = 5;
+    private final double m_dMuiltiplier = 8;
+    private final int m_iLastArraySize = 50;
     
-    private Victor m_mtRight = new Victor(Vars.chnVicDrvRight);
-    private Victor m_mtLeft = new Victor(Vars.chnVicDrvLeft);
+    private double[] m_dLastArrayLeft = new double[m_iLastArraySize];
+    private double[] m_dLastArrayRight = new double[m_iLastArraySize];
     private double m_dRightSpeed = 0;
     private double m_dLeftSpeed = 0;
-    private Button m_btChangeDrive = new Button();
-    private Button m_btReverseDrive = new Button();
     private String m_sDriveStatus = "";
+    private Victor m_mtLeft = new Victor(Vars.chnVicDrvLeft);
+    private Victor m_mtRight = new Victor(Vars.chnVicDrvRight);
     private Joystick m_joy;
     
     public Drive(Joystick joystick)
     {
+        // Initialize arrays to zero
+        for(int iPos = 0; iPos < m_iLastArraySize; iPos++)
+        {
+            m_dLastArrayLeft[iPos] = 0;
+            m_dLastArrayRight[iPos] = 0;
+        }
+        
         m_joy = joystick;
     }
     
     public void run()
     {      
-        m_btChangeDrive.run(m_joy.getRawButton(Vars.btChangeDrive));
-        m_btReverseDrive.run(m_joy.getRawButton(Vars.btReverseDrive));
-        
         if(Vars.bDrive)
         {
-            if(m_btChangeDrive.getSwitch())
-                tankDrive();
-
-            else
-                regDrive();
-            
-            if(m_btReverseDrive.getSwitch())
-            {
-                m_dLeftSpeed = -m_dLeftSpeed;
-                m_dRightSpeed = -m_dRightSpeed;
-            }
-            
-            if(Math.abs(m_dLeftSpeed) + Math.abs(m_dRightSpeed) > m_dMinSpeed)
-                this.setSpeed(m_dLeftSpeed, m_dRightSpeed);
-
-            else
-                this.setSpeed(0, 0);
+            regDrive();
+            setSpeed(m_dLeftSpeed, m_dRightSpeed);
         }
         
         else
             m_sDriveStatus = "Disabled";
         
-        Vars.drvStationPrinter.print(Vars.iDriveStatusLine, m_sDriveStatus + getReverseStat());
-    }
-    
-    private void tankDrive()
-    {
-        // Setting to get Tank Drive Working properly on the ps3 Controller
-        // should be 2, 4
-        m_joy.setAxisChannel(Joystick.AxisType.kX, 2);
-        m_joy.setAxisChannel(Joystick.AxisType.kY, 4);
-
-        m_sDriveStatus = "Tank Drive";
-        m_dLeftSpeed = m_joy.getX() * Math.abs(m_joy.getX());
-        m_dRightSpeed = -m_joy.getY() * Math.abs(m_joy.getY());  
+        Vars.drvStationPrinter.print(Vars.iDriveStatusLine, m_sDriveStatus);
     }
 
     private void regDrive()
@@ -83,50 +59,18 @@ public class Drive {
         m_sDriveStatus = "Regular Drive";
         double y = m_joy.getY() * Math.abs(m_joy.getY());
         double x = m_joy.getX() * Math.abs(m_joy.getX());
-
+        
+        // Update the last variable
+        addToLast(m_dLeftSpeed, m_dRightSpeed); 
         m_dRightSpeed = (-y+x);
         m_dLeftSpeed = (y+x);  
+        
+        
     }
-	
+    
     public void setSpeed(double setMtLeft, double setMtRight)
     {
-        //overDrive(setMtLeft, setMtRight);
-        ramp(setMtLeft, setMtRight);
-    }
-    
-    public double getMtRightSpeed()
-    {
-        return m_dRightSpeed;
-    }
-    
-    public double getMtLeftSpeed()
-    {
-        return m_dLeftSpeed;
-    }
-    
-    private String getReverseStat()
-    {
-        if(m_btReverseDrive.getSwitch())
-            return "Reversed";
-        
-        else
-            return "";
-    }
-    
-    private void ramp(double dLeftSpeed, double dRightSpeed)
-	{
-		/*
-		 * Ramps the speed so it doesn't go too fast, thus damaging the motor
-		 */
-		
-        final double dCurrentLeft = m_mtLeft.get();
-        final double dCurrentRight = m_mtRight.get();
-        
-        if(Math.abs(Math.abs(dCurrentLeft) - Math.abs(dLeftSpeed)) > m_dMaxIncrease)
-            m_mtLeft.set(dLeftSpeed < 0 ? dCurrentLeft - m_dMaxIncrease : dCurrentLeft + m_dMaxIncrease);
-        
-        if(Math.abs(Math.abs(dCurrentRight) - Math.abs(dRightSpeed)) > m_dMaxIncrease)
-            m_mtRight.set(dRightSpeed < 0 ? dCurrentRight - m_dMaxIncrease : dCurrentRight + m_dMaxIncrease);
+        overDrive(setMtLeft, setMtRight);
     }
     
     private void overDrive(double dLeftSpeed, double dRightSpeed)
@@ -137,12 +81,44 @@ public class Drive {
          * better response from the motors, thus called "overdrive"
          */
         
-        final double dCurrentLeft = m_mtLeft.get();
-        final double dCurrentRight = m_mtRight.get();
+        final double dCurrentLeft = getLastLeft();
+        final double dCurrentRight = getLastRight();
         final double dLeftDiff = dLeftSpeed - dCurrentLeft;
         final double dRightDiff = dRightSpeed - dCurrentRight;
         
-        m_mtLeft.set(dCurrentLeft + (m_dMuiltiplier * dLeftDiff));
-        m_mtRight.set(dCurrentRight + (m_dMuiltiplier * dRightDiff));
+        m_mtLeft.set(dLeftSpeed + (m_dMuiltiplier * dLeftDiff));
+        m_mtRight.set(dRightSpeed + (m_dMuiltiplier * dRightDiff));
+    }
+    
+    private void addToLast(double dNewLeft, double dNewRight)
+    {
+        for(int iPos = 0; iPos < m_iLastArraySize - 1; iPos++)
+        {
+            m_dLastArrayLeft[iPos] = m_dLastArrayLeft[iPos + 1];
+            m_dLastArrayRight[iPos] = m_dLastArrayRight[iPos + 1];
+        }
+        
+        m_dLastArrayLeft[m_iLastArraySize - 1] = dNewLeft;
+        m_dLastArrayRight[m_iLastArraySize - 1] = dNewRight;
+    }
+    
+    private double getLastLeft()
+    {
+        return m_dLastArrayLeft[0];
+    }
+    
+    private double getLastRight()
+    {
+        return m_dLastArrayRight[0];
+    }
+    
+    public double getMtRightSpeed()
+    {
+        return m_dRightSpeed;
+    }
+    
+    public double getMtLeftSpeed()
+    {
+        return m_dLeftSpeed;
     }
 }
