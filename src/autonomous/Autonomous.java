@@ -8,12 +8,10 @@ import utilities.Robot;
 import utilities.Vars;;
 import utilities.SpecialButton;
 import utilities.Button;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 
 // @author fauzi      
 // Records robots movements and replays it later, used for autonomous
-// Working on having a function to modify the autonomous
 public class Autonomous {
     
     // CONSTANTS
@@ -25,25 +23,17 @@ public class Autonomous {
     private String m_sAutonmousStatus = "Doing Nothing";
     private String m_sFileTypeStat = "Reg: ";
     private String m_sEditInfoStat = "Can NOT edit";
-    private String m_sFileEditStat = "File Edit: ";
     private String m_sFileName = Vars.sRegOutput; 
     private SpecialButton m_btRecord = new SpecialButton();
     private SpecialButton m_btReplay = new SpecialButton();
     private Button m_btChangeMode = new Button();
-    private Button m_btAllowEdit = new Button();
-    private Button m_btPrintFile = new Button();
-    private Button m_btModifyAuto = new Button();
-    private EditAuto m_editAuto = new EditAuto();    
+    private Button m_btAllowEdit = new Button();   
     private Recorder m_recorder;
     private Replayer m_replayer; 
     private Joystick m_joy;
     private boolean m_bAnotherIsPressed = false; 
     private boolean m_bAutoEditMode = false;
     private int m_iFileMode = 0;
-    private double m_dMin = 0;
-    private double m_dMax = 0;
-    private double m_dMtLeft = 0;
-    private double m_dMtRight = 0;
 
     public Autonomous(Joystick joystick, Robot bot)
     {
@@ -58,8 +48,6 @@ public class Autonomous {
         m_bAnotherIsPressed = m_btReplay.run(m_joy.getRawButton(Vars.btReplay), m_bAnotherIsPressed);
         m_btChangeMode.run(m_joy.getRawButton(Vars.btChangeFile));
         m_btAllowEdit.run(m_joy.getRawButton(Vars.btAllowEdit));
-        m_btPrintFile.run(m_joy.getRawButton(Vars.btPrintFile));
-        m_btModifyAuto.run(m_joy.getRawButton(Vars.btModifyAuto));
 		
         if(!m_btRecord.getSwitch() && !m_btReplay.getSwitch())
         {
@@ -81,20 +69,6 @@ public class Autonomous {
 
                 changeFile(m_iFileMode); // Changes the file 
             }
-            
-            if(canEdit())
-            {
-                m_dMin = DriverStation.getInstance().getAnalogIn(Vars.chnAngMin);
-                m_dMax = DriverStation.getInstance().getAnalogIn(Vars.chnAngMax);
-                m_dMtLeft = DriverStation.getInstance().getAnalogIn(Vars.chnAngMtLeft);
-                m_dMtRight = DriverStation.getInstance().getAnalogIn(Vars.chnAngMtRight);
-                
-                if(m_btPrintFile.gotPressed())
-                    m_sFileEditStat = m_editAuto.printFile(m_sFileName);
-                
-                else if(m_btModifyAuto.gotPressed())
-                    m_sFileEditStat = m_editAuto.modify(m_dMin, m_dMax, m_dMtLeft, m_dMtRight);
-            }
         }
         
         if(m_btRecord.getSwitch())   
@@ -110,7 +84,6 @@ public class Autonomous {
         }
         
         Vars.drvStationPrinter.print(Vars.iEditAutoMode, m_sEditInfoStat);
-        Vars.drvStationPrinter.print(Vars.iEditFileStat, m_sFileEditStat);
         Vars.drvStationPrinter.print(Vars.iRecordStatusLine, m_sFileTypeStat + m_sAutonmousStatus);
     }
     
@@ -195,90 +168,3 @@ public class Autonomous {
         }
     }
 }
-//
-//package utilities;
-//import edu.wpi.first.wpilibj.Joystick;
-//
-///**
-// * @author fauzi
-// */
-//public class PS3Joystick extends Joystick{
-//    
-//    // Joysticks and buttons
-//    private final int btReleaseBall = 1;
-//    private final int btReverseDrive = 2;
-//    private final int btActRetrieve = 3;
-//    private final int btTurnOnCompressor = 4;
-//    private final int btPrintFile = 5;
-//    private final int btModifyAuto = 6;
-//    private final int btChangeDrive = 8;
-//    private final int btRecord = 9;
-//    private final int btAllowEdit = 10;
-//    private final int btChangeFile = 11;
-//    private final int btReplay = 12;
-//    
-//    public void run()
-//    {
-//        
-//    }
-//    
-//    public PS3Joystick(int iPort)
-//    {
-//        super(iPort);
-//    }
-//    
-//    public boolean btReleaseBall()
-//    {
-//        return super.getRawButton(btReleaseBall);
-//    }
-//    
-//    public boolean btReverseDrive()
-//    {
-//        return super.getRawButton(btReverseDrive);
-//    }
-//    
-//    public boolean btActRetrieval()
-//    {
-//        return super.getRawButton(btActRetrieve);
-//    }
-//    
-//    public boolean btActCompressor()
-//    {
-//        return super.getRawButton(btTurnOnCompressor);
-//    }
-//    
-//    public boolean btPrintFile()
-//    {
-//        return super.getRawButton(btPrintFile);
-//    }
-//    
-//    public boolean btModifyAuto()
-//    {
-//        return super.getRawButton(btModifyAuto);
-//    }
-//    
-//    public boolean btChangeDrive()
-//    {
-//        return super.getRawButton(btChangeDrive);
-//    }
-//    
-//    public boolean btRecord()
-//    {
-//        return super.getRawButton(btRecord);
-//    }
-//    
-//    public boolean btAllowEdit()
-//    {
-//        return super.getRawButton(btAllowEdit);
-//    }
-//    
-//    public boolean btChangeFile()
-//    {
-//        return super.getRawButton(btChangeFile);
-//    }
-//    
-//    public boolean btReplay()
-//    {
-//        return super.getRawButton(btReplay);
-//    }
-//}

@@ -90,8 +90,8 @@ public class Drive {
 	
     public void setSpeed(double setMtLeft, double setMtRight)
     {
-        overDrive(setMtLeft, setMtRight);
-        //ramp(setMtLeft, setMtRight);
+        //overDrive(setMtLeft, setMtRight);
+        ramp(setMtLeft, setMtRight);
     }
     
     public double getMtRightSpeed()

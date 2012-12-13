@@ -28,7 +28,6 @@ public class Vars {
     public static final int chnSolReleaseDown = 2;
 	
     // Digital Stuff ?
-    //static final int chnDigiCompressor = 8;
     public static final int chnDigiSensor = 14;
     public static final int chnCompressor = 3;
 
@@ -36,8 +35,6 @@ public class Vars {
     public static final int btReleaseBall = 1;
     public static final int btReverseDrive = 2;
     public static final int btActRetrieve = 3;
-    public static final int btPrintFile = 5;
-    public static final int btModifyAuto = 6;
     public static final int btChangeDrive = 8;
     public static final int btRecord = 9;
     public static final int btAllowEdit = 10;
@@ -63,7 +60,6 @@ public class Vars {
     
     // Printing to Driverstation lines, 2-6 are available only
     public static final int iDriveStatusLine = 2;
-    public static final int iEditFileStat = 4;
     public static final int iEditAutoMode = 5;
     public static final int iRecordStatusLine = 6;
     
