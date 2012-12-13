@@ -81,10 +81,10 @@ public class Drive {
          * better response from the motors, thus called "overdrive"
          */
         
-        final double dCurrentLeft = getLastLeft();
-        final double dCurrentRight = getLastRight();
-        final double dLeftDiff = dLeftSpeed - dCurrentLeft;
-        final double dRightDiff = dRightSpeed - dCurrentRight;
+        final double dLastLeftSpeed = getLastLeft();
+        final double dLastRightSpeed = getLastRight();
+        final double dLeftDiff = dLeftSpeed - dLastLeftSpeed;
+        final double dRightDiff = dRightSpeed - dLastRightSpeed;
         
         m_mtLeft.set(dLeftSpeed + (m_dMuiltiplier * dLeftDiff));
         m_mtRight.set(dRightSpeed + (m_dMuiltiplier * dRightDiff));
