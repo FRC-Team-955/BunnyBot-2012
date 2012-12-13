@@ -1,6 +1,5 @@
 package core;
 import utilities.Vars;
-import utilities.Button;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -60,23 +59,21 @@ public class Drive {
         double y = m_joy.getY() * Math.abs(m_joy.getY());
         double x = m_joy.getX() * Math.abs(m_joy.getX());
         
-        // Update the last variable
-        addToLast(m_dLeftSpeed, m_dRightSpeed); 
         m_dRightSpeed = (-y+x);
         m_dLeftSpeed = (y+x);  
-        
-        
     }
     
     public void setSpeed(double setMtLeft, double setMtRight)
     {
+        // Update the last variable
+        addToLast(m_dLeftSpeed, m_dRightSpeed); 
         overDrive(setMtLeft, setMtRight);
     }
     
     private void overDrive(double dLeftSpeed, double dRightSpeed)
     {
         /*
-         * Gets the difference between the wanted speed and the current speed,
+         * Gets the difference between the wanted speed and old speed,
          * muiltiplies it by a constant and adds it the current speed for a 
          * better response from the motors, thus called "overdrive"
          */
@@ -104,11 +101,13 @@ public class Drive {
     
     private double getLastLeft()
     {
+        // Returns oldest speed for the left motor
         return m_dLastArrayLeft[0];
     }
     
     private double getLastRight()
     {
+        // Returns oldest speed for the right motor
         return m_dLastArrayRight[0];
     }
     

@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Retrieve {
     
-    private Victor m_mtRetrieve = new Victor(Vars.chnVicRetrieve);
-    private Button m_btRetrieve = new Button();
     private boolean m_bRetrieveStatus = false;
     private double m_dRetrieveSpeed = -1;
+    private Victor m_mtRetrieve = new Victor(Vars.chnVicRetrieve);
+    private Button m_btRetrieve = new Button();
     private Joystick m_joy;
     
     public Retrieve(Joystick joystick)
@@ -28,7 +28,6 @@ public class Retrieve {
     
     public void run()
     {
-        //m_dRetrieveSpeed = DriverStation.getInstance().getAnalogIn(Vars.chnAnlgRetrieveSpeed);
         m_btRetrieve.run(m_joy.getRawButton(Vars.btActRetrieve));
         
         if(m_btRetrieve.gotPressed())
