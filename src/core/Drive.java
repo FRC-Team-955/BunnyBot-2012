@@ -114,7 +114,11 @@ public class Drive {
     }
     
     private void ramp(double dLeftSpeed, double dRightSpeed)
-    {
+	{
+		/*
+		 * Ramps the speed so it doesn't go too fast, thus damaging the motor
+		 */
+		
         final double dCurrentLeft = m_mtLeft.get();
         final double dCurrentRight = m_mtRight.get();
         
