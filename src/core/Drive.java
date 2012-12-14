@@ -56,8 +56,8 @@ public class Drive {
         m_joy.setAxisChannel(Joystick.AxisType.kY, 2);
 
         m_sDriveStatus = "Regular Drive";
-        double y = m_joy.getY() * Math.abs(m_joy.getY());
-        double x = m_joy.getX() * Math.abs(m_joy.getX());
+        double y = m_joy.getY() * Math.abs(m_joy.getY()) * Math.abs(m_joy.getY());
+        double x = m_joy.getX() * Math.abs(m_joy.getX()) * Math.abs(m_joy.getX());
         
         m_dRightSpeed = (-y+x);
         m_dLeftSpeed = (y+x);  
