@@ -65,30 +65,6 @@ public class Vars {
     
     public static Double setPrecision(double dDouble)
     {
-        String sArg = Double.toString(dDouble);
-        String sReturn = "";
-        boolean bAfterDec = false;
-        int iSpaceAfter = 0;
-        
-        for(int index = 0; index < sArg.length(); index++)
-        {
-            sReturn += sArg.charAt(index);
-            
-            if(sArg.charAt(index) == '.')
-            {
-                bAfterDec = true;
-                continue;
-            }
-            
-            if(bAfterDec)
-            {
-                iSpaceAfter++;
-                
-                if(iSpaceAfter == 2)
-                    break;
-            }
-        }
-        
-        return Double.valueOf(sReturn);
+        return Double.valueOf(Math.floor(dDouble * 10 + 0.5) / 10);
     }
 }

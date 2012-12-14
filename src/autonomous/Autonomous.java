@@ -26,7 +26,7 @@ public class Autonomous {
     private String m_sFileName = Vars.sRegOutput; 
     private SpecialButton m_btRecord = new SpecialButton();
     private SpecialButton m_btReplay = new SpecialButton();
-    private Button m_btChangeMode = new Button();
+    private Button m_btChangeFile = new Button();
     private Button m_btAllowEdit = new Button();   
     private Recorder m_recorder;
     private Replayer m_replayer; 
@@ -46,7 +46,7 @@ public class Autonomous {
     {
         m_bAnotherIsPressed = m_btRecord.run(m_joy.getRawButton(Vars.btRecord), m_bAnotherIsPressed);
         m_bAnotherIsPressed = m_btReplay.run(m_joy.getRawButton(Vars.btReplay), m_bAnotherIsPressed);
-        m_btChangeMode.run(m_joy.getRawButton(Vars.btChangeFile));
+        m_btChangeFile.run(m_joy.getRawButton(Vars.btChangeFile));
         m_btAllowEdit.run(m_joy.getRawButton(Vars.btAllowEdit));
 		
         if(!m_btRecord.getSwitch() && !m_btReplay.getSwitch())
@@ -62,7 +62,7 @@ public class Autonomous {
                     m_sEditInfoStat = "Can NOT edit";
             }
             
-            if(m_btChangeMode.gotPressed())
+            if(m_btChangeFile.gotPressed())
             {
                 if(++m_iFileMode >= m_iFileMax)
                     m_iFileMode = 0;
@@ -121,7 +121,7 @@ public class Autonomous {
     
     private boolean canEdit()
     {
-       if(m_bAutoEditMode == false && !m_sFileName.equalsIgnoreCase(Vars.sRegOutput))
+       if(!m_bAutoEditMode && !m_sFileName.equalsIgnoreCase(Vars.sRegOutput))
             return false;
        
        return true;
