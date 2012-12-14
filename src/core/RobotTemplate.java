@@ -39,6 +39,10 @@ public class RobotTemplate extends IterativeRobot {
         autonomous.resetAutonomous(); // Resets the replay to false if it was true before
     }
     
+    public void disabledPeriodic()
+    {
+        compressor.run();
+    }
     // Called once in autonomous
     // Tells autonomous which file to play based on
     // the value of "iFileType"

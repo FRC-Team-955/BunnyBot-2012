@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.DigitalOutput;
  */
 public class Compressor {
 	
-    DigitalInput m_digInSensor = new DigitalInput(Vars.chnDigiSensor);
-    DigitalOutput m_Compressor = new DigitalOutput(Vars.chnCompressor);
+    private DigitalInput m_digInSensor = new DigitalInput(Vars.chnDigiSensor);
+    private DigitalOutput m_Compressor = new DigitalOutput(Vars.chnCompressor);
 	
     public void run()
     {
