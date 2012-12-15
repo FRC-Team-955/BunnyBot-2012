@@ -84,6 +84,7 @@ public class Replayer {
                 m_fileReader.close();
             
             m_tmReplay.stop();
+			m_tmReplay.reset();
             m_bDoneReplay = false;
             m_bRepStarted = false;
         }
