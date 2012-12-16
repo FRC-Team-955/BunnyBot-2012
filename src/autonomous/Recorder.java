@@ -45,7 +45,7 @@ public class Recorder {
     {
         if(m_bRecStarted)
         {
-            m_fileWriter.writeDouble(Vars.dENDSIGNAL);
+            m_fileWriter.writeEndSignal();
             m_fileWriter.close();
             m_tmRecord.stop();
             m_tmRecord.reset();

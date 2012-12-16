@@ -35,45 +35,21 @@ public class FileReader {
         }
     }
 
-    
-    public int readInt()
+    public JoyEmulator readAll()
     {
-        try 
-        {           
-            return m_reader.readInt();
-        } 
-        catch (Exception e)
+        JoyEmulator joyEmu = new JoyEmulator();
+        
+        try
         {
-            System.out.println(e.getMessage());
-            return -10;
+            joyEmu.add(m_reader.readDouble(), m_reader.readDouble(), m_reader.readBoolean(), m_reader.readDouble());
         }
-    }
-    
-    public double readDouble()
-    {
-        try 
-        {           
-            return m_reader.readDouble();
-        } 
-		
-        catch (Exception e)
+        
+        catch(IOException e)
         {
-            System.out.println(e.getMessage());
-            return -10.0;
+            joyEmu.add(0, 0, false, Vars.dENDSIGNAL);
         }
-    }
-    
-    public boolean readBoolean()
-    {
-        try 
-        {           
-            return m_reader.readBoolean();
-        } 
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return false;
-        }
+        
+        return joyEmu;
     }
         
     public void close()

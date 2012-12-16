@@ -3,22 +3,18 @@ package utilities;
 // @author Fauzi
 
 public class JoyEmulator{
-    private double m_dTimer = 0;
+    
     private double m_dMtLeft = 0;
     private double m_dMtRight = 0;
+    private double m_dTimer = 0;
     private boolean m_bRtrvStat = false;
     
-    public  void add(double dTimer, double dMtLeft, double dMtRight, boolean bRtrvStat)
+    public  void add(double dMtLeft, double dMtRight, boolean bRtrvStat, double dTimer)
     {
-        m_dTimer = dTimer;
         m_dMtLeft = dMtLeft;
         m_dMtRight = dMtRight;
         m_bRtrvStat = bRtrvStat;
-    }
-    
-    public double getTimer()
-    {
-        return m_dTimer;
+        m_dTimer = dTimer;
     }
     
     public double getMtLeft()
@@ -34,5 +30,11 @@ public class JoyEmulator{
     public boolean getRetrieve()
     {
         return m_bRtrvStat;
+    }
+    
+    
+    public double getTimer()
+    {
+        return m_dTimer;
     }
 }

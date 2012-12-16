@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Replayer {
     
     //Constants
-    private final double m_dMaxReplay = 14.25;
+    private final double m_dMaxReplay = 14.75;
     
     private boolean m_bRepStarted = false;
     private boolean m_bDoneReplay = false;
@@ -39,30 +39,22 @@ public class Replayer {
         if(!m_bRepStarted)
         {
             m_fileReader = new FileReader(sFileName);
-            m_joyAuto.add(m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readBoolean());
+            m_joyAuto = m_fileReader.readAll();
             m_tmReplay.start();
             m_bRepStarted = true;
         }
 
         if(!m_bDoneReplay)
-        {
+        {           
+            if(m_tmReplay.get() >= m_joyAuto.getTimer())
+                m_joyAuto = m_fileReader.readAll();
+            
             m_sReplayStatus = "Replaying: " + Vars.setPrecision(m_tmReplay.get());
             m_bot.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
             m_bot.setRetrieve(m_joyAuto.getRetrieve());
-
-            if(m_tmReplay.get() >= m_dMaxReplay && !sFileName.equalsIgnoreCase(Vars.sRegOutput))
-                m_bDoneReplay = true;
             
-            else if(m_tmReplay.get() >= m_joyAuto.getTimer())
-            {
-                double dTemp = m_fileReader.readDouble(); // Temp var to see if we're done replay
-
-                if(dTemp < Vars.dENDSIGNAL+1) // If true, means we're done replaying
-                    m_bDoneReplay = true;
-
-                else
-                    m_joyAuto.add(dTemp, m_fileReader.readDouble(), m_fileReader.readDouble(), m_fileReader.readBoolean());
-            }
+            if(m_tmReplay.get() >= m_dMaxReplay && !sFileName.equalsIgnoreCase(Vars.sRegOutput) || EndOfFile())
+                m_bDoneReplay = true;
         }
 
         else
@@ -85,5 +77,14 @@ public class Replayer {
             m_bDoneReplay = false;
             m_bRepStarted = false;
         }
+    }
+    
+    private boolean EndOfFile()
+    {
+        if(m_joyAuto.getTimer() < Vars.dENDSIGNAL+1)
+            return true;
+        
+        else 
+            return false;
     }
 }

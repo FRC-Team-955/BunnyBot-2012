@@ -52,25 +52,11 @@ public class FileWriter {
         }
     }
     
-    public void writeInt(int iData)
+    public void writeEndSignal()
     {
         try
         {
-            m_writer.writeInt(iData);
-            m_writer.flush(); 
-        } 
-        
-        catch (IOException e) 
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    
-    public void writeDouble(double dData)
-    {
-        try
-        {
-            m_writer.writeDouble(dData);
+            m_writer.writeDouble(Vars.dENDSIGNAL);
             m_writer.flush();
         } 
         
@@ -79,21 +65,7 @@ public class FileWriter {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void writeBoolean(boolean bData)
-    {
-        try
-        {
-            m_writer.writeBoolean(bData);
-            m_writer.flush();
-        } 
-        
-        catch (IOException e) 
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-       
+     
     public void close()
     {
         try
