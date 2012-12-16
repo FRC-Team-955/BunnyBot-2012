@@ -18,7 +18,6 @@ public class FileReader {
     private String m_sFile;
     private FileConnection m_fc;
     private DataInputStream m_reader;
-    private boolean m_bIsClosed = false;
     
     public FileReader(String sFileName)
     {
@@ -50,7 +49,7 @@ public class FileReader {
         }
     }
     
-	public double readDouble()
+    public double readDouble()
     {
         try 
         {           
@@ -64,7 +63,7 @@ public class FileReader {
         }
     }
     
-	public boolean readBoolean()
+    public boolean readBoolean()
     {
         try 
         {           
@@ -76,40 +75,19 @@ public class FileReader {
             return false;
         }
     }
-    
-    public void open()
-    {
-        try
-        {
-            m_fc = (FileConnection)Connector.open(m_sFile, Connector.READ);
-            m_reader = new DataInputStream(m_fc.openInputStream());
-            m_bIsClosed = false;
-        }
         
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-	
     public void close()
     {
         try
         {
             m_reader.close();
             m_fc.close();
-            m_bIsClosed = true;
         }
         
         catch(IOException e)
         {
             System.out.println(e.getMessage());
         }
-    }
-    
-    public boolean isClosed()
-    {
-        return m_bIsClosed;
     }
 }
 

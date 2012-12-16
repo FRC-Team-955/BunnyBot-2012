@@ -17,8 +17,7 @@ public class FileWriter {
 
     private String m_sFile;
     private FileConnection m_fc;
-    private DataOutputStream m_writer;
-    private boolean m_bIsClosed = false;    
+    private DataOutputStream m_writer;  
     
     public FileWriter(String sFileName)
     {
@@ -37,14 +36,14 @@ public class FileWriter {
         }
     }
     
-    public void writeData(double dTime, double dMtLeft, double dMtRight, boolean bRtrveStat)
+    public void writeData(double dTime, Robot bot)
     {
         try
         {
             m_writer.writeDouble(dTime);
-            m_writer.writeDouble(dMtLeft);
-            m_writer.writeDouble(dMtRight);
-            m_writer.writeBoolean(bRtrveStat);
+            m_writer.writeDouble(bot.getMtLeft());
+            m_writer.writeDouble(bot.getMtRight());
+            m_writer.writeBoolean(bot.getRetrieveStat());
         }
         
         catch(IOException e)
@@ -101,33 +100,11 @@ public class FileWriter {
         {
             m_writer.close();
             m_fc.close();
-            m_bIsClosed = true;
         }
         
         catch(IOException e)
         {
             System.out.println(e.getMessage());
         }
-    }
-    
-    public void open()
-    {
-        try
-        {
-            m_fc = (FileConnection)Connector.open(m_sFile, Connector.WRITE);
-            m_fc.create();
-            m_writer = new DataOutputStream(m_fc.openOutputStream(0));
-            m_bIsClosed = false;
-        }
-        
-        catch (IOException e) 
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    
-    public boolean isClosed()
-    {
-        return m_bIsClosed;
     }
 }

@@ -6,13 +6,13 @@ package autonomous;
 
 
 /**
- *
  * @author fauzi
  */
 import utilities.FileWriter;
 import utilities.Robot;
 import utilities.Vars;
 import edu.wpi.first.wpilibj.Timer;
+
 public class Recorder {
 
     private String m_sRecordStaus = "";
@@ -36,7 +36,7 @@ public class Recorder {
         }
         
         m_sRecordStaus = "Recording: " + Vars.setPrecision(m_tmRecord.get());
-        m_fileWriter.writeData(m_tmRecord.get(), m_bot.getMtLeft(), m_bot.getMtRight(), m_bot.getRetrieveStat());
+        m_fileWriter.writeData(m_tmRecord.get(), m_bot);
 
         return m_sRecordStaus;
     }
@@ -48,6 +48,7 @@ public class Recorder {
             m_fileWriter.writeDouble(Vars.dENDSIGNAL);
             m_fileWriter.close();
             m_tmRecord.stop();
+            m_tmRecord.reset();
             m_bRecStarted = false;
         }
     }

@@ -69,7 +69,6 @@ public class Replayer {
         {
             m_sReplayStatus = "Done Replaying";
             m_bot.setSpeed(0, 0);
-            m_fileReader.close();
             m_tmReplay.stop();
         }
         
@@ -80,11 +79,9 @@ public class Replayer {
     {
         if(m_bRepStarted)
         {
-            if(!m_fileReader.isClosed())
-                m_fileReader.close();
-            
+            m_fileReader.close();
             m_tmReplay.stop();
-			m_tmReplay.reset();
+            m_tmReplay.reset();
             m_bDoneReplay = false;
             m_bRepStarted = false;
         }

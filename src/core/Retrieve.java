@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
- *
  * @author Fauzi
  */
 public class Retrieve {
