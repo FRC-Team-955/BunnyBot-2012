@@ -37,7 +37,6 @@ public class Vars {
     public static final int btActRetrieve = 3;
     public static final int btRecord = 9;
     public static final int btAllowEdit = 10;
-    public static final int btChangeFile = 11;
     public static final int btReplay = 12;
     
     // Other
