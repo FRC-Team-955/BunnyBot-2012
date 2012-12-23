@@ -65,10 +65,14 @@ public class Autonomous {
         }
         
         if(m_btRecord.getSwitch())   
-            m_sAutonmousStatus = record();		
+        {
+            m_sAutonmousStatus = record();
+        }		
 
         else if(m_btReplay.getSwitch())
+        {
             m_sAutonmousStatus = replay();
+        }
         
         else
         {
@@ -96,7 +100,6 @@ public class Autonomous {
     
     private void reset() // Resets timer and booleans so that you can record or replay again
     {  
-        Vars.bDrive = true;
         m_replayer.reset();
         m_recorder.reset();
     }

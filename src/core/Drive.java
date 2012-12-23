@@ -23,7 +23,7 @@ public class Drive {
     
     public void run()
     {      
-        if(Vars.bDrive)
+        if(Vars.canDrive())
         {
             regDrive();
             setSpeed(m_dLeftSpeed, m_dRightSpeed);

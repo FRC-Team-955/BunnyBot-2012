@@ -41,17 +41,30 @@ public class FileReader {
         
         try
         {
-            joyEmu.add(m_reader.readDouble(), m_reader.readDouble(), m_reader.readBoolean(), m_reader.readDouble());
+            joyEmu.setValues(m_reader.readDouble(), m_reader.readDouble(), m_reader.readBoolean(), m_reader.readDouble());
         }
         
         catch(IOException e)
         {
-            joyEmu.add(0, 0, false, Vars.dENDSIGNAL);
+            joyEmu.setValues(0, 0, false, 0);
         }
         
         return joyEmu;
     }
         
+    public int readInt()
+    {
+        try
+        {
+            return m_reader.readInt();
+        }
+        
+        catch(IOException e)
+        {
+            return 0;
+        }
+    }
+    
     public void close()
     {
         try

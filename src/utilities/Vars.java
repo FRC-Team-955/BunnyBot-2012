@@ -39,12 +39,6 @@ public class Vars {
     public static final int btAllowEdit = 10;
     public static final int btReplay = 12;
     
-    // Other
-    public static boolean bDrive = true;
-    public static final double dENDSIGNAL = -10.0;
-    public static final PrintDriver drvStationPrinter = new PrintDriver();
-    public static final String sRegOutput = "file:///regVal.txt";
-    
     // DriverStation Channels
     public static final int chnDigInReg = 0;
     public static final int chnDigInAutoCtr = 1;
@@ -56,8 +50,29 @@ public class Vars {
     public static final int iEditAutoMode = 5;
     public static final int iRecordStatusLine = 6;
     
+    // Otherpublic static boolean bDrive = true;
+    public static final double dENDSIGNAL = -10.0;
+    public static final PrintDriver drvStationPrinter = new PrintDriver();
+    public static final String sRegOutput = "file:///regVal.txt";
+    private static boolean bDrive = true;
+    
     public static Double setPrecision(double dDouble)
     {
         return Double.valueOf(Math.floor(dDouble * 10 + 0.5) / 10);
+    }
+    
+    public static void disableDrive()
+    {
+        bDrive = false;
+    }
+    
+    public static void enableDrive()
+    {
+        bDrive = true;
+    }
+    
+    public static boolean canDrive()
+    {
+        return bDrive;
     }
 }

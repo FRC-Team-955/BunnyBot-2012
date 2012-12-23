@@ -36,14 +36,11 @@ public class FileWriter {
         }
     }
     
-    public void writeData(double dTime, Robot bot)
+    public void writeInt(int iData)
     {
         try
         {
-            m_writer.writeDouble(dTime);
-            m_writer.writeDouble(bot.getMtLeft());
-            m_writer.writeDouble(bot.getMtRight());
-            m_writer.writeBoolean(bot.getRetrieveStat());
+            m_writer.writeInt(iData);
         }
         
         catch(IOException e)
@@ -52,20 +49,31 @@ public class FileWriter {
         }
     }
     
-    public void writeEndSignal()
+    public void writeDouble(double dData)
     {
         try
         {
-            m_writer.writeDouble(Vars.dENDSIGNAL);
-            m_writer.flush();
-        } 
+            m_writer.writeDouble(dData);
+        }
         
-        catch (IOException e) 
+        catch(IOException e)
         {
             System.out.println(e.getMessage());
         }
     }
-     
+    
+    public void writeBoolean(boolean bData)
+    {
+        try
+        {
+            m_writer.writeBoolean(bData);
+        }
+        
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
     public void close()
     {
         try

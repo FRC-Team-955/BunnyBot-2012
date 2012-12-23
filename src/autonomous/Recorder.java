@@ -10,15 +10,19 @@ package autonomous;
  */
 import utilities.FileWriter;
 import utilities.Robot;
-import utilities.Vars;
+import utilities.JoyEmulator;
+import java.util.Vector;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Recorder {
 
-    private String m_sRecordStaus = "";
     private boolean m_bRecStarted = false;
-    private FileWriter m_fileWriter;
+    private int m_Index = 0;
     private Timer m_tmRecord = new Timer();
+    private Vector m_List = new Vector();
+    private JoyEmulator m_JoyEmu = new JoyEmulator();
+    private String m_sFile = null;
+    private FileWriter m_fileWriter;
     private Robot m_bot;
     
     public Recorder(Robot robot)
@@ -30,26 +34,45 @@ public class Recorder {
     {
         if(!m_bRecStarted)
         {
-            m_fileWriter = new FileWriter(sFileName);
             m_tmRecord.start();
+            m_sFile = sFileName;
             m_bRecStarted = true;
         }
         
-        m_sRecordStaus = "Recording: " + Vars.setPrecision(m_tmRecord.get());
-        m_fileWriter.writeData(m_tmRecord.get(), m_bot);
-
-        return m_sRecordStaus;
+        m_Index++;
+        m_JoyEmu.setValues(m_bot.getMtLeft(), m_bot.getMtRight(), m_bot.getRetrieveStat(), m_tmRecord.get());
+        m_List.addElement(m_JoyEmu);
+    
+        return "Recording";
     }
     
     public void reset()
     {
         if(m_bRecStarted)
         {
-            m_fileWriter.writeEndSignal();
-            m_fileWriter.close();
             m_tmRecord.stop();
             m_tmRecord.reset();
+            writeToFile();
+            m_Index = 0;
             m_bRecStarted = false;
         }
+    }
+    
+    private void writeToFile()
+    {
+        m_fileWriter = new FileWriter(m_sFile);
+        m_fileWriter.writeInt(m_Index);
+
+        for(int iPos = 0; iPos < m_Index; iPos++)
+        {
+            m_JoyEmu.setValues((JoyEmulator) m_List.elementAt(iPos));
+            m_fileWriter.writeDouble(m_JoyEmu.getMtLeft());
+            m_fileWriter.writeDouble(m_JoyEmu.getMtRight());
+            m_fileWriter.writeBoolean(m_JoyEmu.getRetrieve());
+            m_fileWriter.writeDouble(m_JoyEmu.getTime());
+        }
+
+        m_List.removeAllElements();
+        m_fileWriter.close();
     }
 }
