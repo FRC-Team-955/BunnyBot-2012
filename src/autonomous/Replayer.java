@@ -48,12 +48,14 @@ public class Replayer {
         if(!m_bDoneReplay)
         {        
             if(getNewData())
+            {    
                 m_joyAuto.setValues(m_fileReader.readAll());
+                m_iCounter++;
+            }
             
             m_sReplayStatus = "Replaying: " + Vars.setPrecision(m_tmReplay.get());
             m_bot.setSpeed(m_joyAuto.getMtLeft(), m_joyAuto.getMtRight());
             m_bot.setRetrieve(m_joyAuto.getRetrieve());
-            m_iCounter++;
             
             if(overTimeLimit(sFileName) || EndOfFile())
                 m_bDoneReplay = true;
