@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.Solenoid;
  * @author Fauzi
  */
 
-/*
+/**
  * Purpose of this class is so that it can simply the job of making solenoids
- * and having to manualy set them indivdually on and off. So instead I just made
+ * and having to manually set them individually on and off. So instead I just made
  * a MySolenoid class with functions that do it for us :D
  */
 public class MySolenoid 
@@ -29,18 +29,28 @@ public class MySolenoid
         m_solDown.set(!m_bDefaultStat);
     }
     
+    /**
+     * Activates the solenoids
+     */
     public void turnOn()
     {
         m_solUp.set(m_bDefaultStat);
         m_solDown.set(!m_bDefaultStat);
     }
     
+    /**
+     * Deactivates the solenoids
+     */
     public void turnOff()
     {
         m_solUp.set(!m_bDefaultStat);
         m_solDown.set(m_bDefaultStat); 
     }
     
+    /**
+     * Sets the solenoids based on argument, true means active
+     * @param bVal 
+     */
     public void set(boolean bVal)
     {
         if(bVal)
@@ -53,15 +63,5 @@ public class MySolenoid
             m_solUp.set(!m_bDefaultStat);
             m_solDown.set(m_bDefaultStat);
         }
-    }
-    
-    public boolean getUp()
-    {
-        return m_solUp.get();
-    }
-
-    public boolean getDown()
-    {
-        return m_solDown.get();
     }
 }

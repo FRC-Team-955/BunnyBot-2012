@@ -6,15 +6,19 @@ import javax.microedition.io.Connector;
 import com.sun.squawk.microedition.io.FileConnection;
 
 /**
- *
+ * This class is responsible to opening/closing and writing data to the file.
  * @author Fauzi
  */
 public class FileWriter {
 
-    private String m_sFile;
+    private final String m_sFile;
     private FileConnection m_fc;
     private DataOutputStream m_writer;  
     
+    /**
+     * Opens the specified file for the ability to write data to it.
+     * @param sFileName 
+     */
     public FileWriter(String sFileName)
     {
         m_sFile = sFileName;
@@ -32,6 +36,10 @@ public class FileWriter {
         }
     }
     
+    /**
+     * Writes an integer value to the file.
+     * @param iData 
+     */
     public void writeInt(int iData)
     {
         try
@@ -45,6 +53,10 @@ public class FileWriter {
         }
     }
     
+    /** 
+     * Writes a double value to the file.
+     * @param dData 
+     */
     public void writeDouble(double dData)
     {
         try
@@ -58,6 +70,10 @@ public class FileWriter {
         }
     }
     
+    /**
+     * Writes a boolean value to the file.
+     * @param bData 
+     */
     public void writeBoolean(boolean bData)
     {
         try
@@ -71,6 +87,9 @@ public class FileWriter {
         }
     }
     
+    /**
+     * Closed the file, disabling use of it.
+     */
     public void close()
     {
         try

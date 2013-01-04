@@ -1,17 +1,14 @@
 package utilities;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 
 /**
- *
- * @author Fauzi
- */
-
-/*
  * This class has all the variables that are used the set the 
- * channels, slots or speed parameters for any object in the t-shirt cannon.
- * We have a seperate class just so we can change the channel more easily rather
- * than seaching through the class itself.
+ * channels, slots or speed parameters for any object for BunnyBot 2012.
+ * We have a separate class just so we can change the channel more easily rather
+ * than searching through the class itself.
+ * @author Fauzi
  */
 public class Vars {
     
@@ -37,22 +34,22 @@ public class Vars {
     public static final int btReplay = 12;
     
     // DriverStation Autonomous Button Channels
-    public static final int chnDigInReg = 0;
-    public static final int chnDigInAutoCtr = 1;
-    public static final int chnDigInAutoLft = 2;
-    public static final int chnDigInAutoRght = 3;
+    public static final int stDigInAutoCtr = 1;
+    public static final int stDigInAutoLft = 2;
+    public static final int stDigInAutoRght = 3;
+    public static final int stDigInReg = 4;
     
     // Printing to Driverstation lines, 2-6 are available only
-    public static final int iDriveStatusLine = 2;
-    public static final int iEditAutoModeLine = 5;
-    public static final int iAutonomousStatLine = 6;
+    public static final int prDriveStatusLine = 2;
+    public static final int prEditAutoModeLine = 5;
+    public static final int prAutonomousStatLine = 6;
     
     // Other
     public static final int iPs3Buttons = 13;
     private static boolean bDrive = true;
     
     /**
-     * Sets the double to be only at the hundreth's place, ex. 12.34
+     * Sets the double to be only at the hundreth's place, ex. 12.34.
      */
     public static double fnSetPrecision(double dDouble)
     {
@@ -60,7 +57,7 @@ public class Vars {
     }
     
     /**
-     * Disables ability for user to drive robot
+     * Disables ability for user to drive robot.
      */
     public static void fnDisableDrive()
     {
@@ -68,7 +65,7 @@ public class Vars {
     }
     
     /**
-     * Enables ability for the user to drive the robot
+     * Enables ability for the user to drive the robot.
      */
     public static void fnEnableDrive()
     {
@@ -76,7 +73,7 @@ public class Vars {
     }
     
     /**
-     * Checks if the user has as the ability to drive the robot
+     * Checks if the user has as the ability to drive the robot.
      */
     public static boolean fnCanDrive()
     {
@@ -84,7 +81,18 @@ public class Vars {
     }
     
     /**
+     * Gets the button status from the driverstation, 1 - 8 available.
+     * @param iChan
+     * @return 
+     */
+    public static boolean fnDriverGetDigitalIn(int iChan)
+    {
+        return DriverStation.getInstance().getDigitalIn(iChan);
+    }
+    
+    /**
      * Prints specified message to the driver station on the corresponding line
+     * 2-6 are available.
      */
     public static void fnPrintToDriverstation(int iLine, String sMessage)
     {

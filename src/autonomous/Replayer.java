@@ -7,15 +7,18 @@ import utilities.Vars;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- *
+ * This class reads data from the specified file from the cRio and then 
+ * "replays" it.
  * @author fauzi
  */
 // TODO: Set kp, ki, kd and tolerance variables
-public class Replayer {
+class Replayer {
+    
+    //Constants
+    private final double m_dTimeTolerance = .1;
     
     private int m_iMax = 0;
     private int m_iCounter = 0;
-    private double m_dReplayTime = 0.00;
     private boolean m_bRepStarted = false;
     private boolean m_bDoneReplay = false;
     private String m_sFileName = "";
@@ -31,9 +34,8 @@ public class Replayer {
     }
     
     /**
-     * Replays data from desired file, returns replay time. Returns -1.00 when done
+     * Replays data from desired file.
      * @param sFileName
-     * @return 
      */
     public void replay(String sFileName)
     {        
@@ -52,7 +54,6 @@ public class Replayer {
             if(getNewData())
                 m_botDataAuto.setValues(m_botDataArray[m_iCounter++]);
             
-            m_dReplayTime = Vars.fnSetPrecision(m_tmReplay.get());
             m_bot.setSpeed(m_botDataAuto.getMtLeft(), m_botDataAuto.getMtRight());
             m_bot.setRetrieve(m_botDataAuto.getRetrieve());
             
@@ -62,14 +63,14 @@ public class Replayer {
 
         else
         {
-            m_bot.setSpeed(0, 0);
-            m_dReplayTime = 0.00;
+            m_bot.stopRobot();
             m_tmReplay.stop();
+            m_tmReplay.reset();
         }
     }
     
     /**
-     * Resets the replayer so it can properly replay next time
+     * Resets the replayer so it can properly replay next time.
      */
     public void reset()
     {
@@ -81,17 +82,37 @@ public class Replayer {
             m_botDataArray = null;
             m_iCounter = 0;
             m_iMax = 0;
-            m_dReplayTime = 0.00;
             m_bDoneReplay = false;
             m_bRepStarted = false;
         }
     }
     
+    /**
+     * Gets the value of the recording, as in how long it has been replaying.
+     * Returns -1 when done, or if it's not replaying
+     * @return 
+     */
     public double getReplayTime()
-    {
-        return m_dReplayTime;
+    {      
+        if(m_tmReplay.get() < m_dTimeTolerance)
+            return -1;
+        
+        return Vars.fnSetPrecision(m_tmReplay.get());
     }
     
+    /**
+     * Stops replay from replaying.
+     */
+    public void stop()
+    {
+        m_bRepStarted = true;
+        m_bDoneReplay = true;
+    }
+    
+    /**
+     * Reads all the data from the file at once and stores them into an array
+     * that we can access.
+     */
     private void readAllData()
     {
         m_fileReader = new FileReader(m_sFileName);
@@ -99,26 +120,25 @@ public class Replayer {
         m_botDataArray = new BotData[m_iMax];
         
         for(int index = 0; index < m_iMax; index++)
-            m_botDataArray[index] = m_fileReader.readAll();
+            m_botDataArray[index].setValues(m_fileReader.readAll());
         
         m_fileReader.close();
     }
 
     /**
-     * Determines whether we should update our data
+     * Determines whether we should update our data.
      * @return 
      */
     private boolean getNewData()
     {
-        if(m_botDataAuto.getTime() >= m_tmReplay.get())
-                return true;
+        if(m_tmReplay.get() >= m_botDataAuto.getTime())
+            return true;
         
-        else 
-            return false;
+        return false;
     }
     
     /**
-     * Determines whether we're at the end of the file
+     * Determines whether we're at the end of the file.
      * @return 
      */
     private boolean EndOfFile()
@@ -126,7 +146,6 @@ public class Replayer {
         if(m_iCounter > 0 && m_iCounter < m_iMax)
             return false;
         
-        else 
-            return true;
+        return true;
     }
 }

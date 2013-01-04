@@ -6,15 +6,19 @@ import javax.microedition.io.Connector;
 import com.sun.squawk.microedition.io.FileConnection;
 
 /**
- *
+ * This class is responsible for opening/closing and reading data from the file.
  * @author Fauzi
  */
 public class FileReader {
 
-    private String m_sFile;
+    private final String m_sFile;
     private FileConnection m_fc;
     private DataInputStream m_reader;
     
+    /**
+     * Opens the specified file and prepares it for reading data from.
+     * @param sFileName 
+     */
     public FileReader(String sFileName)
     {
         m_sFile = sFileName;
@@ -31,6 +35,10 @@ public class FileReader {
         }
     }
 
+    /**
+     * Reads a certain set of data at a time.
+     * @return 
+     */
     public BotData readAll()
     {
         BotData botData = new BotData();
@@ -48,6 +56,10 @@ public class FileReader {
         return botData;
     }
         
+    /**
+     * Reads an integer value from the file.
+     * @return 
+     */
     public int readInt()
     {
         try
@@ -61,6 +73,9 @@ public class FileReader {
         }
     }
     
+    /**
+     * Closes the file, disabling use of it.
+     */
     public void close()
     {
         try

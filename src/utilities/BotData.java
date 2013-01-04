@@ -1,7 +1,7 @@
 package utilities;
 
 /**
- * 
+ * Holds data corresponding to the values of the robot.
  * @author Fauzi
  */ 
 public class BotData{
@@ -11,6 +11,12 @@ public class BotData{
     private double m_dMtRight = 0;
     private boolean m_bRtrvStat = false;
     
+    /**
+     * Sets the values
+     * @param dMtLeft
+     * @param dMtRight
+     * @param bRtrvStat 
+     */
     public void setValues(double dTimer, double dMtLeft, double dMtRight, boolean bRtrvStat)
     {
         m_dTimer = dTimer;
@@ -19,37 +25,55 @@ public class BotData{
         m_bRtrvStat = bRtrvStat;
     }
     
+    /**
+     * Sets the values.
+     * @param bot 
+     */
     public void setValues(double dTimer, Robot bot)
     {
-        m_dTimer = dTimer;
-        m_dMtLeft = bot.getMotorLeft();
-        m_dMtRight = bot.getMotorRight();
-        m_bRtrvStat = bot.getRetrieveStat();
+        setValues(dTimer, bot.getMotorLeft(), bot.getMotorRight(), bot.getRetrieveStat());
     }
     
+    /**
+     * Sets the values.
+     * @param emu 
+     */
     public void setValues(BotData emu)
     {
-        m_dTimer = emu.getTime();
-        m_dMtLeft = emu.getMtLeft();
-        m_dMtRight = emu.getMtRight();
-        m_bRtrvStat = emu.getRetrieve();
+        setValues(emu.getTime(), emu.getMtLeft(), emu.getMtRight(), emu.getRetrieve());
     }
     
+    /**
+     * Returns the timestamp of the data.
+     * @return 
+     */
     public double getTime()
     {
         return m_dTimer;
     }
     
+    /**
+     * Gets the motor value on the left side
+     * @return 
+     */
     public double getMtLeft()
     {
         return m_dMtLeft;
     }
     
+    /**
+     * Gets the motor value on the right side.
+     * @return 
+     */
     public double getMtRight()
     {
         return m_dMtRight;
     }
     
+    /**
+     * Gets the retrieve status.
+     * @return 
+     */
     public boolean getRetrieve()
     {
         return m_bRtrvStat;
