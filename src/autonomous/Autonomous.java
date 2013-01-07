@@ -134,14 +134,14 @@ public class Autonomous {
      */
     private void setButtonStat()
     {
+        if(m_joy.gotPressed(Vars.btRecord))
+            if(!m_joy.getSwitch(Vars.btReplay))
+                m_joy.flipSwitch(Vars.btRecord);
+        
         if(m_joy.gotPressed(Vars.btReplay))
             if(!m_joy.getSwitch(Vars.btRecord))
                 m_joy.flipSwitch(Vars.btReplay);
                 
-        else if(m_joy.gotPressed(Vars.btRecord))
-            if(!m_joy.getSwitch(Vars.btReplay))
-                m_joy.flipSwitch(Vars.btRecord);
-                        
         if(!m_joy.getSwitch(Vars.btReplay) && !m_joy.getSwitch(Vars.btRecord))
         {
             // Changes the ability for the user to edit the autonomous

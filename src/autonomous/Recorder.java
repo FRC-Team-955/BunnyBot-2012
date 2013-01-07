@@ -19,7 +19,7 @@ class Recorder {
     private boolean m_bRecDone = false;
     private Timer m_tmRecorder = new Timer();
     private Vector m_List = new Vector();
-    private BotData m_botDataAuto = new BotData();
+    private BotData m_botDataAuto;
     private String m_sFile = "";
     private FileWriter m_fileWriter;
     private Robot m_bot;
@@ -45,6 +45,7 @@ class Recorder {
         if(!m_bRecDone)
         {
             m_Index++;
+            m_botDataAuto = new BotData();
             m_botDataAuto.setValues(m_tmRecorder.get(), m_bot);
             m_List.addElement(m_botDataAuto);
         }
